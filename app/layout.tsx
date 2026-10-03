@@ -26,7 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${instrumentSans.variable} ${geistMono.variable} h-full antialiased px-1`}
+      className={`${instrumentSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider
@@ -36,7 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           disableTransitionOnChange
         >
           <TooltipProvider>
-            <main className="flex flex-col mx-auto max-w-7xl w-full h-screen">
+            <main className="flex w-full flex-1 flex-col">
               <Header />
               {children}
               <Toaster />
