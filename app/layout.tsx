@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toast";
+import Header from "@/components/header";
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument-sans",
@@ -35,8 +36,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           disableTransitionOnChange
         >
           <TooltipProvider>
-            {children}
-            <Toaster />
+            <main className="flex flex-col mx-auto max-w-7xl w-full h-screen">
+              <Header />
+              {children}
+              <Toaster />
+            </main>
           </TooltipProvider>
         </ThemeProvider>
       </body>
