@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toast";
 import Header from "@/components/header";
+import { Footer } from "@/components/footer";
+import { org } from "@/lib/content";
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument-sans",
@@ -17,8 +19,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Neuvikon",
-  description: "Neuvikon Official Website",
+  title: {
+    default: `${org.name} — ${org.tagline}`,
+    template: `%s — ${org.name}`,
+  },
+  description: org.description,
+  openGraph: {
+    title: `${org.name} — ${org.tagline}`,
+    description: org.description,
+    siteName: org.name,
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -36,11 +47,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           disableTransitionOnChange
         >
           <TooltipProvider>
-            <main className="flex w-full flex-1 flex-col">
-              <Header />
-              {children}
-              <Toaster />
-            </main>
+            <Header />
+            <main className="flex w-full flex-1 flex-col">{children}</main>
+            <Footer />
+            <Toaster />
           </TooltipProvider>
         </ThemeProvider>
       </body>
