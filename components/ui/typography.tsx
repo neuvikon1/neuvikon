@@ -24,7 +24,7 @@ const titleVariants = cva("tracking-tight text-balance", {
   variants: {
     level: {
       /** Page-opening statement. One per page. */
-      display: "max-w-4xl text-3l leading-[1.02] md:text-4xl xl:text-5xl",
+      display: "max-w-4xl text-3xl leading-[1.02] md:text-4xl xl:text-5xl",
       /** Section headline. */
       section: "max-w-xl text-4xl leading-[1.1]",
       /** Subsection or card headline. */

@@ -1,37 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Container } from "./container";
-
-/**
- * A 2px dot marking a rail/rule intersection. Near-foreground on purpose:
- * the contrast against the hairlines is the point.
- *
- * Rendered as a sibling of the rails, never a child - the rails carry a mask,
- * and a mask clips its descendants too, which would swallow the dot.
- */
-function Tick({ side }: { side: "left" | "right" }) {
-  return (
-    <span
-      aria-hidden
-      className={cn(
-        "pointer-events-none absolute top-0 size-[2px] -translate-y-1/2 rounded-full bg-tick",
-        side === "left" ? "left-0 -translate-x-1/2" : "right-0 translate-x-1/2",
-      )}
-    />
-  );
-}
-
-/** A vertical hairline at one edge of the container, gapped at each crossing. */
-function Rail({ side }: { side: "left" | "right" }) {
-  return (
-    <span
-      aria-hidden
-      className={cn(
-        "pointer-events-none absolute inset-y-0 w-px bg-rule grid-rail",
-        side === "left" ? "left-0" : "right-0",
-      )}
-    />
-  );
-}
+import { GridRail, GridRule, GridTick } from "./grid-lines";
 
 type SectionProps = React.ComponentProps<"section"> & {
   /** Vertical rails at the container edges. */
@@ -43,6 +12,10 @@ type SectionProps = React.ComponentProps<"section"> & {
   containerClassName?: string;
 };
 
+/**
+ * The frame every section wears. The lines draw themselves in as the section is
+ * reached - see `grid-lines.tsx`, which owns that and the reasons for it.
+ */
 export function Section({
   className,
   containerClassName,
@@ -55,26 +28,21 @@ export function Section({
   return (
     <section className={cn("relative w-full", className)} {...props}>
       {/* A masked element, not a border: a border cannot be gapped. */}
-      {rule && (
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-rule grid-rule"
-        />
-      )}
+      {rule && <GridRule />}
       <Container
         className={cn("relative", inset && "py-20 md:py-28", containerClassName)}
       >
         {rails && (
           <>
-            <Rail side="left" />
-            <Rail side="right" />
+            <GridRail side="left" />
+            <GridRail side="right" />
           </>
         )}
         {/* The dot marks a crossing, so it only exists where both lines do. */}
         {rails && rule && (
           <>
-            <Tick side="left" />
-            <Tick side="right" />
+            <GridTick side="left" />
+            <GridTick side="right" />
           </>
         )}
         {children}

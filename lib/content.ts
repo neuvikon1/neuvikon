@@ -332,7 +332,7 @@ export const about = {
     },
   ],
   /** No roles: in a studio this size everyone does several jobs. */
-  team: ["Vural Bilgin", "Oğulcan Yusuf Bozkurt", "Arda Özan", "İrem Bozkurt"],
+  team: ["Vural Bilgin", "Oğulcan Bozkurt", "Arda Özan", "İrem Bozkurt", "Selinay Kıyak"],
 };
 
 export const careers = {

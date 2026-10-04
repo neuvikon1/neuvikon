@@ -2,6 +2,9 @@ import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
+import { CountUp } from "@/components/motion/count-up";
+import { Reveal, RevealGroup, RevealRow } from "@/components/motion/reveal";
+import { RisingWords } from "@/components/motion/rising-words";
 import { HeroBackdrop } from "@/components/sections/hero-backdrop";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Stat, StatGroup } from "@/components/ui/stat";
@@ -10,10 +13,30 @@ import { divisions, org, projectCount } from "@/lib/content";
 
 /** Counted from the content, so the figures cannot drift from the lists below. */
 const STATS = [
-  { value: String(divisions.length), label: "Divisions" },
-  { value: String(projectCount), label: "Projects under way" },
-  { value: String(org.year), label: "Founded" },
+  { value: divisions.length, label: "Divisions" },
+  { value: projectCount, label: "Projects under way" },
+  { value: org.year, label: "Founded" },
 ];
+
+/**
+ * The first screen, in order of arrival.
+ *
+ * Nothing here waits to be scrolled to - it is all already on screen - so the
+ * sequence is held by hand instead: the statement rises word by word, the
+ * supporting line and the buttons follow it up, the index comes in beside them,
+ * and the figures land last, on the floor of the screen. Read top-left to
+ * bottom-right, which is the order the page wants to be read in anyway.
+ *
+ * The numbers are the one thing that moves on its own after it has arrived, and
+ * the delay here is what buys that: the roll starts while the row is still
+ * fading up, so no figure is ever seen sitting still before it counts.
+ */
+const CUE = {
+  lead: 0.42,
+  actions: 0.56,
+  index: 0.5,
+  floor: 0.78,
+};
 
 /**
  * The three divisions as a numbered index, opposite the statement.
@@ -26,32 +49,34 @@ function DivisionIndex() {
   return (
     <Stack gap="sm" className="w-full">
       <Eyebrow>Divisions</Eyebrow>
-      <ul className="w-full">
-        {divisions.map((division, index) => (
-          <li key={division.slug} className="border-t border-rule">
-            <a
-              href={`#${division.slug}`}
-              className="group flex items-baseline gap-4 py-4 transition-colors hover:text-foreground"
-            >
-              <span className="font-mono text-xs text-muted-foreground tabular-nums">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block text-base tracking-tight">
-                  {division.name}
+      <RevealGroup inView={false} delay={CUE.index} className="w-full">
+        <ul className="w-full">
+          {divisions.map((division, index) => (
+            <RevealRow key={division.slug} className="border-t border-rule">
+              <a
+                href={`#${division.slug}`}
+                className="group flex items-baseline gap-4 py-4 transition-colors hover:text-foreground"
+              >
+                <span className="font-mono text-xs text-muted-foreground tabular-nums">
+                  {String(index + 1).padStart(2, "0")}
                 </span>
-                <span className="mt-0.5 block text-sm text-muted-foreground">
-                  {division.tagline}
+                <span className="min-w-0 flex-1">
+                  <span className="block text-base tracking-tight">
+                    {division.name}
+                  </span>
+                  <span className="mt-0.5 block text-sm text-muted-foreground">
+                    {division.tagline}
+                  </span>
                 </span>
-              </span>
-              <ArrowUpRight
-                aria-hidden
-                className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground"
-              />
-            </a>
-          </li>
-        ))}
-      </ul>
+                <ArrowUpRight
+                  aria-hidden
+                  className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground"
+                />
+              </a>
+            </RevealRow>
+          ))}
+        </ul>
+      </RevealGroup>
     </Stack>
   );
 }
@@ -113,24 +138,28 @@ export function Hero() {
           <Stack gap="lg" className="lg:col-span-7">
             <Stack gap="md">
               <Title as="h1" level="display">
-                {org.tagline}
+                <RisingWords inView={false}>{org.tagline}</RisingWords>
               </Title>
-              <Text level="lead">{org.description}</Text>
+              <Reveal inView={false} delay={CUE.lead}>
+                <Text level="lead">{org.description}</Text>
+              </Reveal>
             </Stack>
 
-            <Actions>
-              <ButtonLink href="#divisions" size="lg">
-                Explore the divisions
-                <ArrowRight data-icon="inline-end" />
-              </ButtonLink>
-              <ButtonLink
-                href={`mailto:${org.email}`}
-                size="lg"
-                variant="outline"
-              >
-                {org.email}
-              </ButtonLink>
-            </Actions>
+            <Reveal inView={false} delay={CUE.actions}>
+              <Actions>
+                <ButtonLink href="#divisions" size="lg">
+                  Explore the divisions
+                  <ArrowRight data-icon="inline-end" />
+                </ButtonLink>
+                <ButtonLink
+                  href={`mailto:${org.email}`}
+                  size="lg"
+                  variant="outline"
+                >
+                  {org.email}
+                </ButtonLink>
+              </Actions>
+            </Reveal>
           </Stack>
 
           {/* Bottom-aligned, so the index hangs off the same optical baseline
@@ -139,6 +168,30 @@ export function Hero() {
             <DivisionIndex />
           </div>
         </div>
+
+        <Reveal
+          inView={false}
+          delay={CUE.floor}
+          still
+          className="flex w-full items-end justify-between gap-6 border-t border-rule py-6"
+        >
+          {/* Three across at every width. The default two-column wrap costs a
+              second row, and this band only works if it clears the fold. */}
+          <StatGroup className="max-w-none grid-cols-3 gap-4 md:gap-8">
+            {STATS.map((stat) => (
+              <Stat
+                key={stat.label}
+                value={
+                  <span className="tabular-nums">
+                    <CountUp to={stat.value} />
+                  </span>
+                }
+                label={stat.label}
+              />
+            ))}
+          </StatGroup>
+          <ScrollCue />
+        </Reveal>
       </Section>
     </div>
   );

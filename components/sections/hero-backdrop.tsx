@@ -1,27 +1,9 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 
 import SideRays from "@/components/ui/side-rays";
-
-const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
-
-/**
- * Subscribes to the OS motion preference. Server-rendered as `false` - the
- * value only feeds a shader uniform, never markup, so it cannot desync.
- */
-function usePrefersReducedMotion() {
-  return useSyncExternalStore(
-    (onChange) => {
-      const mql = window.matchMedia(REDUCED_MOTION);
-      mql.addEventListener("change", onChange);
-      return () => mql.removeEventListener("change", onChange);
-    },
-    () => window.matchMedia(REDUCED_MOTION).matches,
-    () => false,
-  );
-}
+import { usePrefersReducedMotion } from "@/hooks/use-media-query";
 
 /**
  * Decorative light rays behind the hero, raking in from the top right.

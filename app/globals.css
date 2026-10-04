@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+/* Lenis owns the document scroll; this is the height reset that lets it. */
+@import "lenis/dist/lenis.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -42,6 +44,10 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --animate-hero-cue: hero-cue 2.6s ease-in-out infinite;
+  /* The house curve, matching `EASE` in components/motion/tokens.ts: quick
+     out, long settle. Here so a CSS transition and a motion animation on the
+     same element cannot drift apart. */
+  --ease-house: cubic-bezier(0.16, 1, 0.3, 1);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -186,5 +192,117 @@
   50% {
     transform: translateY(4px);
     opacity: 1;
+  }
+}
+
+@layer components {
+  /*
+   * Reading position, as a hairline under the header. A scroll-driven CSS
+   * animation rather than a subscription: it runs off the compositor, so the
+   * one element on the page that updates on every single frame costs no
+   * JavaScript and cannot stutter under a heavy section.
+   *
+   * It is drawn only where the timeline exists. Without support the bar stays
+   * at zero width, which is the design the site had before it.
+   */
+  .scroll-progress {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  /* The header earns its edge once there is something scrolled behind it. */
+  .header-edge {
+    opacity: 0;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      animation: progress-x linear both;
+      animation-timeline: scroll(root block);
+    }
+
+    .header-edge {
+      animation: header-edge linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 6rem;
+    }
+  }
+}
+
+/*
+ * Everything the motion components animate starts from a hidden inline style,
+ * which is a promise that something will arrive to clear it. Where scripting is
+ * off, nothing will - so the promise is cancelled here and the page renders as
+ * the plain document it still is underneath.
+ */
+@media (scripting: none) {
+  [data-motion] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
+
+@keyframes progress-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes header-edge {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/*
+ * Changing the theme as a sweep out of the toggle that was pressed.
+ *
+ * The new theme is painted over the old one through a circle growing from the
+ * button, so the change has a source the eye can follow. Nothing moves: at the
+ * one moment when every colour on the page is already changing, motion on top
+ * of it would read as the layout reflowing.
+ *
+ * The old snapshot is held still rather than cross-faded. Two near-complementary
+ * palettes crossing through each other pass through a muddy middle, and the
+ * wipe never shows it.
+ */
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  z-index: 0;
+}
+
+::view-transition-new(root) {
+  animation: theme-sweep 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
+  mix-blend-mode: normal;
+  z-index: 1;
+}
+
+/* The overlay sits over a live, still-interactive page; let clicks through. */
+::view-transition {
+  pointer-events: none;
+}
+
+@keyframes theme-sweep {
+  from {
+    clip-path: circle(0 at var(--sweep-x, 100%) var(--sweep-y, 0));
+  }
+  to {
+    clip-path: circle(var(--sweep-r, 150vmax) at var(--sweep-x, 100%) var(--sweep-y, 0));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group(root) {
+    animation: none !important;
   }
 }

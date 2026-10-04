@@ -2,6 +2,14 @@ import Image from "next/image";
 
 import { Section } from "@/components/layout/section";
 import { Stack } from "@/components/layout/stack";
+import {
+  Reveal,
+  RevealCell,
+  RevealGroup,
+  RevealItem,
+  RevealRow,
+} from "@/components/motion/reveal";
+import { RisingWords } from "@/components/motion/rising-words";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eyebrow, Text, Title } from "@/components/ui/typography";
@@ -13,7 +21,7 @@ import { statusLabel, type Division, type Project } from "@/lib/content";
  */
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <Card>
+    <Card className="h-full transition-shadow duration-500 ease-house hover:ring-foreground/20">
       <CardContent>
         <Stack gap="sm">
           <div className="flex w-full items-start justify-between gap-3">
@@ -23,7 +31,9 @@ function ProjectCard({ project }: { project: Project }) {
                 alt=""
                 width={96}
                 height={96}
-                className="size-11 rounded-lg object-cover ring-1 ring-foreground/10"
+                /* The icon is the only thing on the card that reacts to the
+                   pointer: a mark lifting slightly out of its own ring. */
+                className="size-11 rounded-lg object-cover ring-1 ring-foreground/10 transition-transform duration-500 ease-house group-hover/card:scale-[1.06]"
               />
             ) : (
               /* No icon yet - hold the row height so cards stay aligned. */
@@ -77,51 +87,76 @@ function ProjectCard({ project }: { project: Project }) {
 /**
  * A division: what it does, what it can do, and everything it has in flight.
  * One of these per record in `divisions`.
+ *
+ * Three groups, each arriving on its own cue as it is reached, which is also
+ * the order of the argument: the name, then the evidence that the division can
+ * do the thing, then the things it is doing.
  */
 export function DivisionSection({ division }: { division: Division }) {
   return (
     <Section id={division.slug} className="scroll-mt-20">
       <Stack gap="xl" className="w-full">
         <Stack gap="md">
-          <Eyebrow>{division.short}</Eyebrow>
-          <Title>{division.name}</Title>
-          <Text level="lead">{division.tagline}</Text>
-          <Text>{division.intro}</Text>
+          <Reveal still>
+            <Eyebrow>{division.short}</Eyebrow>
+          </Reveal>
+          <Title>
+            <RisingWords>{division.name}</RisingWords>
+          </Title>
+          <Reveal delay={0.1}>
+            <Text level="lead">{division.tagline}</Text>
+          </Reveal>
+          <Reveal delay={0.16}>
+            <Text>{division.intro}</Text>
+          </Reveal>
         </Stack>
 
-        <Stack gap="sm" className="w-full">
-          <Eyebrow>Capabilities</Eyebrow>
-          <ul className="grid w-full gap-x-10 gap-y-2 md:grid-cols-2">
-            {division.capabilities.map((capability) => (
-              <li
-                key={capability}
-                className="border-t border-rule py-2 text-sm text-muted-foreground"
-              >
-                {capability}
-              </li>
-            ))}
-          </ul>
-        </Stack>
+        <RevealGroup stagger={0.05} className="w-full">
+          <Stack gap="sm" className="w-full">
+            <RevealItem still>
+              <Eyebrow>Capabilities</Eyebrow>
+            </RevealItem>
+            <ul className="grid w-full gap-x-10 gap-y-2 md:grid-cols-2">
+              {division.capabilities.map((capability) => (
+                <RevealRow
+                  key={capability}
+                  className="border-t border-rule py-2 text-sm text-muted-foreground"
+                >
+                  {capability}
+                </RevealRow>
+              ))}
+            </ul>
+          </Stack>
+        </RevealGroup>
 
         {division.projects.length > 0 ? (
           <Stack gap="sm" className="w-full">
-            <Eyebrow>
-              {division.projects.length} project
-              {division.projects.length === 1 ? "" : "s"}
-            </Eyebrow>
-            <div className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <Reveal still>
+              <Eyebrow>
+                {division.projects.length} project
+                {division.projects.length === 1 ? "" : "s"}
+              </Eyebrow>
+            </Reveal>
+            <RevealGroup
+              stagger={0.06}
+              className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3"
+            >
               {division.projects.map((project) => (
-                <ProjectCard key={project.name} project={project} />
+                <RevealCell key={project.name}>
+                  <ProjectCard project={project} />
+                </RevealCell>
               ))}
-            </div>
+            </RevealGroup>
           </Stack>
         ) : (
           /* Robotics has no public project yet; say so rather than hide the
              division, which is staffed and shipping internally. */
-          <Text>
-            Nothing public from this division yet — the work is at prototype
-            stage. Write to us if it is the part you care about.
-          </Text>
+          <Reveal>
+            <Text>
+              Nothing public from this division yet — the work is at prototype
+              stage. Write to us if it is the part you care about.
+            </Text>
+          </Reveal>
         )}
       </Stack>
     </Section>
