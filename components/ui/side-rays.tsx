@@ -5,6 +5,16 @@ import { Renderer, Program, Triangle, Mesh } from 'ogl';
 
 type Origin = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
 
+/**
+ * How the rays meet the page behind them.
+ *
+ * `add` paints light: the beam is brighter than its surroundings, which only
+ * reads on a dark page. `tint` paints the same field as coverage for a dark,
+ * saturated hue, which is the only way a beam can read on a light one - over
+ * white, anything brighter than the page is invisible by definition.
+ */
+type Polarity = 'add' | 'tint';
+
 interface SideRaysProps {
   speed?: number;
   rayColor1?: string;
@@ -17,6 +27,8 @@ interface SideRaysProps {
   blend?: number;
   falloff?: number;
   opacity?: number;
+  polarity?: Polarity;
+  depth?: number;
   className?: string;
 }
 
@@ -46,6 +58,8 @@ const SideRays = ({
   blend = 0.75,
   falloff = 1.6,
   opacity = 1.0,
+  polarity = 'add',
+  depth = 0.42,
   className = ''
 }: SideRaysProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -130,6 +144,8 @@ uniform float iSaturation;
 uniform float iBlend;
 uniform float iFalloff;
 uniform float iOpacity;
+uniform float iTint;
+uniform float iDepth;
 
 float rayStrength(vec2 raySource, vec2 rayRefDirection, vec2 coord, float seedA, float seedB, float speed) {
   vec2 sourceToCoord = coord - raySource;
@@ -159,14 +175,33 @@ void main() {
   vec2 rayRefDir1 = normalize(vec2(cos(0.785398 + halfSpread), sin(0.785398 + halfSpread)));
   vec2 rayRefDir2 = normalize(vec2(cos(0.785398 - halfSpread), sin(0.785398 - halfSpread)));
 
-  vec4 rays1 = vec4(iRayColor1, 1.0) * rayStrength(rayPos, rayRefDir1, tiltedCoord, 36.2214, 21.11349, iSpeed);
-  vec4 rays2 = vec4(iRayColor2, 1.0) * rayStrength(rayPos, rayRefDir2, tiltedCoord, 22.3991, 18.0234, iSpeed * 0.2);
+  float s1 = rayStrength(rayPos, rayRefDir1, tiltedCoord, 36.2214, 21.11349, iSpeed);
+  float s2 = rayStrength(rayPos, rayRefDir2, tiltedCoord, 22.3991, 18.0234, iSpeed * 0.2);
 
-  vec4 color = rays1 * (1.0 - iBlend) * 0.9 + rays2 * iBlend * 0.9;
+  float w1 = (1.0 - iBlend) * 0.9 * s1;
+  float w2 = iBlend * 0.9 * s2;
 
   float distanceToLight = length(fragCoord.xy - vec2(rayPos.x, iResolution.y - rayPos.y)) / iResolution.y;
   float brightness = iIntensity * 0.4 / pow(max(distanceToLight, 0.001), iFalloff);
-  color.rgb *= brightness;
+
+  if (iTint > 0.5) {
+    // Pigment, not light. Two beams of light sum, and a sum of enough light is
+    // white - which over a white page is nothing at all, and is exactly how the
+    // additive branch below disappears here. Two tints average instead, so the
+    // overlap stays a colour and the beam keeps its hue wherever it lands.
+    vec3 pigment = (iRayColor1 * w1 + iRayColor2 * w2) / max(w1 + w2, 0.0001);
+    float pigmentGray = dot(pigment, vec3(0.299, 0.587, 0.114));
+    pigment = clamp(mix(vec3(pigmentGray), pigment, iSaturation), 0.0, 1.0);
+
+    // Brightness lands as coverage instead of as light, through a soft knee:
+    // nothing clips, so the corner keeps a gradient where the additive beam
+    // would have flattened into one blown-out value.
+    float coverage = 1.0 - exp(-(w1 + w2) * brightness * 1.1);
+    gl_FragColor = vec4(pigment * iDepth, coverage * iOpacity);
+    return;
+  }
+
+  vec4 color = vec4((iRayColor1 * w1 + iRayColor2 * w2) * brightness, 1.0);
 
   float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
   color.rgb = mix(vec3(gray), color.rgb, iSaturation);
@@ -190,7 +225,9 @@ void main() {
         iSaturation: { value: saturation },
         iBlend: { value: blend },
         iFalloff: { value: falloff },
-        iOpacity: { value: opacity }
+        iOpacity: { value: opacity },
+        iTint: { value: polarity === 'tint' ? 1 : 0 },
+        iDepth: { value: depth }
       };
       uniformsRef.current = uniforms;
 
@@ -250,7 +287,7 @@ void main() {
         cleanupFunctionRef.current = null;
       }
     };
-  }, [isVisible, speed, rayColor1, rayColor2, intensity, spread, origin, tilt, saturation, blend, falloff, opacity]);
+  }, [isVisible, speed, rayColor1, rayColor2, intensity, spread, origin, tilt, saturation, blend, falloff, opacity, polarity, depth]);
 
   useEffect(() => {
     if (!uniformsRef.current) return;
@@ -268,7 +305,9 @@ void main() {
     u.iBlend.value = blend;
     u.iFalloff.value = falloff;
     u.iOpacity.value = opacity;
-  }, [speed, rayColor1, rayColor2, intensity, spread, origin, tilt, saturation, blend, falloff, opacity]);
+    u.iTint.value = polarity === 'tint' ? 1 : 0;
+    u.iDepth.value = depth;
+  }, [speed, rayColor1, rayColor2, intensity, spread, origin, tilt, saturation, blend, falloff, opacity, polarity, depth]);
 
   return (
     <div
