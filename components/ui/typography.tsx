@@ -24,7 +24,7 @@ const titleVariants = cva("tracking-tight text-balance", {
   variants: {
     level: {
       /** Page-opening statement. One per page. */
-      display: "max-w-3xl text-5xl leading-[1.04] md:text-7xl",
+      display: "max-w-4xl text-3l leading-[1.02] md:text-4xl xl:text-5xl",
       /** Section headline. */
       section: "max-w-xl text-4xl leading-[1.1]",
       /** Subsection or card headline. */
@@ -36,7 +36,6 @@ const titleVariants = cva("tracking-tight text-balance", {
 
 type TitleProps = React.ComponentProps<"h2"> &
   VariantProps<typeof titleVariants> & {
-    /** Heading level to render. Pick it for document outline, not for size. */
     as?: "h1" | "h2" | "h3" | "h4"
   }
 

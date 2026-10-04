@@ -18,7 +18,7 @@ const NAV = [
 const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
-      <Container className="flex h-20 items-center justify-between gap-6">
+      <Container className="flex h-[var(--header-h)] items-center justify-between gap-6">
         <Link href="/" className="tracking-tight">
           {org.name}
         </Link>
