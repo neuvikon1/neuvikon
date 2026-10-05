@@ -290,7 +290,7 @@ export const about = {
   facts: [
     { label: "Founded", value: "2026" },
     { label: "Location", value: "Türkiye" },
-    { label: "Team", value: "4 people" },
+    { label: "Team", value: "5 people" },
     { label: "Divisions", value: "3" },
   ],
   principles: [
