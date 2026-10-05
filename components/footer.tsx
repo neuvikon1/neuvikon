@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { divisions, links, org } from "@/lib/content";
+import { Wordmark } from "./brand/logo";
 import { Reveal } from "./motion/reveal";
 import { Container } from "./layout/container";
 import { GridRule } from "./layout/grid-lines";
@@ -16,8 +17,8 @@ export function Footer() {
       <Container className="py-10">
         <Reveal className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
-            <Link href="/" className="text-foreground">
-              {org.name}
+            <Link href="/" aria-label={org.name} className="shrink-0">
+              <Wordmark height={18} />
             </Link>
             {divisions.map((division) => (
               <Link

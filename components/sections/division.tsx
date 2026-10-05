@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eyebrow, Text, Title } from "@/components/ui/typography";
 import { statusLabel, type Division, type Project } from "@/lib/content";
+import { divisionLogos } from "@/lib/division-logos";
 
 /**
  * One project. The icon is the app's own square icon, so it is sized as a
@@ -85,6 +86,63 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 /**
+ * The division's name at the top of its section.
+ *
+ * Where there is a lockup it *is* the heading - the artwork already says
+ * "Neuvikon Games", and setting the text beside it would be the name twice.
+ * The alt text carries the name instead, so the heading reads the same to a
+ * screen reader either way.
+ *
+ * Width rather than height: the two lockups have different proportions, and
+ * matching their heights would print Robotics - the lighter, outline-drawn
+ * one - noticeably wider than Games. Held to a common width they sit at the
+ * same weight down the page.
+ */
+function DivisionHeading({ division }: { division: Division }) {
+  const logo = divisionLogos[division.slug];
+
+  if (!logo) {
+    return (
+      <Title>
+        <RisingWords>{division.name}</RisingWords>
+      </Title>
+    );
+  }
+
+  return (
+    <Reveal>
+      {/* h2, matching what Title renders for the text branch - the two
+          headings have to sit at the same level in the outline.
+
+          The width is a definite length, not a percentage. The Stack above is
+          `items-start`, so this sits in a shrink-to-fit box: a percentage
+          would have nothing to resolve against, collapse to zero, and then
+          the lazy image inside could never intersect the viewport to load -
+          leaving the heading permanently blank. */}
+      <h2 className="w-[22rem] max-w-full">
+        {/* The name lives on the heading, not on either image. Only one ink
+            version is displayed at a time and the other is `display: none`,
+            so an alt on the images would leave the heading nameless in
+            whichever theme hid the one carrying it. */}
+        <span className="sr-only">{division.name}</span>
+        <Image
+          src={logo.light}
+          alt=""
+          aria-hidden
+          className="block h-auto w-full dark:hidden"
+        />
+        <Image
+          src={logo.dark}
+          alt=""
+          aria-hidden
+          className="hidden h-auto w-full dark:block"
+        />
+      </h2>
+    </Reveal>
+  );
+}
+
+/**
  * A division: what it does, what it can do, and everything it has in flight.
  * One of these per record in `divisions`.
  *
@@ -100,9 +158,7 @@ export function DivisionSection({ division }: { division: Division }) {
           <Reveal still>
             <Eyebrow>{division.short}</Eyebrow>
           </Reveal>
-          <Title>
-            <RisingWords>{division.name}</RisingWords>
-          </Title>
+          <DivisionHeading division={division} />
           <Reveal delay={0.1}>
             <Text level="lead">{division.tagline}</Text>
           </Reveal>
@@ -150,13 +206,25 @@ export function DivisionSection({ division }: { division: Division }) {
           </Stack>
         ) : (
           /* Robotics has no public project yet; say so rather than hide the
-             division, which is staffed and shipping internally. */
-          <Reveal>
-            <Text>
-              Nothing public from this division yet — the work is at prototype
-              stage. Write to us if it is the part you care about.
-            </Text>
-          </Reveal>
+             division, which is staffed and shipping internally. The notice
+             sits in the same card the projects would have filled, so the
+             section keeps the ruled edge every other division has. */
+          <Stack gap="sm" className="w-full">
+            <Reveal still>
+              <Eyebrow>No public projects</Eyebrow>
+            </Reveal>
+            <Reveal className="w-full">
+              <Card>
+                <CardContent>
+                  <Text>
+                    Nothing public from this division yet — the work is at
+                    prototype stage. Write to us if it is the part you care
+                    about.
+                  </Text>
+                </CardContent>
+              </Card>
+            </Reveal>
+          </Stack>
         )}
       </Stack>
     </Section>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { divisions, org } from "@/lib/content";
+import { Wordmark } from "./brand/logo";
 import { Container } from "./layout/container";
 import { ModeToggle } from "./mode-toggle";
 import { SiteNav, type NavItem } from "./site-nav";
@@ -34,8 +35,8 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full bg-background supports-[backdrop-filter]:bg-background/72 supports-[backdrop-filter]:backdrop-blur-xl">
       <Container className="flex h-[var(--header-h)] items-center justify-between gap-6">
-        <Link href="/" className="tracking-tight">
-          {org.name}
+        <Link href="/" aria-label={org.name} className="shrink-0">
+          <Wordmark height={20} priority />
         </Link>
         <SiteNav items={NAV} />
         <div className="flex items-center gap-2">
