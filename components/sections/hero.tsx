@@ -11,13 +11,6 @@ import { Stat, StatGroup } from "@/components/ui/stat";
 import { Eyebrow, Text, Title } from "@/components/ui/typography";
 import { divisions, org, projectCount } from "@/lib/content";
 
-/** Counted from the content, so the figures cannot drift from the lists below. */
-const STATS = [
-  { value: divisions.length, label: "Divisions" },
-  { value: projectCount, label: "Projects under way" },
-  { value: org.year, label: "Founded" },
-];
-
 /**
  * The first screen, in order of arrival.
  *
@@ -168,30 +161,6 @@ export function Hero() {
             <DivisionIndex />
           </div>
         </div>
-
-        <Reveal
-          inView={false}
-          delay={CUE.floor}
-          still
-          className="flex w-full items-end justify-between gap-6 border-t border-rule py-6"
-        >
-          {/* Three across at every width. The default two-column wrap costs a
-              second row, and this band only works if it clears the fold. */}
-          <StatGroup className="max-w-none grid-cols-3 gap-4 md:gap-8">
-            {STATS.map((stat) => (
-              <Stat
-                key={stat.label}
-                value={
-                  <span className="tabular-nums">
-                    <CountUp to={stat.value} />
-                  </span>
-                }
-                label={stat.label}
-              />
-            ))}
-          </StatGroup>
-          <ScrollCue />
-        </Reveal>
       </Section>
     </div>
   );
