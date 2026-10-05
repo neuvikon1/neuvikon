@@ -2,14 +2,12 @@ import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
-import { CountUp } from "@/components/motion/count-up";
 import { Reveal, RevealGroup, RevealRow } from "@/components/motion/reveal";
 import { RisingWords } from "@/components/motion/rising-words";
 import { HeroBackdrop } from "@/components/sections/hero-backdrop";
 import { ButtonLink } from "@/components/ui/button-link";
-import { Stat, StatGroup } from "@/components/ui/stat";
 import { Eyebrow, Text, Title } from "@/components/ui/typography";
-import { divisions, org, projectCount } from "@/lib/content";
+import { divisions, org } from "@/lib/content";
 
 /**
  * The first screen, in order of arrival.
