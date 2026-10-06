@@ -130,7 +130,7 @@ export const ui = {
     team: "Ekip",
     openPositions: "Açık pozisyonlar.",
     noOpenPositions: "Açık pozisyon yok — yine de yaz.",
-    whatWeReadFirst: "Önce neye bakarız",
+    apply: "Başvur",
     contactTitle: "Bizimle iletişime geç.",
     contactLead:
       "Tek stüdyo, üç bölüm ve hepsi için tek bir adres. Gelen her şeyi okuyoruz.",
@@ -191,7 +191,7 @@ export const ui = {
     team: "Team",
     openPositions: "Open positions.",
     noOpenPositions: "No open positions — write anyway.",
-    whatWeReadFirst: "What we would read first",
+    apply: "Apply",
     contactTitle: "Get in touch with us.",
     contactLead:
       "One studio, three divisions, and a single address for all of them. We " +

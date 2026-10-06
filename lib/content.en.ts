@@ -51,7 +51,7 @@ export const divisions: Division[] = [
           "phone, then charge a shot and let it go. Characters with their own " +
           "weapons and abilities, four arenas, a bot mode and a defence mode.",
         status: "building",
-        tags: ["Unity", "Mirror", "Android", "Multiplayer"],
+        tags: ["Arena", "Action", "Multiplayer", "Mobile"],
         image: "/apps/pushbump.png",
       },
       {
@@ -66,7 +66,7 @@ export const divisions: Division[] = [
           "asset in the repository: all visuals and sound are generated in " +
           "code at runtime. No ads, no in-app purchases.",
         status: "building",
-        tags: ["Unity 6", "Netcode for GameObjects", "Android", "2-8 players"],
+        tags: ["Party game", "Minigames", "Local multiplayer", "2-8 players"],
         image: "/apps/neuparty.png",
       },
       {
@@ -79,7 +79,7 @@ export const divisions: Division[] = [
           "difficulties, a fully offline single-player mode, reconnection, " +
           "ability and event cards, three themes and two languages.",
         status: "building",
-        tags: ["React Native", "Expo", "Firebase", "2-8 players"],
+        tags: ["Card game", "Strategy", "Multiplayer", "2-8 players"],
         image: "/apps/undercard.png",
         media: [
           { src: "/media/undercard/01.jpg", alt: "Home menu and daily challenge" },
@@ -101,7 +101,7 @@ export const divisions: Division[] = [
           "still hits the server wall. An MMR-windowed matchmaking queue, a " +
           "rank ladder, turn timers and a practice bot.",
         status: "building",
-        tags: ["TypeScript", "Node.js", "WebSocket", "Multiplayer"],
+        tags: ["Strategy", "Board game", "Online", "Ranked"],
         image: "/apps/edgeout.png",
         media: [
           { src: "/media/edgeout/01.png", alt: "Starting position: 14 black and 14 white marbles on the 61-cell board" },
@@ -118,7 +118,7 @@ export const divisions: Division[] = [
           "A number-guessing game. Every guess narrows the range; what counts " +
           "is not how many tries you needed but how long you took.",
         status: "released",
-        tags: ["React Native", "Expo", "Android", "Puzzle"],
+        tags: ["Puzzle", "Number guessing", "Daily challenge", "PvP"],
         image: "/apps/guessfast.png",
         links: [
           {
@@ -132,56 +132,12 @@ export const divisions: Division[] = [
         ],
         media: [
           { src: "/media/guessfast/01.jpg", alt: "Main menu" },
-          { src: "/media/guessfast/02.jpg", alt: "Settings" },
-          { src: "/media/guessfast/03.jpg", alt: "Daily challenge result" },
-          { src: "/media/guessfast/04.jpg", alt: "The last seven days" },
-        ],
-      },
-      {
-        name: "Today's Word",
-        tagline: "The word of the day.",
-        description:
-          "One English word a day, the same one for everyone: its meaning, " +
-          "real-world examples and where it comes from, then a short quiz. " +
-          "Words you have learned come back later so they actually stick, " +
-          "and a daily tracker keeps the streak. No accounts.",
-        status: "released",
-        tags: ["React Native", "Expo", "Convex", "iOS"],
-        image: "/apps/todays-word.jpg",
-        links: [{ label: "App Store", href: "https://apps.apple.com/app/todays-word-learn-everyday/id6810232514" }],
-        media: [
-          { src: "/media/today-s-word/01.jpg", alt: "The word of the day" },
-          { src: "/media/today-s-word/02.jpg", alt: "Where the word comes from" },
-          { src: "/media/today-s-word/03.jpg", alt: "Review quiz" },
-          { src: "/media/today-s-word/04.jpg", alt: "Daily quiz" },
-          { src: "/media/today-s-word/05.jpg", alt: "Quiz result" },
-          { src: "/media/today-s-word/06.jpg", alt: "A year of progress" },
-          { src: "/media/today-s-word/07.jpg", alt: "A word from a past day" },
-          { src: "/media/today-s-word/08.jpg", alt: "Words learned so far" },
-          { src: "/media/today-s-word/09.jpg", alt: "Practice" },
-          { src: "/media/today-s-word/10.jpg", alt: "Settings" },
-        ],
-      },
-      {
-        name: "WordDeck",
-        tagline: "Exam vocabulary, just before you forget it.",
-        description:
-          "English vocabulary flashcards. Every word " +
-          "comes with its Turkish meanings, an English definition, an " +
-          "example sentence, synonyms and antonyms; spaced repetition brings " +
-          "each card back just before it would slip. No accounts: progress " +
-          "is tied to a random id the device makes.",
-        status: "building",
-        tags: ["Flashcards", "Spaced repetition", "Expo"],
-        image: "/apps/worddeck.png",
-        links: [{ label: "Privacy Policy", href: "/en/privacy/worddeck" }],
-        media: [
-          { src: "/media/worddeck/01.png", alt: "Today's deck" },
-          { src: "/media/worddeck/02.png", alt: "Flashcard, front" },
-          { src: "/media/worddeck/03.png", alt: "Card back with the spaced-repetition rating" },
-          { src: "/media/worddeck/04.png", alt: "Decks" },
-          { src: "/media/worddeck/05.png", alt: "Five-choice vocabulary quiz" },
-          { src: "/media/worddeck/06.png", alt: "Grammar topics" },
+          { src: "/media/guessfast/02.jpg", alt: "Practice game: how many digits are right after each guess" },
+          { src: "/media/guessfast/03.jpg", alt: "Indicator mode: right place in green, wrong place in yellow" },
+          { src: "/media/guessfast/04.jpg", alt: "PvP mode: create a private room or join with a code" },
+          { src: "/media/guessfast/05.jpg", alt: "Settings" },
+          { src: "/media/guessfast/06.jpg", alt: "Daily challenge result" },
+          { src: "/media/guessfast/07.jpg", alt: "The last seven days" },
         ],
       },
       {
@@ -215,6 +171,53 @@ export const divisions: Division[] = [
     ],
     projects: [
       {
+        name: "Today's Word",
+        tagline: "The word of the day.",
+        description:
+          "One English word a day, the same one for everyone: its meaning, " +
+          "real-world examples and where it comes from, then a short quiz. " +
+          "Words you have learned come back later so they actually stick, " +
+          "and a daily tracker keeps the streak. No accounts.",
+        status: "released",
+        tags: ["Education", "Language learning", "Vocabulary", "Daily"],
+        image: "/apps/todays-word.jpg",
+        links: [{ label: "App Store", href: "https://apps.apple.com/app/todays-word-learn-everyday/id6810232514" }],
+        media: [
+          { src: "/media/today-s-word/01.jpg", alt: "The word of the day" },
+          { src: "/media/today-s-word/02.jpg", alt: "Where the word comes from" },
+          { src: "/media/today-s-word/03.jpg", alt: "Review quiz" },
+          { src: "/media/today-s-word/04.jpg", alt: "Daily quiz" },
+          { src: "/media/today-s-word/05.jpg", alt: "Quiz result" },
+          { src: "/media/today-s-word/06.jpg", alt: "A year of progress" },
+          { src: "/media/today-s-word/07.jpg", alt: "A word from a past day" },
+          { src: "/media/today-s-word/08.jpg", alt: "Words learned so far" },
+          { src: "/media/today-s-word/09.jpg", alt: "Practice" },
+          { src: "/media/today-s-word/10.jpg", alt: "Settings" },
+        ],
+      },
+      {
+        name: "WordDeck",
+        tagline: "Exam vocabulary, just before you forget it.",
+        description:
+          "English vocabulary flashcards. Every word " +
+          "comes with its Turkish meanings, an English definition, an " +
+          "example sentence, synonyms and antonyms; spaced repetition brings " +
+          "each card back just before it would slip. No accounts: progress " +
+          "is tied to a random id the device makes.",
+        status: "building",
+        tags: ["Education", "Flashcards", "Spaced repetition", "English"],
+        image: "/apps/worddeck.png",
+        links: [{ label: "Privacy Policy", href: "/en/privacy/worddeck" }],
+        media: [
+          { src: "/media/worddeck/01.png", alt: "Today's deck" },
+          { src: "/media/worddeck/02.png", alt: "Flashcard, front" },
+          { src: "/media/worddeck/03.png", alt: "Card back with the spaced-repetition rating" },
+          { src: "/media/worddeck/04.png", alt: "Decks" },
+          { src: "/media/worddeck/05.png", alt: "Test yourself: five-choice practice quizzes" },
+          { src: "/media/worddeck/06.png", alt: "Grammar topics" },
+        ],
+      },
+      {
         name: "Neu-Source",
         tagline: "Which ticket the agent is on, and what it spent.",
         description:
@@ -222,7 +225,7 @@ export const divisions: Division[] = [
           "neuvikon CLI connects to it and reports which ticket a coding " +
           "agent is working on and how many tokens it spent.",
         status: "released",
-        tags: ["Next.js", "TypeScript"],
+        tags: ["Developer tool", "Project management", "AI agents"],
         links: [
           { label: "neuvikon.space", href: "https://www.neuvikon.space/" },
         ],
@@ -241,7 +244,7 @@ export const divisions: Division[] = [
           "A habit tracker. It follows six areas of personal development " +
           "separately; progress accumulates as long as the daily streak holds.",
         status: "building",
-        tags: ["React Native", "Expo", "Habit tracking"],
+        tags: ["Habit tracker", "Self-improvement", "Gamified"],
         image: "/apps/eclosion.png",
         media: [
           { src: "/media/eclosion/01.png", alt: "World selection: the Shadow Army preview and daily quests" },
@@ -257,7 +260,7 @@ export const divisions: Division[] = [
         description:
           "A chat application. Details will be added once it is ready to show.",
         status: "building",
-        tags: ["Chat"],
+        tags: ["Chat", "Messaging"],
         image: "/apps/neu-chat.png",
       },
     ],
@@ -333,14 +336,16 @@ export const about: About = {
 
 export const careers: Careers = {
   lead:
-    "There are no open positions right now. If you still want to work " +
-    "together, write to us: a short email naming the division you care about " +
-    "and one thing you actually finished is enough.",
-  openings: [],
-  interests: [
-    "Unity and multiplayer network architecture",
-    "Mobile products in React Native / Expo",
-    "Embedded software — ESP32, sensor fusion",
-    "Game and interface design",
+    "We are looking for a designer. If that is you, a short email is " +
+    "enough: a few lines about yourself and some of the work you have " +
+    "designed.",
+  openings: [
+    {
+      title: "Designer",
+      division: "Games · Tech",
+      summary:
+        "Someone to design the interfaces, screen flows and visual language " +
+        "of our games and apps with us.",
+    },
   ],
 };

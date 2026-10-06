@@ -77,7 +77,6 @@ export type About = {
 export type Careers = {
   lead: string;
   openings: { title: string; division: string; summary: string }[];
-  interests: string[];
 };
 
 export type Content = {

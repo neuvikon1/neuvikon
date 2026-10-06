@@ -28,7 +28,10 @@ export function Footer({ locale }: { locale: Locale }) {
     <footer className="relative w-full">
       <GridRule />
       <Container className="py-10">
-        <Reveal className="flex flex-col gap-6 text-sm text-muted-foreground">
+        {/* No bottom margin on the in-view test, unlike every other Reveal:
+            the footer is the last thing on the page, so it can never rise
+            into the band the shared margin leaves out - it stayed invisible. */}
+        <Reveal viewport={{ once: true }} className="flex flex-col gap-6 text-sm text-muted-foreground">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
               <Link href={href(locale, "home")} aria-label={org.name} className="shrink-0">

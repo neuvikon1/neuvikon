@@ -51,7 +51,7 @@ export const divisions: Division[] = [
           "eder, atışını doldurup bırakırsın. Her biri farklı silah ve " +
           "yeteneğe sahip karakterler, dört arena, bot modu ve savunma modu.",
         status: "building",
-        tags: ["Unity", "Mirror", "Android", "Çok oyunculu"],
+        tags: ["Arena", "Aksiyon", "Çok oyunculu", "Mobil"],
         image: "/apps/pushbump.png",
       },
       {
@@ -66,7 +66,7 @@ export const divisions: Division[] = [
           "yok: tüm görseller ve sesler çalışma anında kodla üretiliyor. " +
           "Reklam ve uygulama içi satın alma yok.",
         status: "building",
-        tags: ["Unity 6", "Netcode for GameObjects", "Android", "2-8 oyuncu"],
+        tags: ["Parti oyunu", "Mini oyunlar", "Yerel çok oyunculu", "2-8 oyuncu"],
         image: "/apps/neuparty.png",
       },
       {
@@ -79,7 +79,7 @@ export const divisions: Division[] = [
           "tamamen cihazda çalışan çevrimdışı mod, yeniden bağlanma, yetenek " +
           "ve olay kartları, üç tema ve iki dil.",
         status: "building",
-        tags: ["React Native", "Expo", "Firebase", "2-8 oyuncu"],
+        tags: ["Kart oyunu", "Strateji", "Çok oyunculu", "2-8 oyuncu"],
         image: "/apps/undercard.png",
         media: [
           { src: "/media/undercard/01.jpg", alt: "Ana menü ve günlük meydan okuma" },
@@ -101,7 +101,7 @@ export const divisions: Division[] = [
           "genişleyen eşleştirme kuyruğu, rütbe merdiveni, tur sayacı ve " +
           "pratik için bot rakip.",
         status: "building",
-        tags: ["TypeScript", "Node.js", "WebSocket", "Çok oyunculu"],
+        tags: ["Strateji", "Masa oyunu", "Çevrimiçi", "Sıralamalı"],
         image: "/apps/edgeout.png",
         media: [
           { src: "/media/edgeout/01.png", alt: "Başlangıç dizilimi: 61 hücrelik tahtada 14 siyah ve 14 beyaz küre" },
@@ -118,7 +118,7 @@ export const divisions: Division[] = [
           "Sayı tahmin oyunu. Her tahmin seni doğruya biraz daha yaklaştırır; " +
           "mesele kaç denemede değil, ne kadar sürede bulduğun.",
         status: "released",
-        tags: ["React Native", "Expo", "Android", "Bulmaca"],
+        tags: ["Bulmaca", "Sayı tahmini", "Günlük challenge", "PvP"],
         image: "/apps/guessfast.png",
         links: [
           {
@@ -132,56 +132,12 @@ export const divisions: Division[] = [
         ],
         media: [
           { src: "/media/guessfast/01.jpg", alt: "Ana menü" },
-          { src: "/media/guessfast/02.jpg", alt: "Ayarlar" },
-          { src: "/media/guessfast/03.jpg", alt: "Günlük challenge sonucu" },
-          { src: "/media/guessfast/04.jpg", alt: "Son 7 günün istatistikleri" },
-        ],
-      },
-      {
-        name: "Today's Word",
-        tagline: "Günün kelimesi.",
-        description:
-          "Her gün herkese aynı İngilizce kelime: anlamı, gerçek hayattan " +
-          "örnekleri ve nereden geldiği, ardından kısa bir test. Öğrenilen " +
-          "kelimeler sonradan geri geliyor, böylece gerçekten akılda " +
-          "kalıyor; günlük takip seriyi tutuyor. Hesap yok.",
-        status: "released",
-        tags: ["React Native", "Expo", "Convex", "iOS"],
-        image: "/apps/todays-word.jpg",
-        links: [{ label: "App Store", href: "https://apps.apple.com/app/todays-word-learn-everyday/id6810232514" }],
-        media: [
-          { src: "/media/today-s-word/01.jpg", alt: "Günün kelimesi" },
-          { src: "/media/today-s-word/02.jpg", alt: "Kelimenin geçmişi" },
-          { src: "/media/today-s-word/03.jpg", alt: "Tekrar testi" },
-          { src: "/media/today-s-word/04.jpg", alt: "Günlük test" },
-          { src: "/media/today-s-word/05.jpg", alt: "Test sonucu" },
-          { src: "/media/today-s-word/06.jpg", alt: "Yıllık ilerleme" },
-          { src: "/media/today-s-word/07.jpg", alt: "Geçmiş bir günün kelimesi" },
-          { src: "/media/today-s-word/08.jpg", alt: "Öğrenilen kelimeler" },
-          { src: "/media/today-s-word/09.jpg", alt: "Alıştırma" },
-          { src: "/media/today-s-word/10.jpg", alt: "Ayarlar" },
-        ],
-      },
-      {
-        name: "WordDeck",
-        tagline: "Sınav kelimeleri, unutmadan hemen önce.",
-        description:
-          "İngilizce kelime kartları. Her kelime " +
-          "Türkçe anlamı, İngilizce tanımı, örnek cümlesi, eş ve zıt " +
-          "anlamlılarıyla geliyor; aralıklı tekrar her kartı tam unutmak " +
-          "üzereyken geri getiriyor. Hesap yok, ilerleme cihazda üretilen " +
-          "rastgele bir kimliğe bağlı.",
-        status: "building",
-        tags: ["Kelime kartları", "Aralıklı tekrar", "Expo"],
-        image: "/apps/worddeck.png",
-        links: [{ label: "Gizlilik Politikası", href: "/gizlilik/worddeck" }],
-        media: [
-          { src: "/media/worddeck/01.png", alt: "Günlük deste ekranı" },
-          { src: "/media/worddeck/02.png", alt: "Kelime kartı (ön yüz)" },
-          { src: "/media/worddeck/03.png", alt: "Kartın arka yüzü ve tekrar aralığı seçimi" },
-          { src: "/media/worddeck/04.png", alt: "Desteler" },
-          { src: "/media/worddeck/05.png", alt: "Beş şıklı kelime testi" },
-          { src: "/media/worddeck/06.png", alt: "Gramer konuları" },
+          { src: "/media/guessfast/02.jpg", alt: "Pratik oyunu: her tahminden sonra doğru rakam sayısı" },
+          { src: "/media/guessfast/03.jpg", alt: "Göstergeli mod: doğru yerdeki rakamlar yeşil, yanlış yerdekiler sarı" },
+          { src: "/media/guessfast/04.jpg", alt: "PvP modu: özel oda kur ya da kodla katıl" },
+          { src: "/media/guessfast/05.jpg", alt: "Ayarlar" },
+          { src: "/media/guessfast/06.jpg", alt: "Günlük challenge sonucu" },
+          { src: "/media/guessfast/07.jpg", alt: "Son 7 günün istatistikleri" },
         ],
       },
       {
@@ -215,6 +171,53 @@ export const divisions: Division[] = [
     ],
     projects: [
       {
+        name: "Today's Word",
+        tagline: "Günün kelimesi.",
+        description:
+          "Her gün herkese aynı İngilizce kelime: anlamı, gerçek hayattan " +
+          "örnekleri ve nereden geldiği, ardından kısa bir test. Öğrenilen " +
+          "kelimeler sonradan geri geliyor, böylece gerçekten akılda " +
+          "kalıyor; günlük takip seriyi tutuyor. Hesap yok.",
+        status: "released",
+        tags: ["Eğitim", "Dil öğrenme", "Kelime", "Günlük"],
+        image: "/apps/todays-word.jpg",
+        links: [{ label: "App Store", href: "https://apps.apple.com/app/todays-word-learn-everyday/id6810232514" }],
+        media: [
+          { src: "/media/today-s-word/01.jpg", alt: "Günün kelimesi" },
+          { src: "/media/today-s-word/02.jpg", alt: "Kelimenin geçmişi" },
+          { src: "/media/today-s-word/03.jpg", alt: "Tekrar testi" },
+          { src: "/media/today-s-word/04.jpg", alt: "Günlük test" },
+          { src: "/media/today-s-word/05.jpg", alt: "Test sonucu" },
+          { src: "/media/today-s-word/06.jpg", alt: "Yıllık ilerleme" },
+          { src: "/media/today-s-word/07.jpg", alt: "Geçmiş bir günün kelimesi" },
+          { src: "/media/today-s-word/08.jpg", alt: "Öğrenilen kelimeler" },
+          { src: "/media/today-s-word/09.jpg", alt: "Alıştırma" },
+          { src: "/media/today-s-word/10.jpg", alt: "Ayarlar" },
+        ],
+      },
+      {
+        name: "WordDeck",
+        tagline: "Sınav kelimeleri, unutmadan hemen önce.",
+        description:
+          "İngilizce kelime kartları. Her kelime " +
+          "Türkçe anlamı, İngilizce tanımı, örnek cümlesi, eş ve zıt " +
+          "anlamlılarıyla geliyor; aralıklı tekrar her kartı tam unutmak " +
+          "üzereyken geri getiriyor. Hesap yok, ilerleme cihazda üretilen " +
+          "rastgele bir kimliğe bağlı.",
+        status: "building",
+        tags: ["Eğitim", "Kelime kartları", "Aralıklı tekrar", "İngilizce"],
+        image: "/apps/worddeck.png",
+        links: [{ label: "Gizlilik Politikası", href: "/gizlilik/worddeck" }],
+        media: [
+          { src: "/media/worddeck/01.png", alt: "Günlük deste ekranı" },
+          { src: "/media/worddeck/02.png", alt: "Kelime kartı (ön yüz)" },
+          { src: "/media/worddeck/03.png", alt: "Kartın arka yüzü ve tekrar aralığı seçimi" },
+          { src: "/media/worddeck/04.png", alt: "Desteler" },
+          { src: "/media/worddeck/05.png", alt: "Kendini test et: beş şıklı alıştırma testleri" },
+          { src: "/media/worddeck/06.png", alt: "Gramer konuları" },
+        ],
+      },
+      {
         name: "Neu-Source",
         tagline: "Ajan hangi bilette, ne harcadı — tek ekranda.",
         description:
@@ -222,7 +225,7 @@ export const divisions: Division[] = [
           "buraya bağlanıyor: kodlama ajanının hangi bilet üzerinde " +
           "çalıştığını ve ne kadar token harcadığını bildiriyor.",
         status: "released",
-        tags: ["Next.js", "TypeScript"],
+        tags: ["Geliştirici aracı", "Proje yönetimi", "Yapay zekâ ajanları"],
         links: [{ label: "neuvikon.space", href: "https://www.neuvikon.space/" }],
         media: [
           { src: "/media/neu-source/01.png", alt: "Ana sayfa ve canlı ajan panosu", wide: true },
@@ -239,7 +242,7 @@ export const divisions: Division[] = [
           "Alışkanlık takibi uygulaması. İnsanın gelişmesi gereken altı alanı " +
           "ayrı ayrı takip ediyor; günlük tekrar sürdükçe ilerleme birikiyor.",
         status: "building",
-        tags: ["React Native", "Expo", "Alışkanlık takibi"],
+        tags: ["Alışkanlık takibi", "Kişisel gelişim", "Oyunlaştırma"],
         image: "/apps/eclosion.png",
         media: [
           { src: "/media/eclosion/01.png", alt: "Dünya seçimi: Gölge Ordusu önizlemesi ve günlük görevler" },
@@ -254,7 +257,7 @@ export const divisions: Division[] = [
         tagline: "Stüdyonun kendi sohbet katmanı.",
         description: "Sohbet uygulaması. Ayrıntılar yayına hazır olduğunda eklenecek.",
         status: "building",
-        tags: ["Sohbet"],
+        tags: ["Sohbet", "Mesajlaşma"],
         image: "/apps/neu-chat.png",
       },
     ],
@@ -328,14 +331,16 @@ export const about: About = {
 
 export const careers: Careers = {
   lead:
-    "Şu anda açık bir pozisyon yok. Yine de birlikte çalışmak istiyorsan " +
-    "yazabilirsin: ilgilendiğin bölümü ve daha önce bitirdiğin bir işi " +
-    "anlatan kısa bir e-posta yeterli.",
-  openings: [],
-  interests: [
-    "Unity ve çok oyunculu ağ mimarisi",
-    "React Native / Expo ile mobil ürün",
-    "Gömülü yazılım — ESP32, sensör füzyonu",
-    "Oyun ve arayüz tasarımı",
+    "Bir tasarımcı arıyoruz. İlgileniyorsan kısa bir e-posta yeterli: " +
+    "kendini birkaç cümleyle anlat ve daha önce tasarladığın işlerden " +
+    "birkaçını ekle.",
+  openings: [
+    {
+      title: "Tasarımcı",
+      division: "Games · Tech",
+      summary:
+        "Oyunlarımızın ve uygulamalarımızın arayüzlerini, ekran akışlarını " +
+        "ve görsel dilini bizimle birlikte tasarlayacak biri.",
+    },
   ],
 };

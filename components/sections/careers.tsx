@@ -1,15 +1,23 @@
+import { ArrowRight } from "lucide-react";
+
 import { Section } from "@/components/layout/section";
 import { Stack } from "@/components/layout/stack";
-import { Reveal, RevealGroup, RevealItem, RevealRow } from "@/components/motion/reveal";
+import { Reveal, RevealCell, RevealGroup } from "@/components/motion/reveal";
 import { RisingWords } from "@/components/motion/rising-words";
+import { ButtonLink } from "@/components/ui/button-link";
+import { Card, CardContent } from "@/components/ui/card";
 import { Eyebrow, Text, Title } from "@/components/ui/typography";
 import { getContent } from "@/lib/content";
 import { ui, type Locale } from "@/lib/i18n";
 
-/** Open roles, or the honest absence of them. On the home page and the Careers page. */
+/**
+ * Open roles, or the honest absence of them. On the home page and the
+ * Careers page. Applying is an email with the role already in the subject,
+ * so it lands in the inbox sorted.
+ */
 export function CareersSection({ locale, as = "h2" }: { locale: Locale; as?: "h1" | "h2" }) {
   const t = ui[locale];
-  const { careers } = getContent(locale);
+  const { careers, org } = getContent(locale);
 
   return (
     <Section id="careers" className="scroll-mt-20">
@@ -29,38 +37,30 @@ export function CareersSection({ locale, as = "h2" }: { locale: Locale; as?: "h1
         </Stack>
 
         {careers.openings.length > 0 && (
-          <ul className="grid w-full gap-4 md:grid-cols-2">
+          <RevealGroup stagger={0.06} className="grid w-full gap-4 md:grid-cols-2">
             {careers.openings.map((opening) => (
-              <li key={opening.title} className="border-t border-rule py-3">
-                <Stack gap="xs">
-                  <Title as="h3" level="sub" className="text-base">
-                    {opening.title}
-                  </Title>
-                  <Eyebrow lang="en">{opening.division}</Eyebrow>
-                  <Text>{opening.summary}</Text>
-                </Stack>
-              </li>
+              <RevealCell key={opening.title}>
+                <Card className="h-full transition-shadow duration-500 ease-house hover:ring-foreground/20">
+                  <CardContent>
+                    <Stack gap="sm">
+                      <Eyebrow lang="en">{opening.division}</Eyebrow>
+                      <Title as="h3" level="sub" className="text-xl">
+                        {opening.title}
+                      </Title>
+                      <Text>{opening.summary}</Text>
+                      <ButtonLink
+                        href={`mailto:${org.email}?subject=${encodeURIComponent(`${t.apply}: ${opening.title}`)}`}
+                      >
+                        {t.apply}
+                        <ArrowRight data-icon="inline-end" />
+                      </ButtonLink>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </RevealCell>
             ))}
-          </ul>
+          </RevealGroup>
         )}
-
-        <RevealGroup stagger={0.05} className="w-full">
-          <Stack gap="sm" className="w-full">
-            <RevealItem still>
-              <Eyebrow>{t.whatWeReadFirst}</Eyebrow>
-            </RevealItem>
-            <ul className="grid w-full gap-x-10 gap-y-2 md:grid-cols-2">
-              {careers.interests.map((interest) => (
-                <RevealRow
-                  key={interest}
-                  className="border-t border-rule py-2 text-sm text-muted-foreground"
-                >
-                  {interest}
-                </RevealRow>
-              ))}
-            </ul>
-          </Stack>
-        </RevealGroup>
       </Stack>
     </Section>
   );
