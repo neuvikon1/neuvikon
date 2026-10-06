@@ -1,5 +1,6 @@
 import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
 
+import { SignedWordmark } from "@/components/brand/logo";
 import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal, RevealGroup, RevealRow } from "@/components/motion/reveal";
@@ -130,6 +131,11 @@ export function Hero({ locale }: { locale: Locale }) {
             stat rule. */}
         <div className="grid w-full flex-1 content-center gap-12 py-10 lg:grid-cols-12 lg:gap-16">
           <Stack gap="lg" className="lg:col-span-7">
+            {/* The signature, large, writing itself as the page opens - the
+                first thing the old site showed, and the mark the green line
+                down the page is drawn in. The size rides the viewport; the
+                inline height SignedWordmark sets is only its default. */}
+            <SignedWordmark className="!h-[clamp(4.5rem,11vw,8.5rem)] -ml-1" />
             <Stack gap="md">
               <Title as="h1" level="display">
                 <RisingWords inView={false}>{org.tagline}</RisingWords>
