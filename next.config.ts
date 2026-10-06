@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
   output: "export",
   basePath,
   trailingSlash: true,
+  experimental: {
+    // Two root layouts (one per language) leave no single layout to build a
+    // 404 inside; see app/global-not-found.tsx.
+    globalNotFound: true,
+  },
   images: {
     // No image optimization server on Pages.
     unoptimized: true,

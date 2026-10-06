@@ -1,21 +1,33 @@
 import Link from "next/link";
 
-import { divisions, org } from "@/lib/content";
+import { getContent } from "@/lib/content";
+import { divisionHref, href, ui, type Locale } from "@/lib/i18n";
 import { Wordmark } from "./brand/logo";
 import { Container } from "./layout/container";
+import { LanguageSwitch } from "./language-switch";
+import { MobileNav } from "./mobile-nav";
 import { ModeToggle } from "./mode-toggle";
 import { SiteNav, type NavItem } from "./site-nav";
 import { ButtonLink } from "./ui/button-link";
 
-/** Divisions first, then the two pages everyone looks for. */
-const NAV: NavItem[] = [
-  ...divisions.map((division) => ({
-    href: `#${division.slug}`,
-    label: division.short,
-  })),
-  { href: "#studio", label: "Studio" },
-  { href: "#careers", label: "Careers" },
-];
+/**
+ * Divisions first, then the two pages everyone looks for. Each goes to its own
+ * page; on the home page each also has a section, which is what the marker
+ * follows while you scroll there.
+ */
+function navItems(locale: Locale): NavItem[] {
+  const t = ui[locale];
+  return [
+    ...getContent(locale).divisions.map((division) => ({
+      href: divisionHref(locale, division.slug),
+      label: division.short,
+      section: division.slug,
+      lang: "en",
+    })),
+    { href: href(locale, "about"), label: t.studio, section: "studio" },
+    { href: href(locale, "careers"), label: t.careers, section: "careers" },
+  ];
+}
 
 /**
  * The header carries two scroll-driven marks along its bottom edge, both of
@@ -31,17 +43,26 @@ const NAV: NavItem[] = [
  * without that it stays opaque, because 70% of the background over the hero's
  * shader is not a frosted header, it is a smeared one.
  */
-const Header = () => {
+const Header = ({ locale }: { locale: Locale }) => {
+  const t = ui[locale];
+  const { org } = getContent(locale);
+  const items = navItems(locale);
+  const contact: NavItem = { href: href(locale, "contact"), label: t.contact, section: "contact" };
+
   return (
     <header className="sticky top-0 z-50 w-full bg-background supports-[backdrop-filter]:bg-background/72 supports-[backdrop-filter]:backdrop-blur-xl">
       <Container className="flex h-[var(--header-h)] items-center justify-between gap-6">
-        <Link href="/" aria-label={org.name} className="shrink-0">
+        <Link href={href(locale, "home")} aria-label={org.name} className="shrink-0">
           <Wordmark height={20} priority />
         </Link>
-        <SiteNav items={NAV} />
+        <SiteNav items={items} label={t.mainNav} />
         <div className="flex items-center gap-2">
-          <ButtonLink href="#contact">Contact</ButtonLink>
-          <ModeToggle />
+          <LanguageSwitch locale={locale} className="mr-2 hidden md:inline" />
+          <ButtonLink href={contact.href} className="hidden sm:inline-flex">
+            {t.contact}
+          </ButtonLink>
+          <ModeToggle label={t.toggleTheme} />
+          <MobileNav locale={locale} items={items} contact={contact} />
         </div>
       </Container>
 

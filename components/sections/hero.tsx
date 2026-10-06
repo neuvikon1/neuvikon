@@ -7,7 +7,8 @@ import { RisingWords } from "@/components/motion/rising-words";
 import { HeroBackdrop } from "@/components/sections/hero-backdrop";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Eyebrow, Text, Title } from "@/components/ui/typography";
-import { divisions, org } from "@/lib/content";
+import { getContent, type Division } from "@/lib/content";
+import { ui, type Locale } from "@/lib/i18n";
 
 /**
  * The first screen, in order of arrival.
@@ -36,10 +37,10 @@ const CUE = {
  * empty, and it is the page's table of contents: the primary call to action
  * scrolls to the divisions, these jump straight into one.
  */
-function DivisionIndex() {
+function DivisionIndex({ divisions, label }: { divisions: Division[]; label: string }) {
   return (
     <Stack gap="sm" className="w-full">
-      <Eyebrow>Divisions</Eyebrow>
+      <Eyebrow>{label}</Eyebrow>
       <RevealGroup inView={false} delay={CUE.index} className="w-full">
         <ul className="w-full">
           {divisions.map((division, index) => (
@@ -52,7 +53,7 @@ function DivisionIndex() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block text-base tracking-tight">
+                  <span lang="en" className="block text-base tracking-tight">
                     {division.name}
                   </span>
                   <span className="mt-0.5 block text-sm text-muted-foreground">
@@ -76,13 +77,13 @@ function DivisionIndex() {
  * Where the first screen ends. Everything below the fold starts at the rule
  * under the hero, so the next section announces itself by its own top edge.
  */
-function ScrollCue() {
+function ScrollCue({ label }: { label: string }) {
   return (
     <a
       href="#divisions"
       className="hidden shrink-0 items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground md:flex"
     >
-      Scroll
+      {label}
       <ArrowDown
         aria-hidden
         className="size-3.5 motion-safe:animate-hero-cue"
@@ -109,7 +110,9 @@ function ScrollCue() {
  * The prism backdrop is clipped to this section and sits behind the content;
  * the wrapper owns the stacking context so the shader can't escape it.
  */
-export function Hero() {
+export function Hero({ locale }: { locale: Locale }) {
+  const t = ui[locale];
+  const { org, divisions } = getContent(locale);
   return (
     <div className="relative isolate overflow-hidden">
       <HeroBackdrop />
@@ -139,7 +142,7 @@ export function Hero() {
             <Reveal inView={false} delay={CUE.actions}>
               <Actions>
                 <ButtonLink href="#divisions" size="lg">
-                  Explore the divisions
+                  {t.exploreDivisions}
                   <ArrowRight data-icon="inline-end" />
                 </ButtonLink>
                 <ButtonLink
@@ -156,7 +159,7 @@ export function Hero() {
           {/* Bottom-aligned, so the index hangs off the same optical baseline
               as the actions rather than floating beside the headline. */}
           <div className="lg:col-span-5 lg:self-end">
-            <DivisionIndex />
+            <DivisionIndex divisions={divisions} label={t.divisions} />
           </div>
         </div>
       </Section>

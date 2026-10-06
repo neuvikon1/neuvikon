@@ -52,7 +52,7 @@ function BrightnessIcon(props: React.ComponentProps<"svg">) {
  * Where there is no View Transitions API, or where motion is unwelcome, the
  * theme simply changes.
  */
-function ModeToggle() {
+function ModeToggle({ label }: { label: string }) {
   const { resolvedTheme, setTheme } = useTheme()
   const reducedMotion = usePrefersReducedMotion()
   const isDark = resolvedTheme === "dark"
@@ -93,7 +93,7 @@ function ModeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      aria-label="Toggle theme"
+      aria-label={label}
       onClick={toggle}
     >
       {/*
@@ -111,7 +111,6 @@ function ModeToggle() {
       <span className="flex rotate-0 transition-transform duration-500 ease-house dark:rotate-180">
         <BrightnessIcon className="size-4.5" />
       </span>
-      <span className="sr-only">Toggle theme</span>
     </Button>
   )
 }
