@@ -81,6 +81,14 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["React Native", "Expo", "Firebase", "2-8 oyuncu"],
         image: "/apps/undercard.png",
+        media: [
+          { src: "/media/undercard/01.jpg", alt: "Ana menü ve günlük meydan okuma" },
+          { src: "/media/undercard/02.jpg", alt: "Botlarla oyun lobisi" },
+          { src: "/media/undercard/03.jpg", alt: "Oyun masası" },
+          { src: "/media/undercard/04.jpg", alt: "Kart çekme: değiştir ya da at" },
+          { src: "/media/undercard/05.jpg", alt: "Olay kartı: Vergi" },
+          { src: "/media/undercard/06.jpg", alt: "Tur sonucu ve puan tablosu" },
+        ],
       },
       {
         name: "EdgeOut",
@@ -95,6 +103,13 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["TypeScript", "Node.js", "WebSocket", "Çok oyunculu"],
         image: "/apps/edgeout.png",
+        media: [
+          { src: "/media/edgeout/01.png", alt: "Başlangıç dizilimi: 61 hücrelik tahtada 14 siyah ve 14 beyaz küre" },
+          { src: "/media/edgeout/02.png", alt: "Orta oyun: seçili üç beyaz küre ve olası hamle yönleri" },
+          { src: "/media/edgeout/03.png", alt: "Duvar yerleştirme modu: uygun kenarlar vurgulu" },
+          { src: "/media/edgeout/04.png", alt: "Siyahın yerleştirdiği duvar beyazların önünü kesiyor" },
+          { src: "/media/edgeout/05.png", alt: "Giriş ekranı" },
+        ],
       },
       {
         name: "GuessFast",
@@ -115,18 +130,12 @@ export const divisions: Division[] = [
             href: "https://apps.apple.com/ng/app/guessfast/id6758861605",
           },
         ],
-      },
-      {
-        name: "Card Wars",
-        tagline: "Hat tabanlı kart savaşı; 1v1 ya da 2v2.",
-        description:
-          "Hat (lane) tabanlı kart savaşı oyunu. Oyun açılışta kendini kurar " +
-          "— boş bir sahnede bile çalışır, böylece sahne dosyası bozulsa bile " +
-          "her şey sürüm kontrolünde metin olarak durur. 2v2'de her oyuncunun " +
-          "tek bir karşısı vardır ve takım ancak tüm üyeleri düşünce kaybeder; " +
-          "bu da müttefiki ayakta tutmayı anlamlı bir karar hâline getirir.",
-        status: "building",
-        tags: ["Unity 6", "Kart oyunu", "2v2"],
+        media: [
+          { src: "/media/guessfast/01.jpg", alt: "Ana menü" },
+          { src: "/media/guessfast/02.jpg", alt: "Ayarlar" },
+          { src: "/media/guessfast/03.jpg", alt: "Günlük challenge sonucu" },
+          { src: "/media/guessfast/04.jpg", alt: "Son 7 günün istatistikleri" },
+        ],
       },
       {
         name: "Today's Word",
@@ -140,6 +149,18 @@ export const divisions: Division[] = [
         tags: ["React Native", "Expo", "Convex", "iOS"],
         image: "/apps/todays-word.jpg",
         links: [{ label: "App Store", href: "https://apps.apple.com/app/todays-word-learn-everyday/id6810232514" }],
+        media: [
+          { src: "/media/today-s-word/01.jpg", alt: "Günün kelimesi" },
+          { src: "/media/today-s-word/02.jpg", alt: "Kelimenin geçmişi" },
+          { src: "/media/today-s-word/03.jpg", alt: "Tekrar testi" },
+          { src: "/media/today-s-word/04.jpg", alt: "Günlük test" },
+          { src: "/media/today-s-word/05.jpg", alt: "Test sonucu" },
+          { src: "/media/today-s-word/06.jpg", alt: "Yıllık ilerleme" },
+          { src: "/media/today-s-word/07.jpg", alt: "Geçmiş bir günün kelimesi" },
+          { src: "/media/today-s-word/08.jpg", alt: "Öğrenilen kelimeler" },
+          { src: "/media/today-s-word/09.jpg", alt: "Alıştırma" },
+          { src: "/media/today-s-word/10.jpg", alt: "Ayarlar" },
+        ],
       },
       {
         name: "WordDeck",
@@ -154,16 +175,14 @@ export const divisions: Division[] = [
         tags: ["Kelime kartları", "Aralıklı tekrar", "Expo"],
         image: "/apps/worddeck.png",
         links: [{ label: "Gizlilik Politikası", href: "/gizlilik/worddeck" }],
-      },
-      {
-        name: "Timber Supply & Co",
-        tagline: "Kes, taşı, sat. Zincirin tamamı sende.",
-        description:
-          "Kereste tedarik zinciri üzerine kurulu yönetim oyunu. Ayrıntılar " +
-          "yayına hazır olduğunda eklenecek.",
-        status: "building",
-        tags: ["Yönetim"],
-        image: "/apps/timber-supply.jpg",
+        media: [
+          { src: "/media/worddeck/01.png", alt: "Günlük deste ekranı" },
+          { src: "/media/worddeck/02.png", alt: "Kelime kartı (ön yüz)" },
+          { src: "/media/worddeck/03.png", alt: "Kartın arka yüzü ve tekrar aralığı seçimi" },
+          { src: "/media/worddeck/04.png", alt: "Desteler" },
+          { src: "/media/worddeck/05.png", alt: "Beş şıklı kelime testi" },
+          { src: "/media/worddeck/06.png", alt: "Gramer konuları" },
+        ],
       },
       {
         name: "Muavin-Sim",
@@ -174,16 +193,6 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Simülasyon"],
         image: "/apps/muavin-sim.png",
-      },
-      {
-        name: "Duskfield",
-        tagline: "Alacakaranlıkta geçen bir dünya.",
-        description:
-          "Arka uç tarafı Bun ile yazılıyor. Oyunun kendisine dair ayrıntılar " +
-          "yayına hazır olduğunda eklenecek.",
-        status: "building",
-        tags: ["Bun", "TypeScript"],
-        image: "/apps/duskfield.png",
       },
     ],
   },
@@ -215,6 +224,13 @@ export const divisions: Division[] = [
         status: "released",
         tags: ["Next.js", "TypeScript"],
         links: [{ label: "neuvikon.space", href: "https://www.neuvikon.space/" }],
+        media: [
+          { src: "/media/neu-source/01.png", alt: "Ana sayfa ve canlı ajan panosu", wide: true },
+          { src: "/media/neu-source/02.png", alt: "Bilete bağlı ajan oturumu", wide: true },
+          { src: "/media/neu-source/03.png", alt: "Ajan harcama paneli", wide: true },
+          { src: "/media/neu-source/04.png", alt: "Wiki sayfaları ve bağlantı grafiği", wide: true },
+          { src: "/media/neu-source/05.png", alt: "Kişisel çalışma alanı", wide: true },
+        ],
       },
       {
         name: "Eclosion",
@@ -225,6 +241,13 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["React Native", "Expo", "Alışkanlık takibi"],
         image: "/apps/eclosion.png",
+        media: [
+          { src: "/media/eclosion/01.png", alt: "Dünya seçimi: Gölge Ordusu önizlemesi ve günlük görevler" },
+          { src: "/media/eclosion/02.png", alt: "Günün görevleri: rütbe, XP ve alan filtreleri" },
+          { src: "/media/eclosion/03.png", alt: "Altı gelişim alanını gösteren durum radarı" },
+          { src: "/media/eclosion/04.png", alt: "Gölge Ordusu: asker, güç, moral ve haftalık kapı" },
+          { src: "/media/eclosion/05.png", alt: "Ödül mağazası: seri kalkanı ve kişisel ödüller" },
+        ],
       },
       {
         name: "Neu-Chat",
@@ -233,15 +256,6 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Sohbet"],
         image: "/apps/neu-chat.png",
-      },
-      {
-        name: "Neuvikon Web",
-        tagline: "Bu site.",
-        description:
-          "Next.js App Router, TypeScript ve Tailwind ile yazılmış statik " +
-          "kurumsal site. İçerik tek bir veri dosyasından üretiliyor.",
-        status: "building",
-        tags: ["Next.js", "TypeScript", "Tailwind"],
       },
     ],
   },

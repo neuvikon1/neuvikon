@@ -23,6 +23,8 @@ export type ProjectMedia = {
   poster?: string;
   alt?: string;
   kind?: "image" | "video";
+  /** A landscape capture (desktop, tablet). Phone screenshots are the default. */
+  wide?: boolean;
 };
 
 export type Project = {

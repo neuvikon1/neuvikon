@@ -5,6 +5,7 @@ import "@/app/globals.css";
 import { Footer } from "@/components/footer";
 import Header from "@/components/header";
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { ScrollInk } from "@/components/motion/scroll-ink";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toast";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -74,7 +75,8 @@ export function SiteShell({ locale, children }: { locale: Locale; children: Reac
           <TooltipProvider>
             <MotionProvider>
               <Header locale={locale} />
-              <main id="content" tabIndex={-1} className="flex w-full flex-1 flex-col outline-none">
+              <main id="content" tabIndex={-1} className="relative flex w-full flex-1 flex-col outline-none">
+                <ScrollInk />
                 {children}
               </main>
               <Footer locale={locale} />

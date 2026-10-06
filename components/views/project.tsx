@@ -6,6 +6,7 @@ import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal, RevealCell, RevealGroup } from "@/components/motion/reveal";
 import { RisingWords } from "@/components/motion/rising-words";
+import { MediaGallery } from "@/components/media-gallery";
 import { ProjectCard, ProjectLinks } from "@/components/sections/division";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -97,35 +98,7 @@ export function ProjectView({
             <Eyebrow>{t.media}</Eyebrow>
           </Reveal>
           {project.media && project.media.length > 0 ? (
-            <RevealGroup stagger={0.06} className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {project.media.map((media) => (
-                <RevealCell key={media.src}>
-                  <div className="overflow-hidden rounded-xl ring-1 ring-foreground/10">
-                    {media.kind === "video" ? (
-                      /* No autoplay: six clips running at once is noise, and
-                         on a phone it is someone's data plan. */
-                      <video
-                        src={asset(media.src)}
-                        poster={media.poster && asset(media.poster)}
-                        aria-label={media.alt}
-                        controls
-                        playsInline
-                        preload="metadata"
-                        className="h-auto w-full"
-                      />
-                    ) : (
-                      <Image
-                        src={asset(media.src)}
-                        alt={media.alt ?? ""}
-                        width={1080}
-                        height={1920}
-                        className="h-auto w-full"
-                      />
-                    )}
-                  </div>
-                </RevealCell>
-              ))}
-            </RevealGroup>
+            <MediaGallery media={project.media} locale={locale} />
           ) : (
             <Reveal className="w-full">
               <Text>{t.mediaPending}</Text>

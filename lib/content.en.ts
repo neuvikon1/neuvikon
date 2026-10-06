@@ -81,6 +81,14 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["React Native", "Expo", "Firebase", "2-8 players"],
         image: "/apps/undercard.png",
+        media: [
+          { src: "/media/undercard/01.jpg", alt: "Home menu and daily challenge" },
+          { src: "/media/undercard/02.jpg", alt: "Game lobby with bots" },
+          { src: "/media/undercard/03.jpg", alt: "Game table" },
+          { src: "/media/undercard/04.jpg", alt: "Drawing a card: replace or discard" },
+          { src: "/media/undercard/05.jpg", alt: "Event card: Tax" },
+          { src: "/media/undercard/06.jpg", alt: "Round results and standings" },
+        ],
       },
       {
         name: "EdgeOut",
@@ -95,6 +103,13 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["TypeScript", "Node.js", "WebSocket", "Multiplayer"],
         image: "/apps/edgeout.png",
+        media: [
+          { src: "/media/edgeout/01.png", alt: "Starting position: 14 black and 14 white marbles on the 61-cell board" },
+          { src: "/media/edgeout/02.png", alt: "Mid-game: three selected white marbles and their legal moves" },
+          { src: "/media/edgeout/03.png", alt: "Wall placement mode: available edges highlighted" },
+          { src: "/media/edgeout/04.png", alt: "A wall placed by Black blocks the white marbles" },
+          { src: "/media/edgeout/05.png", alt: "Sign-in screen" },
+        ],
       },
       {
         name: "GuessFast",
@@ -115,19 +130,12 @@ export const divisions: Division[] = [
             href: "https://apps.apple.com/ng/app/guessfast/id6758861605",
           },
         ],
-      },
-      {
-        name: "Card Wars",
-        tagline: "Lane-based card combat, 1v1 or 2v2.",
-        description:
-          "A lane-based card battler. The game bootstraps itself at launch — " +
-          "it runs even in an empty scene, so a corrupted scene file cannot " +
-          "take the game down and everything stays as text under version " +
-          "control. In 2v2 each player faces exactly one opponent and a team " +
-          "only loses once every member is down, which makes keeping your " +
-          "ally alive a real decision.",
-        status: "building",
-        tags: ["Unity 6", "Card game", "2v2"],
+        media: [
+          { src: "/media/guessfast/01.jpg", alt: "Main menu" },
+          { src: "/media/guessfast/02.jpg", alt: "Settings" },
+          { src: "/media/guessfast/03.jpg", alt: "Daily challenge result" },
+          { src: "/media/guessfast/04.jpg", alt: "The last seven days" },
+        ],
       },
       {
         name: "Today's Word",
@@ -141,6 +149,18 @@ export const divisions: Division[] = [
         tags: ["React Native", "Expo", "Convex", "iOS"],
         image: "/apps/todays-word.jpg",
         links: [{ label: "App Store", href: "https://apps.apple.com/app/todays-word-learn-everyday/id6810232514" }],
+        media: [
+          { src: "/media/today-s-word/01.jpg", alt: "The word of the day" },
+          { src: "/media/today-s-word/02.jpg", alt: "Where the word comes from" },
+          { src: "/media/today-s-word/03.jpg", alt: "Review quiz" },
+          { src: "/media/today-s-word/04.jpg", alt: "Daily quiz" },
+          { src: "/media/today-s-word/05.jpg", alt: "Quiz result" },
+          { src: "/media/today-s-word/06.jpg", alt: "A year of progress" },
+          { src: "/media/today-s-word/07.jpg", alt: "A word from a past day" },
+          { src: "/media/today-s-word/08.jpg", alt: "Words learned so far" },
+          { src: "/media/today-s-word/09.jpg", alt: "Practice" },
+          { src: "/media/today-s-word/10.jpg", alt: "Settings" },
+        ],
       },
       {
         name: "WordDeck",
@@ -155,16 +175,14 @@ export const divisions: Division[] = [
         tags: ["Flashcards", "Spaced repetition", "Expo"],
         image: "/apps/worddeck.png",
         links: [{ label: "Privacy Policy", href: "/en/privacy/worddeck" }],
-      },
-      {
-        name: "Timber Supply & Co",
-        tagline: "Cut it, haul it, sell it — the whole chain is yours.",
-        description:
-          "A management game built on a timber supply chain. Details will be " +
-          "added once it is ready to show.",
-        status: "building",
-        tags: ["Management"],
-        image: "/apps/timber-supply.jpg",
+        media: [
+          { src: "/media/worddeck/01.png", alt: "Today's deck" },
+          { src: "/media/worddeck/02.png", alt: "Flashcard, front" },
+          { src: "/media/worddeck/03.png", alt: "Card back with the spaced-repetition rating" },
+          { src: "/media/worddeck/04.png", alt: "Decks" },
+          { src: "/media/worddeck/05.png", alt: "Five-choice vocabulary quiz" },
+          { src: "/media/worddeck/06.png", alt: "Grammar topics" },
+        ],
       },
       {
         name: "Muavin-Sim",
@@ -175,16 +193,6 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Simulation"],
         image: "/apps/muavin-sim.png",
-      },
-      {
-        name: "Duskfield",
-        tagline: "A world set at dusk.",
-        description:
-          "The backend is being written in Bun. Details about the game itself " +
-          "will be added when it is ready to show.",
-        status: "building",
-        tags: ["Bun", "TypeScript"],
-        image: "/apps/duskfield.png",
       },
     ],
   },
@@ -218,6 +226,13 @@ export const divisions: Division[] = [
         links: [
           { label: "neuvikon.space", href: "https://www.neuvikon.space/" },
         ],
+        media: [
+          { src: "/media/neu-source/01.png", alt: "Landing page and the live agent board", wide: true },
+          { src: "/media/neu-source/02.png", alt: "An agent session tied to a ticket", wide: true },
+          { src: "/media/neu-source/03.png", alt: "Agent spend dashboard", wide: true },
+          { src: "/media/neu-source/04.png", alt: "Wiki pages and link graph", wide: true },
+          { src: "/media/neu-source/05.png", alt: "Personal workspace", wide: true },
+        ],
       },
       {
         name: "Eclosion",
@@ -228,6 +243,13 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["React Native", "Expo", "Habit tracking"],
         image: "/apps/eclosion.png",
+        media: [
+          { src: "/media/eclosion/01.png", alt: "World selection: the Shadow Army preview and daily quests" },
+          { src: "/media/eclosion/02.png", alt: "Daily quests with rank, XP and area filters" },
+          { src: "/media/eclosion/03.png", alt: "Status radar for the six development areas" },
+          { src: "/media/eclosion/04.png", alt: "Shadow Army: soldiers, power, morale and the weekly gate" },
+          { src: "/media/eclosion/05.png", alt: "Rewards shop: streak shields and personal rewards" },
+        ],
       },
       {
         name: "Neu-Chat",
@@ -237,15 +259,6 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Chat"],
         image: "/apps/neu-chat.png",
-      },
-      {
-        name: "Neuvikon Web",
-        tagline: "This site.",
-        description:
-          "A static company site built with the Next.js App Router, " +
-          "TypeScript and Tailwind. All content comes from a single data file.",
-        status: "building",
-        tags: ["Next.js", "TypeScript", "Tailwind"],
       },
     ],
   },

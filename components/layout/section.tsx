@@ -26,7 +26,8 @@ export function Section({
   ...props
 }: SectionProps) {
   return (
-    <section className={cn("relative w-full", className)} {...props}>
+    // `data-rails` is what ScrollInk follows down the page.
+    <section className={cn("relative w-full", className)} data-rails={rails || undefined} {...props}>
       {/* A masked element, not a border: a border cannot be gapped. */}
       {rule && <GridRule />}
       <Container

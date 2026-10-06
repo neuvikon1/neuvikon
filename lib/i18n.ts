@@ -38,8 +38,8 @@ export function divisionHref(locale: Locale, slug: string): string {
 }
 
 /**
- * A project's address segment from its name: "Timber Supply & Co" →
- * "timber-supply-co". Names are brand names and read the same in both
+ * A project's address segment from its name: "Neu-Pummel Party" →
+ * "neu-pummel-party". Names are brand names and read the same in both
  * languages, so the slug does too and needs no field of its own.
  */
 export function projectSlug(name: string): string {
@@ -122,13 +122,16 @@ export const ui = {
     media: "Uygulamanın içinden",
     mediaPending: "Bu projenin uygulama içi görselleri ve videoları henüz eklenmedi.",
     links: "Bağlantılar",
+    galleryOpen: (n: number, total: number) => `Görseli büyüt (${n}/${total})`,
+    galleryPrev: "Önceki görsel",
+    galleryNext: "Sonraki görsel",
     getInTouch: "İletişime geç",
     howWeWork: "Nasıl çalışıyoruz.",
     team: "Ekip",
     openPositions: "Açık pozisyonlar.",
     noOpenPositions: "Açık pozisyon yok — yine de yaz.",
     whatWeReadFirst: "Önce neye bakarız",
-    contactTitle: "Ne üzerinde çalıştığını anlat.",
+    contactTitle: "Bizimle iletişime geç.",
     contactLead:
       "Tek stüdyo, üç bölüm ve hepsi için tek bir adres. Gelen her şeyi okuyoruz.",
     formName: "Adın",
@@ -180,13 +183,16 @@ export const ui = {
     media: "Inside the app",
     mediaPending: "Screenshots and videos from inside this project are not up yet.",
     links: "Links",
+    galleryOpen: (n: number, total: number) => `Enlarge image (${n} of ${total})`,
+    galleryPrev: "Previous image",
+    galleryNext: "Next image",
     getInTouch: "Get in touch",
     howWeWork: "How we work.",
     team: "Team",
     openPositions: "Open positions.",
     noOpenPositions: "No open positions — write anyway.",
     whatWeReadFirst: "What we would read first",
-    contactTitle: "Tell us what you are building.",
+    contactTitle: "Get in touch with us.",
     contactLead:
       "One studio, three divisions, and a single address for all of them. We " +
       "read everything that arrives.",
