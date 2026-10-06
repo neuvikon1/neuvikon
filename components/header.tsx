@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { getContent } from "@/lib/content";
 import { divisionHref, href, ui, type Locale } from "@/lib/i18n";
-import { Wordmark } from "./brand/logo";
+import { SignedWordmark } from "./brand/logo";
 import { Container } from "./layout/container";
 import { LanguageSwitch } from "./language-switch";
 import { MobileNav } from "./mobile-nav";
@@ -53,7 +53,7 @@ const Header = ({ locale }: { locale: Locale }) => {
     <header className="sticky top-0 z-50 w-full bg-background supports-[backdrop-filter]:bg-background/72 supports-[backdrop-filter]:backdrop-blur-xl">
       <Container className="flex h-[var(--header-h)] items-center justify-between gap-6">
         <Link href={href(locale, "home")} aria-label={org.name} className="shrink-0">
-          <Wordmark height={20} priority />
+          <SignedWordmark height={20} />
         </Link>
         <SiteNav items={items} label={t.mainNav} />
         <div className="flex items-center gap-2">

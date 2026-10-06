@@ -35,6 +35,10 @@ jobs:
       - name: Build static export
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          # Web3Forms access key for the contact form. Public by design (it can
+          # only mail the inbox it was issued for); without it the form is
+          # simply not drawn and the email address stands alone.
+          NEXT_PUBLIC_WEB3FORMS_KEY: ${{ vars.WEB3FORMS_KEY }}
         run: pnpm build
 
       - uses: actions/upload-pages-artifact@v3

@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 
+import { ContactForm } from "@/components/contact-form";
 import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal } from "@/components/motion/reveal";
@@ -10,10 +11,13 @@ import { getContent } from "@/lib/content";
 import { ui, type Locale } from "@/lib/i18n";
 
 /**
- * One address for the whole studio. Deliberately no form: a static site has
- * nowhere to send one, and a form that silently loses the message is worse
- * than an email address that works.
+ * One address for the whole studio, and a form that writes to it without
+ * leaving the page. The address stays visible either way: some people would
+ * rather use their own mail client, and it is the fallback if the form's
+ * service is ever down. See `ContactForm` for where the form sends.
  */
+const HAS_FORM = Boolean(process.env.NEXT_PUBLIC_WEB3FORMS_KEY);
+
 export function ContactSection({ locale, as = "h2" }: { locale: Locale; as?: "h1" | "h2" }) {
   const t = ui[locale];
   const { org } = getContent(locale);
@@ -32,9 +36,15 @@ export function ContactSection({ locale, as = "h2" }: { locale: Locale; as?: "h1
             <Text level="lead">{t.contactLead}</Text>
           </Reveal>
         </Stack>
-        <Reveal delay={0.18}>
+        {HAS_FORM && (
+          <Reveal delay={0.18} className="w-full">
+            <ContactForm locale={locale} email={org.email} />
+          </Reveal>
+        )}
+        <Reveal delay={0.24}>
+          {HAS_FORM && <Text className="mb-3">{t.formOr}</Text>}
           <Actions>
-            <ButtonLink href={`mailto:${org.email}`} size="lg">
+            <ButtonLink href={`mailto:${org.email}`} size="lg" variant={HAS_FORM ? "outline" : "default"}>
               {org.email}
               <ArrowRight data-icon="inline-end" />
             </ButtonLink>

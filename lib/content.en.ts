@@ -133,17 +133,20 @@ export const divisions: Division[] = [
         name: "Today's Word",
         tagline: "The word of the day.",
         description:
-          "A word puzzle game. Still in design; the rules and screenshots " +
-          "will be added once it is ready to show.",
-        status: "building",
-        tags: ["Word game"],
+          "One English word a day, the same one for everyone: its meaning, " +
+          "real-world examples and where it comes from, then a short quiz. " +
+          "Words you have learned come back later so they actually stick, " +
+          "and a daily tracker keeps the streak. No accounts.",
+        status: "released",
+        tags: ["React Native", "Expo", "Convex", "iOS"],
         image: "/apps/todays-word.jpg",
+        links: [{ label: "App Store", href: "https://apps.apple.com/app/todays-word-learn-everyday/id6810232514" }],
       },
       {
         name: "WordDeck",
         tagline: "Exam vocabulary, just before you forget it.",
         description:
-          "Flashcards for the YDS, YÖKDİL, YDT, TOEFL and IELTS. Every word " +
+          "English vocabulary flashcards. Every word " +
           "comes with its Turkish meanings, an English definition, an " +
           "example sentence, synonyms and antonyms; spaced repetition brings " +
           "each card back just before it would slip. No accounts: progress " +

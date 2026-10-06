@@ -8,8 +8,9 @@ const { org } = getContent("tr");
  * KVKK aydınlatma metni.
  *
  * Metin sitenin gerçek davranışını anlatıyor, genel bir şablon değil: bu site
- * statik olarak üretiliyor, form yok, çerez yazılmıyor, oturum tutulmuyor.
- * Kişisel veri yalnızca ziyaretçi e-posta yazdığında işleniyor.
+ * statik olarak üretiliyor, çerez yazılmıyor, oturum tutulmuyor. Kişisel
+ * veri yalnızca ziyaretçi iletişim formunu gönderdiğinde ya da e-posta
+ * yazdığında işleniyor.
  *
  * ⚠️ Bu metin bir avukat tarafından yazılmadı. Siteye form, üyelik, ödeme ya
  * da çerez kullanan bir analitik eklenirse metin yeniden gözden geçirilmeli.
@@ -35,15 +36,16 @@ export default function KvkkPage() {
 
       <LegalSection title="Hangi verileri işliyoruz">
         <p>
-          Bu site statik olarak üretilir. Üyelik, form, ödeme ya da oturum
+          Bu site statik olarak üretilir. Üyelik, ödeme ya da oturum
           bulunmadığından, siteyi yalnızca gezerken bize herhangi bir kişisel
           veri iletmezsiniz.
         </p>
-        <p>Kişisel veri yalnızca şu durumda işlenir:</p>
+        <p>Kişisel veri yalnızca şu durumlarda işlenir:</p>
         <ul>
           <li>
-            <strong>E-posta yazdığınızda:</strong> ad ve
-            soyadınız, e-posta adresiniz ve mesajınızda paylaştığınız bilgiler.
+            <strong>İletişim formunu gönderdiğinizde ya da e-posta
+            yazdığınızda:</strong> adınız, e-posta adresiniz ve mesajınızda
+            paylaştığınız bilgiler.
           </li>
         </ul>
         <p>
@@ -71,7 +73,8 @@ export default function KvkkPage() {
         <p>
           Kişisel verileriniz pazarlama amacıyla üçüncü kişilere satılmaz ve
           devredilmez. Yalnızca hizmetin sürdürülebilmesi için e-posta ve
-          barındırma sağlayıcılarımızın altyapısında bulunur. Bu sağlayıcıların
+          barındırma sağlayıcılarımızın ve iletişim formunu e-postaya çeviren
+          Web3Forms hizmetinin altyapısında bulunur. Bu sağlayıcıların
           sunucuları yurt dışında olabileceğinden, aktarım KVKK m.9 kapsamında
           gerçekleşir.
         </p>

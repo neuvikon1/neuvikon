@@ -34,13 +34,13 @@ export default function DataProtectionPage() {
 
       <LegalSection title="What we process">
         <p>
-          This site is statically generated. There is no account, form, payment
-          or session, so simply browsing it sends us no personal data.
+          This site is statically generated. There is no account, payment or
+          session, so simply browsing it sends us no personal data.
         </p>
         <p>Personal data is processed in one case only:</p>
         <ul>
           <li>
-            <strong>When you send an email:</strong> your
+            <strong>When you send the contact form or an email:</strong> your
             name, your email address and whatever you include in the message.
           </li>
         </ul>
@@ -68,7 +68,8 @@ export default function DataProtectionPage() {
         <p>
           Your personal data is never sold or transferred to third parties for
           marketing. It resides only in the infrastructure of our email and
-          hosting providers, as needed to run the service. Because those
+          hosting providers and of Web3Forms, which turns the contact form into
+          email, as needed to run the service. Because those
           providers&apos; servers may be outside Türkiye, such transfers take
           place under KVKK art. 9.
         </p>

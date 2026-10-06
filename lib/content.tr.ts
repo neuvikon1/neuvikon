@@ -132,17 +132,20 @@ export const divisions: Division[] = [
         name: "Today's Word",
         tagline: "Günün kelimesi.",
         description:
-          "Kelime bulmaca oyunu. Tasarımı sürüyor; kurallar ve ekran " +
-          "görüntüleri yayına hazır olduğunda eklenecek.",
-        status: "building",
-        tags: ["Kelime oyunu"],
+          "Her gün herkese aynı İngilizce kelime: anlamı, gerçek hayattan " +
+          "örnekleri ve nereden geldiği, ardından kısa bir test. Öğrenilen " +
+          "kelimeler sonradan geri geliyor, böylece gerçekten akılda " +
+          "kalıyor; günlük takip seriyi tutuyor. Hesap yok.",
+        status: "released",
+        tags: ["React Native", "Expo", "Convex", "iOS"],
         image: "/apps/todays-word.jpg",
+        links: [{ label: "App Store", href: "https://apps.apple.com/app/todays-word-learn-everyday/id6810232514" }],
       },
       {
         name: "WordDeck",
         tagline: "Sınav kelimeleri, unutmadan hemen önce.",
         description:
-          "YDS, YÖKDİL, YDT, TOEFL ve IELTS için kelime kartları. Her kelime " +
+          "İngilizce kelime kartları. Her kelime " +
           "Türkçe anlamı, İngilizce tanımı, örnek cümlesi, eş ve zıt " +
           "anlamlılarıyla geliyor; aralıklı tekrar her kartı tam unutmak " +
           "üzereyken geri getiriyor. Hesap yok, ilerleme cihazda üretilen " +

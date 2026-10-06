@@ -8,7 +8,7 @@ const { org } = getContent("en");
  * Gizlilik politikasının İngilizcesi.
  *
  * Türkçe metnin birebir çevirisi değil ama aynı olguları anlatıyor: bu site
- * statik, form yok, çerez yazılmıyor. İki metin ayrı dosyalarda durduğu için
+ * statik, çerez yazılmıyor, tek veri iletişim formu ve e-posta. İki metin ayrı dosyalarda durduğu için
  * biri değişince diğeri de elden geçirilmeli.
  */
 
@@ -23,8 +23,9 @@ export default function PrivacyPage() {
       <LegalSection title="In short">
         <p>
           This site does not track you. There is no ad network, no social
-          media pixel and no profiling. You do not create an account and you do
-          not fill in a form; the site is a set of pre-rendered pages.
+          media pixel and no profiling. You do not create an account; the site
+          is a set of pre-rendered pages. The only thing that reaches us is a
+          message you choose to send, through the contact form or by email.
         </p>
       </LegalSection>
 
@@ -40,7 +41,19 @@ export default function PrivacyPage() {
         <p>
           Fonts are served from this site&apos;s own origin; opening a page
           sends no request to Google Fonts. Images and logos come from the same
-          domain.
+          domain. The contact form sends a request to Web3Forms only when you
+          press &quot;Send&quot;; nothing leaves the page when it opens.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="The contact form">
+        <p>
+          When you send the contact form, your name, email address and
+          message go to Web3Forms, a service that turns form submissions into
+          email, which forwards them to our address. We use it because a
+          static site has no server of its own to receive a message. Web3Forms
+          handles that data under its own privacy policy. Once the message
+          reaches us, it is treated exactly like an email, as described below.
         </p>
       </LegalSection>
 

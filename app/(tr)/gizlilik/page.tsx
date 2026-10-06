@@ -25,8 +25,9 @@ export default function PrivacyPage() {
       <LegalSection title="Kısaca">
         <p>
           Bu site sizi takip etmiyor. Reklam ağı, sosyal medya pikseli ve
-          profilleme yok. Hesap açmıyorsunuz, form doldurmuyorsunuz; site
-          önceden üretilmiş sayfalardan ibaret.
+          profilleme yok. Hesap açmıyorsunuz; site önceden üretilmiş
+          sayfalardan ibaret. Bize ulaşan tek bilgi, iletişim formuyla ya da
+          e-postayla kendi isteğinizle gönderdiğiniz mesajdır.
         </p>
       </LegalSection>
 
@@ -41,7 +42,21 @@ export default function PrivacyPage() {
         <p>
           Yazı tipleri sitenin kendi sunucusundan servis edilir; sayfa
           açıldığında Google Fonts&apos;a bir istek gitmez. Görseller ve
-          logolar da aynı alan adından gelir.
+          logolar da aynı alan adından gelir. İletişim formu yalnızca siz
+          &quot;Gönder&quot;e bastığınızda dışarıya, Web3Forms&apos;a bir
+          istek gönderir; sayfa açıldığında dışarıya istek gitmez.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="İletişim formu">
+        <p>
+          İletişim formunu gönderdiğinizde adınız, e-posta adresiniz ve
+          mesajınız, formu e-postaya çeviren Web3Forms hizmetine iletilir;
+          Web3Forms bunları bizim e-posta adresimize gönderir. Bu hizmeti,
+          statik bir sitede mesajın bize ulaşabilmesi için kullanıyoruz.
+          Web3Forms gönderilen verileri kendi gizlilik politikasına göre
+          işler. Mesaj bize ulaştıktan sonra aşağıda e-posta için anlatılanla
+          aynı şekilde ele alınır.
         </p>
       </LegalSection>
 

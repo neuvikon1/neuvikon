@@ -299,7 +299,30 @@
   }
 }
 
+/* The N in the header writing itself - see SignedWordmark in
+   components/brand/logo.tsx. It eases out the way a signature's last stroke
+   does: quick off the mark, settling into the end. */
+@keyframes pen-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.pen-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: pen-draw 1.8s cubic-bezier(0.62, 0.02, 0.3, 1) 0.15s forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .pen-draw {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
   ::view-transition-old(root),
   ::view-transition-new(root),
   ::view-transition-group(root) {

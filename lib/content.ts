@@ -136,7 +136,7 @@ export const legalEntity = {
   mersis: null as string | null,
   taxOffice: null as string | null,
   /** Changed by hand whenever the site's own legal texts change. */
-  updated: { tr: "16 Eylül 2026", en: "16 September 2026" },
+  updated: { tr: "6 Ekim 2026", en: "6 October 2026" },
 };
 
 /**
