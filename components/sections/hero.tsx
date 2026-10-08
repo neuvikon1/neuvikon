@@ -141,7 +141,7 @@ export function Hero({ locale }: { locale: Locale }) {
                 <RisingWords inView={false}>{org.tagline}</RisingWords>
               </Title>
               <Reveal inView={false} delay={CUE.lead}>
-                <Text level="lead">{org.description}</Text>
+                <Text level="lead" className="text-sm md:text-sm">{org.description}</Text>
               </Reveal>
             </Stack>
 

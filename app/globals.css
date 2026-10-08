@@ -6,6 +6,38 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * The type scale, in pixels over a 12px root. The root is shrunk (see `html`
+ * below) so spacing reads tight, but the stock `--text-*` sizes are rem too and
+ * would shrink with it. These set every size, and the line height that goes
+ * with it, in pixels - written as `px / 12` in rem so they still follow the
+ * reader's browser font setting.
+ *
+ * Sizes and leading follow elevenlabs.io: 15/22 body, 16/24 and 18/26 lead,
+ * 13/18 captions, 36/42 section heads and a 48/52 display that steps down to
+ * 36/42 and 30/36 on small screens.
+ */
+@theme {
+  --text-xs: calc(13rem / 12);
+  --text-xs--line-height: calc(18 / 13);
+  --text-sm: calc(15rem / 12);
+  --text-sm--line-height: calc(22 / 15);
+  --text-base: calc(16rem / 12);
+  --text-base--line-height: calc(24 / 16);
+  --text-lg: calc(18rem / 12);
+  --text-lg--line-height: calc(26 / 18);
+  --text-xl: calc(20rem / 12);
+  --text-xl--line-height: calc(27 / 20);
+  --text-2xl: calc(24rem / 12);
+  --text-2xl--line-height: calc(30 / 24);
+  --text-3xl: calc(30rem / 12);
+  --text-3xl--line-height: calc(36 / 30);
+  --text-4xl: calc(36rem / 12);
+  --text-4xl--line-height: calc(42 / 36);
+  --text-5xl: calc(48rem / 12);
+  --text-5xl--line-height: calc(52 / 48);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -141,8 +173,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* 12px root. Not `text-xs`: that token is now 12px expressed against this
+     root, which on the root itself would resolve against the browser's 16px. */
   html {
-    @apply font-sans text-xs;
+    @apply font-sans;
+    font-size: 0.75rem;
+    line-height: calc(1 / 0.75);
   }
 }
 @layer components {
@@ -196,31 +232,12 @@
 }
 
 @layer components {
-  /*
-   * Reading position, as a hairline under the header. A scroll-driven CSS
-   * animation rather than a subscription: it runs off the compositor, so the
-   * one element on the page that updates on every single frame costs no
-   * JavaScript and cannot stutter under a heavy section.
-   *
-   * It is drawn only where the timeline exists. Without support the bar stays
-   * at zero width, which is the design the site had before it.
-   */
-  .scroll-progress {
-    transform: scaleX(0);
-    transform-origin: left center;
-  }
-
   /* The header earns its edge once there is something scrolled behind it. */
   .header-edge {
     opacity: 0;
   }
 
   @supports (animation-timeline: scroll()) {
-    .scroll-progress {
-      animation: progress-x linear both;
-      animation-timeline: scroll(root block);
-    }
-
     .header-edge {
       animation: header-edge linear both;
       animation-timeline: scroll(root block);
@@ -243,14 +260,6 @@
   }
 }
 
-@keyframes progress-x {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
 
 @keyframes header-edge {
   from {

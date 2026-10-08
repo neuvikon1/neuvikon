@@ -111,6 +111,8 @@ export const ui = {
     projectCount: (n: number) => `${n} proje`,
     inPrototype: "Prototip aşamasında",
     explore: "Bölümü incele",
+    viewMore: (n: number) => `${n} proje daha göster`,
+    viewLess: "Daha az göster",
     capabilities: "Yetkinlikler",
     noPublicProjects: "Yayında proje yok",
     noPublicProjectsBody:
@@ -172,6 +174,8 @@ export const ui = {
     projectCount: (n: number) => (n === 1 ? "1 project" : `${n} projects`),
     inPrototype: "In prototype",
     explore: "Explore the division",
+    viewMore: (n: number) => (n === 1 ? "View 1 more project" : `View ${n} more projects`),
+    viewLess: "View less",
     capabilities: "Capabilities",
     noPublicProjects: "No public projects",
     noPublicProjectsBody:

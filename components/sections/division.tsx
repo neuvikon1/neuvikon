@@ -12,6 +12,7 @@ import {
   RevealRow,
 } from "@/components/motion/reveal";
 import { RisingWords } from "@/components/motion/rising-words";
+import { ProjectGrid } from "@/components/sections/project-grid";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Card, CardContent } from "@/components/ui/card";
@@ -267,8 +268,12 @@ export function DivisionSection({
             <Reveal still>
               <Eyebrow>{t.projectCount(projects.length)}</Eyebrow>
             </Reveal>
-            <RevealGroup
-              stagger={0.06}
+            {/* On the home page a long division shows six and keeps the rest
+                behind a button; its own page lists everything. */}
+            <ProjectGrid
+              limit={as === "h2" ? 6 : undefined}
+              moreLabel={t.viewMore(projects.length - 6)}
+              lessLabel={t.viewLess}
               className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3"
             >
               {projects.map((project) => (
@@ -279,7 +284,7 @@ export function DivisionSection({
                   <ProjectCard project={project} locale={locale} divisionSlug={division.slug} />
                 </RevealCell>
               ))}
-            </RevealGroup>
+            </ProjectGrid>
           </Stack>
         ) : (
           /* Robotics has no public project yet; say so rather than hide the

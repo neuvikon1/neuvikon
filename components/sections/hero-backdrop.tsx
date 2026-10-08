@@ -69,8 +69,8 @@ const RAYS = {
   },
   light: {
     polarity: "tint",
-    rayColor1: "#d89a2e",
-    rayColor2: "#2f6fd8",
+    rayColor1: "#3f7a45",
+    rayColor2: "#3a8a70",
     intensity: 2.4,
     saturation: 1.9,
     blend: 0.64,

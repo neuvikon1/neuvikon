@@ -6,6 +6,9 @@ import { cn } from "cn"
  * level, never a font size. Measure (max-width) travels with the level, since
  * the comfortable line length is a property of the size.
  *
+ * Line height comes with the size (see the type scale in globals.css), so a
+ * level never sets its own leading.
+ *
  * None of these carry vertical margin; spacing is the job of the layout
  * primitives (Stack, Section) so rhythm stays consistent across sections.
  */
@@ -24,11 +27,11 @@ const titleVariants = cva("tracking-tight text-balance", {
   variants: {
     level: {
       /** Page-opening statement. One per page. */
-      display: "max-w-4xl text-3xl leading-[1.02] md:text-4xl xl:text-5xl",
+      display: "max-w-4xl text-4xl lg:text-5xl",
       /** Section headline. */
-      section: "max-w-xl text-4xl leading-[1.1]",
+      section: "max-w-xl text-3xl md:text-4xl",
       /** Subsection or card headline. */
-      sub: "max-w-md text-2xl leading-[1.2]",
+      sub: "max-w-md text-2xl",
     },
   },
   defaultVariants: { level: "section" },
@@ -53,9 +56,9 @@ const textVariants = cva("text-muted-foreground", {
   variants: {
     level: {
       /** Supporting paragraph under a display title. */
-      lead: "max-w-xl text-base leading-relaxed md:text-lg",
+      lead: "max-w-xl text-base md:text-lg",
       /** Body copy. */
-      body: "max-w-prose text-sm leading-relaxed",
+      body: "max-w-prose text-sm",
     },
   },
   defaultVariants: { level: "body" },

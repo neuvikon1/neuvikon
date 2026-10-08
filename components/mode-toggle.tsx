@@ -91,7 +91,7 @@ function ModeToggle({ label }: { label: string }) {
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       size="icon"
       aria-label={label}
       onClick={toggle}

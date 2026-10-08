@@ -92,11 +92,15 @@ export function useCurrentItem(
  * hairline the grid is drawn in, and it is doing the same job the rails do -
  * saying where you are.
  */
-export function SiteNav({ items, label }: { items: NavItem[]; label: string }) {
+export function SiteNav({
+  items,
+  label,
+  className,
+}: { items: NavItem[]; label: string; className?: string }) {
   const current = useCurrentItem(items);
 
   return (
-    <nav aria-label={label} className="hidden items-center gap-6 md:flex">
+    <nav aria-label={label} className={cn("hidden items-center gap-[calc(16rem/12)] md:flex", className)}>
       {items.map((item) => {
         const isCurrent = item === current?.item;
         return (
@@ -106,7 +110,7 @@ export function SiteNav({ items, label }: { items: NavItem[]; label: string }) {
             lang={item.lang}
             aria-current={isCurrent ? current?.ariaCurrent : undefined}
             className={cn(
-              "relative py-1 text-sm transition-colors duration-300",
+              "relative py-1 text-[calc(14rem/12)] leading-[calc(21/14)] transition-colors duration-300",
               isCurrent ? "text-foreground" : "text-muted-foreground hover:text-foreground",
             )}
           >
