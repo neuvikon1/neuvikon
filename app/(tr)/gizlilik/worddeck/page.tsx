@@ -4,7 +4,7 @@ import { getContent } from "@/lib/content";
 
 const { org } = getContent("tr");
 
-const UPDATED = "6 Ekim 2026";
+const UPDATED = "10 Ekim 2026";
 
 /**
  * WordDeck'in gizlilik politikası — uygulamanın Ayarlar ekranındaki
@@ -100,7 +100,8 @@ export default function WordDeckPrivacyPage() {
 
       <LegalSection title="Reklamlar">
         <p>Uygulama Google AdMob reklamları gösterir: ana ekranların altında bir banner
-          ve bir çalışma oturumunu bitirdiğinizde zaman zaman tam ekran bir reklam.
+          ve bir çalışma oturumunu ya da testi bitirdiğinizde zaman zaman tam ekran
+          bir reklam.
           Google, reklamı sunmak için gerekenleri alır — cihazınızın reklam kimliği, cihaz
           türü ve IP adresinden çıkarılan kaba bir konum — ve bu verileri kendi gizlilik
           politikasına göre işler. Biz yalnızca kişiselleştirilmemiş reklam isteriz; yani

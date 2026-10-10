@@ -4,7 +4,7 @@ import { getContent } from "@/lib/content";
 
 const { org } = getContent("en");
 
-const UPDATED = "6 October 2026";
+const UPDATED = "10 October 2026";
 
 /** İngilizcesi; gerekçe Türkçe sayfanın başında (`/gizlilik/worddeck`). */
 
@@ -82,7 +82,8 @@ export default function WordDeckPrivacyPage() {
 
       <LegalSection title="Advertising">
         <p>The app shows adverts from Google AdMob: a banner at the bottom of the main
-          screens, and occasionally a full-screen advert when you finish a study session.
+          screens, and occasionally a full-screen advert when you finish a study session or
+          a test.
           Google receives what it needs to serve them — your device&apos;s advertising
           identifier, its type, and a coarse location derived from the IP address — and
           its use of that data is governed by Google&apos;s own privacy policy, not by ours. We
