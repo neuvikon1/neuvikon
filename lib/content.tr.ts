@@ -34,14 +34,7 @@ export const divisions: Division[] = [
       "Games bölümü mobil için kısa oturumlu, öğrenmesi birkaç saniye süren " +
       "ama ustalaşması uzun süren oyunlar üretiyor. Tasarımdan ağ katmanına, " +
       "görsellerden mağaza yayınına kadar her aşama stüdyo içinde yapılıyor.",
-    capabilities: [
-      "Unity 6 ile mobil oyun geliştirme — URP 2D, Input System",
-      "Çok oyunculu ağ mimarisi — Netcode for GameObjects, Mirror, Unity Relay",
-      "React Native + Expo ile mobil oyun; Firestore oda senkronizasyonu",
-      "Prosedürel görsel ve ses üretimi, kodla kurulan arayüz",
-      "Sunucu yetkili kural motorları, eşleştirme ve MMR/ELO",
-      "Erişilebilirlik, çift dil (TR/EN) ve mağaza yayın süreçleri",
-    ],
+    capabilities: [],
     projects: [
       {
         name: "PushBump",
@@ -186,14 +179,7 @@ export const divisions: Division[] = [
       "Tech tarafında ürünün tamamını üstleniyoruz: arayüz, sunucu, veri ve " +
       "dağıtım. Küçük ekiple çalıştığımız için karmaşıklığı baştan " +
       "sınırlamayı, çalışan bir sürümü erken çıkarmayı tercih ediyoruz.",
-    capabilities: [
-      "Web uygulamaları — TypeScript, React, Next.js, Angular",
-      "Mobil uygulamalar — React Native, Expo",
-      "Arka uç ve gerçek zamanlı servisler — Node.js, Bun, Firebase",
-      "Veri toplama, puanlama ve rapor üretimi — Python",
-      "Bilgisayarlı görü ve hareketle etkileşim",
-      "CI/CD, sürüm yönetimi ve mağaza yayın süreçleri",
-    ],
+    capabilities: [],
     projects: [
       {
         name: "Today's Word",

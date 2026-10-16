@@ -34,14 +34,7 @@ export const divisions: Division[] = [
       "Games builds short-session mobile games that take seconds to learn and " +
       "a long time to master. Every stage happens inside the studio: design, " +
       "networking, art and store release.",
-    capabilities: [
-      "Mobile game development in Unity 6 — URP 2D, Input System",
-      "Multiplayer architecture — Netcode for GameObjects, Mirror, Unity Relay",
-      "Mobile games in React Native + Expo, with Firestore room sync",
-      "Procedural art and audio; interfaces built in code",
-      "Server-authoritative rule engines, matchmaking and MMR/ELO",
-      "Accessibility, two languages (TR/EN) and store release pipelines",
-    ],
+    capabilities: [],
     projects: [
       {
         name: "PushBump",
@@ -186,14 +179,7 @@ export const divisions: Division[] = [
       "On the Tech side we take on the whole product: interface, server, data " +
       "and deployment. Because the team is small we cap complexity early and " +
       "prefer shipping something that works over something that is complete.",
-    capabilities: [
-      "Web applications — TypeScript, React, Next.js, Angular",
-      "Mobile applications — React Native, Expo",
-      "Backend and real-time services — Node.js, Bun, Firebase",
-      "Data collection, scoring and report generation — Python",
-      "Computer vision and gesture interaction",
-      "CI/CD, release management and store submission",
-    ],
+    capabilities: [],
     projects: [
       {
         name: "Today's Word",
