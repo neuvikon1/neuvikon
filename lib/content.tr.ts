@@ -53,21 +53,38 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Arena", "Aksiyon", "Çok oyunculu", "Mobil"],
         image: "/apps/pushbump.png",
+        media: [
+          { src: "/media/pushbump/store-en-01.jpg", alt: "Push. Bump. Win. — arcade şekil dövüşü" },
+          { src: "/media/pushbump/store-en-02.jpg", alt: "17 eşsiz şekil kahraman" },
+          { src: "/media/pushbump/store-en-03.jpg", alt: "Kahramanını seç" },
+          { src: "/media/pushbump/store-en-04.jpg", alt: "Sonsuz dalgalara dayan" },
+          { src: "/media/pushbump/store-en-05.jpg", alt: "Seviye atla, yapını güçlendir" },
+          { src: "/media/pushbump/store-en-06.jpg", alt: "Efsanevi görünümleri aç" },
+          { src: "/media/pushbump/store-en-07.jpg", alt: "Günlük ödüller, görevler ve seriler" },
+        ],
       },
       {
         name: "Neu-Pummel Party",
-        tagline: "İki ila sekiz telefon, otuz mini oyun, tek oda.",
+        tagline: "İki ila sekiz telefon, kırk mini oyun, tek oda.",
         description:
           "Telefonlarla oynanan parti oyunu. Biri oda kurar, herkes aynı " +
           "Wi-Fi'deki listeden katılır — IP yazmak yok, hesap açmak yok; " +
           "internet üzerinden oynamak için altı haneli oda kodu var. Her " +
-          "turda otuz mini oyundan biri gelir, her birinin üç arena varyantı " +
+          "turda kırk mini oyundan biri gelir, her birinin üç arena varyantı " +
           "ve bot yapay zekâsı vardır. Depoda tek bir ikili sanat varlığı " +
           "yok: tüm görseller ve sesler çalışma anında kodla üretiliyor. " +
           "Reklam ve uygulama içi satın alma yok.",
         status: "building",
         tags: ["Parti oyunu", "Mini oyunlar", "Yerel çok oyunculu", "2-8 oyuncu"],
         image: "/apps/neuparty.png",
+        media: [
+          { src: "/media/neu-pummel-party/store-tr-01.jpg", alt: "40 mini oyun, tek parti" },
+          { src: "/media/neu-pummel-party/store-tr-02.jpg", alt: "Aynı Wi-Fi, anında oda" },
+          { src: "/media/neu-pummel-party/store-tr-03.jpg", alt: "Hızlı düşün, hızlı dokun" },
+          { src: "/media/neu-pummel-party/store-tr-04.jpg", alt: "Her tur yeni bir oyun" },
+          { src: "/media/neu-pummel-party/store-tr-05.jpg", alt: "Takım 2v2 ve Grand Prix" },
+          { src: "/media/neu-pummel-party/store-tr-06.jpg", alt: "Reklam yok, sadece parti" },
+        ],
       },
       {
         name: "UnderCard",
@@ -131,6 +148,14 @@ export const divisions: Division[] = [
           },
         ],
         media: [
+          { src: "/media/guessfast/store-tr-01.jpg", alt: "5 zekâ oyunu tek uygulamada" },
+          { src: "/media/guessfast/store-tr-02.jpg", alt: "Gizli sayıyı çöz" },
+          { src: "/media/guessfast/store-tr-03.jpg", alt: "Ne kadar yakınsan o kadar puan" },
+          { src: "/media/guessfast/store-tr-04.jpg", alt: "Her gün yeni bir film" },
+          { src: "/media/guessfast/store-tr-05.jpg", alt: "Ünlüyü ipuçlarından bul" },
+          { src: "/media/guessfast/store-tr-06.jpg", alt: "Hangisi daha çok?" },
+          { src: "/media/guessfast/store-tr-07.jpg", alt: "Paylaş, sıralamada yüksel" },
+          { src: "/media/guessfast/store-tr-08.jpg", alt: "Seviye atla, başarım topla" },
           { src: "/media/guessfast/01.jpg", alt: "Ana menü" },
           { src: "/media/guessfast/02.jpg", alt: "Pratik oyunu: her tahminden sonra doğru rakam sayısı" },
           { src: "/media/guessfast/03.jpg", alt: "Göstergeli mod: doğru yerdeki rakamlar yeşil, yanlış yerdekiler sarı" },
@@ -183,6 +208,12 @@ export const divisions: Division[] = [
         image: "/apps/todays-word.jpg",
         links: [{ label: "App Store", href: "https://apps.apple.com/app/todays-word-learn-everyday/id6810232514" }],
         media: [
+          { src: "/media/today-s-word/store-tr-01.jpg", alt: "Her gün yeni bir kelime" },
+          { src: "/media/today-s-word/store-tr-02.jpg", alt: "Gerçek cümlelerde gör" },
+          { src: "/media/today-s-word/store-tr-03.jpg", alt: "Nereden geldiğini öğren" },
+          { src: "/media/today-s-word/store-tr-04.jpg", alt: "Kalıcı olsun diye kısa bir test" },
+          { src: "/media/today-s-word/store-tr-05.jpg", alt: "Seni affeden bir seri" },
+          { src: "/media/today-s-word/store-tr-06.jpg", alt: "Unutulmayan kelimeler" },
           { src: "/media/today-s-word/01.jpg", alt: "Günün kelimesi" },
           { src: "/media/today-s-word/02.jpg", alt: "Kelimenin geçmişi" },
           { src: "/media/today-s-word/03.jpg", alt: "Tekrar testi" },
@@ -209,6 +240,12 @@ export const divisions: Division[] = [
         image: "/apps/worddeck.png",
         links: [{ label: "Gizlilik Politikası", href: "/gizlilik/worddeck" }],
         media: [
+          { src: "/media/worddeck/store-tr-01.jpg", alt: "Sınav kelimelerini kalıcı öğren" },
+          { src: "/media/worddeck/store-tr-02.jpg", alt: "Kartı çevir, anlamını gör" },
+          { src: "/media/worddeck/store-tr-03.jpg", alt: "Unutmadan önce tekrar et" },
+          { src: "/media/worddeck/store-tr-04.jpg", alt: "Sınav tarzı testler" },
+          { src: "/media/worddeck/store-tr-05.jpg", alt: "Gramer, sınavın diliyle" },
+          { src: "/media/worddeck/store-tr-06.jpg", alt: "Her gün biraz, seri bozulmasın" },
           { src: "/media/worddeck/01.png", alt: "Günlük deste ekranı" },
           { src: "/media/worddeck/02.png", alt: "Kelime kartı (ön yüz)" },
           { src: "/media/worddeck/03.png", alt: "Kartın arka yüzü ve tekrar aralığı seçimi" },
@@ -245,6 +282,12 @@ export const divisions: Division[] = [
         tags: ["Alışkanlık takibi", "Kişisel gelişim", "Oyunlaştırma"],
         image: "/apps/eclosion.png",
         media: [
+          { src: "/media/eclosion/store-tr-01.jpg", alt: "Hayatını seviye atla" },
+          { src: "/media/eclosion/store-tr-02.jpg", alt: "Her görev XP kazandırır" },
+          { src: "/media/eclosion/store-tr-03.jpg", alt: "Her seviye bir asker" },
+          { src: "/media/eclosion/store-tr-04.jpg", alt: "Üç gölge, tek elit" },
+          { src: "/media/eclosion/store-tr-05.jpg", alt: "Tek yemin, tek ejderha" },
+          { src: "/media/eclosion/store-tr-06.jpg", alt: "Seri bozulmasın" },
           { src: "/media/eclosion/01.png", alt: "Dünya seçimi: Gölge Ordusu önizlemesi ve günlük görevler" },
           { src: "/media/eclosion/02.png", alt: "Günün görevleri: rütbe, XP ve alan filtreleri" },
           { src: "/media/eclosion/03.png", alt: "Altı gelişim alanını gösteren durum radarı" },

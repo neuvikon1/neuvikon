@@ -53,21 +53,38 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Arena", "Action", "Multiplayer", "Mobile"],
         image: "/apps/pushbump.png",
+        media: [
+          { src: "/media/pushbump/store-en-01.jpg", alt: "Push. Bump. Win. — an arcade shape brawler" },
+          { src: "/media/pushbump/store-en-02.jpg", alt: "17 unique shape heroes" },
+          { src: "/media/pushbump/store-en-03.jpg", alt: "Pick your hero" },
+          { src: "/media/pushbump/store-en-04.jpg", alt: "Survive endless waves" },
+          { src: "/media/pushbump/store-en-05.jpg", alt: "Level up your build" },
+          { src: "/media/pushbump/store-en-06.jpg", alt: "Unlock legendary skins" },
+          { src: "/media/pushbump/store-en-07.jpg", alt: "Daily rewards, quests and streaks" },
+        ],
       },
       {
         name: "Neu-Pummel Party",
-        tagline: "Two to eight phones, thirty minigames, one room.",
+        tagline: "Two to eight phones, forty minigames, one room.",
         description:
           "A party game played on phones. One person hosts, everyone else " +
           "joins from a list on the same Wi-Fi — no IP addresses, no accounts; " +
           "a six-digit room code covers play over the internet. Each round " +
-          "pulls one of thirty minigames, and every game has three arena " +
+          "pulls one of forty minigames, and every game has three arena " +
           "variants and its own bot AI. There is not a single binary art " +
           "asset in the repository: all visuals and sound are generated in " +
           "code at runtime. No ads, no in-app purchases.",
         status: "building",
         tags: ["Party game", "Minigames", "Local multiplayer", "2-8 players"],
         image: "/apps/neuparty.png",
+        media: [
+          { src: "/media/neu-pummel-party/store-en-01.jpg", alt: "40 minigames, one party" },
+          { src: "/media/neu-pummel-party/store-en-02.jpg", alt: "Same Wi-Fi, instant room" },
+          { src: "/media/neu-pummel-party/store-en-03.jpg", alt: "Think fast, tap faster" },
+          { src: "/media/neu-pummel-party/store-en-04.jpg", alt: "A new game every round" },
+          { src: "/media/neu-pummel-party/store-en-05.jpg", alt: "Team 2v2 and Grand Prix" },
+          { src: "/media/neu-pummel-party/store-en-06.jpg", alt: "No ads, just party" },
+        ],
       },
       {
         name: "UnderCard",
@@ -131,6 +148,14 @@ export const divisions: Division[] = [
           },
         ],
         media: [
+          { src: "/media/guessfast/store-en-01.jpg", alt: "5 brain games in one app" },
+          { src: "/media/guessfast/store-en-02.jpg", alt: "Crack the secret number" },
+          { src: "/media/guessfast/store-en-03.jpg", alt: "The closer you get, the more you score" },
+          { src: "/media/guessfast/store-en-04.jpg", alt: "A new movie every day" },
+          { src: "/media/guessfast/store-en-05.jpg", alt: "Guess the famous person" },
+          { src: "/media/guessfast/store-en-06.jpg", alt: "Which one is more?" },
+          { src: "/media/guessfast/store-en-07.jpg", alt: "Share and climb the leaderboard" },
+          { src: "/media/guessfast/store-en-08.jpg", alt: "Level up, unlock achievements" },
           { src: "/media/guessfast/01.jpg", alt: "Main menu" },
           { src: "/media/guessfast/02.jpg", alt: "Practice game: how many digits are right after each guess" },
           { src: "/media/guessfast/03.jpg", alt: "Indicator mode: right place in green, wrong place in yellow" },
@@ -183,6 +208,12 @@ export const divisions: Division[] = [
         image: "/apps/todays-word.jpg",
         links: [{ label: "App Store", href: "https://apps.apple.com/app/todays-word-learn-everyday/id6810232514" }],
         media: [
+          { src: "/media/today-s-word/store-en-01.jpg", alt: "One new word every day" },
+          { src: "/media/today-s-word/store-en-02.jpg", alt: "See it in real sentences" },
+          { src: "/media/today-s-word/store-en-03.jpg", alt: "Where it comes from" },
+          { src: "/media/today-s-word/store-en-04.jpg", alt: "A little quiz to make it stick" },
+          { src: "/media/today-s-word/store-en-05.jpg", alt: "A streak that forgives you" },
+          { src: "/media/today-s-word/store-en-06.jpg", alt: "Words that stay" },
           { src: "/media/today-s-word/01.jpg", alt: "The word of the day" },
           { src: "/media/today-s-word/02.jpg", alt: "Where the word comes from" },
           { src: "/media/today-s-word/03.jpg", alt: "Review quiz" },
@@ -209,6 +240,12 @@ export const divisions: Division[] = [
         image: "/apps/worddeck.png",
         links: [{ label: "Privacy Policy", href: "/en/privacy/worddeck" }],
         media: [
+          { src: "/media/worddeck/store-tr-01.jpg", alt: "Learn exam words for good" },
+          { src: "/media/worddeck/store-tr-02.jpg", alt: "Flip the card, see the meaning" },
+          { src: "/media/worddeck/store-tr-03.jpg", alt: "Review before you forget" },
+          { src: "/media/worddeck/store-tr-04.jpg", alt: "Exam-style tests" },
+          { src: "/media/worddeck/store-tr-05.jpg", alt: "Grammar in the language of the exam" },
+          { src: "/media/worddeck/store-tr-06.jpg", alt: "A little every day, keep the streak" },
           { src: "/media/worddeck/01.png", alt: "Today's deck" },
           { src: "/media/worddeck/02.png", alt: "Flashcard, front" },
           { src: "/media/worddeck/03.png", alt: "Card back with the spaced-repetition rating" },
@@ -247,6 +284,12 @@ export const divisions: Division[] = [
         tags: ["Habit tracker", "Self-improvement", "Gamified"],
         image: "/apps/eclosion.png",
         media: [
+          { src: "/media/eclosion/store-tr-01.jpg", alt: "Level up your life" },
+          { src: "/media/eclosion/store-tr-02.jpg", alt: "Every quest earns XP" },
+          { src: "/media/eclosion/store-tr-03.jpg", alt: "Every level is a soldier" },
+          { src: "/media/eclosion/store-tr-04.jpg", alt: "Three shadows, one elite" },
+          { src: "/media/eclosion/store-tr-05.jpg", alt: "One oath, one dragon" },
+          { src: "/media/eclosion/store-tr-06.jpg", alt: "Keep the streak" },
           { src: "/media/eclosion/01.png", alt: "World selection: the Shadow Army preview and daily quests" },
           { src: "/media/eclosion/02.png", alt: "Daily quests with rank, XP and area filters" },
           { src: "/media/eclosion/03.png", alt: "Status radar for the six development areas" },
