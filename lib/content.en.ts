@@ -323,14 +323,7 @@ export const divisions: Division[] = [
       "Robotics works where hardware meets software: systems that read " +
       "sensors, decide, and then do something in the physical world. The " +
       "focus is on shortening the road from prototype to working device.",
-    capabilities: [
-      "Embedded software — ESP32 / ESP32-S3, C++, FreeRTOS",
-      "Sensor fusion and control loops — IMU, compass, ToF",
-      "Device-to-cloud and device-to-desktop links — WebSocket, BLE, USB HID",
-      "Over-the-air firmware updates and modular firmware architecture",
-      "ROS 2 / Gazebo simulation, motion planning and navigation",
-      "Kinematic analysis and workspace visualisation",
-    ],
+    capabilities: [],
     projects: [],
   },
 ];

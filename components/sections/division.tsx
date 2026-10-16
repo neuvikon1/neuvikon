@@ -245,23 +245,25 @@ export function DivisionSection({
           )}
         </Stack>
 
-        <RevealGroup stagger={0.05} className="w-full">
-          <Stack gap="sm" className="w-full">
-            <RevealItem still>
-              <Eyebrow>{t.capabilities}</Eyebrow>
-            </RevealItem>
-            <ul className="grid w-full gap-x-10 gap-y-2 md:grid-cols-2">
-              {division.capabilities.map((capability) => (
-                <RevealRow
-                  key={capability}
-                  className="border-t border-rule py-2 text-sm text-muted-foreground"
-                >
-                  {capability}
-                </RevealRow>
-              ))}
-            </ul>
-          </Stack>
-        </RevealGroup>
+        {division.capabilities.length > 0 && (
+          <RevealGroup stagger={0.05} className="w-full">
+            <Stack gap="sm" className="w-full">
+              <RevealItem still>
+                <Eyebrow>{t.capabilities}</Eyebrow>
+              </RevealItem>
+              <ul className="grid w-full gap-x-10 gap-y-2 md:grid-cols-2">
+                {division.capabilities.map((capability) => (
+                  <RevealRow
+                    key={capability}
+                    className="border-t border-rule py-2 text-sm text-muted-foreground"
+                  >
+                    {capability}
+                  </RevealRow>
+                ))}
+              </ul>
+            </Stack>
+          </RevealGroup>
+        )}
 
         {projects.length > 0 ? (
           <Stack gap="sm" className="w-full">

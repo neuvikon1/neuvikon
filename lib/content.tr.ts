@@ -320,14 +320,7 @@ export const divisions: Division[] = [
       "Robotics bölümü donanımla yazılımın kesiştiği yerde çalışıyor: sensör " +
       "okuyan, karar veren ve fiziksel dünyada bir şey yapan sistemler. " +
       "Prototipten çalışan cihaza kadar olan yolu kısaltmaya odaklanıyoruz.",
-    capabilities: [
-      "Gömülü yazılım — ESP32 / ESP32-S3, C++, FreeRTOS",
-      "Sensör füzyonu ve kontrol döngüleri — IMU, pusula, ToF",
-      "Cihaz–bulut ve cihaz–masaüstü haberleşmesi — WebSocket, BLE, USB HID",
-      "Kablosuz (OTA) firmware güncelleme ve modüler firmware mimarisi",
-      "ROS 2 / Gazebo simülasyonu, hareket planlama ve navigasyon",
-      "Kinematik analiz ve çalışma alanı görselleştirme",
-    ],
+    capabilities: [],
     projects: [],
   },
 ];
