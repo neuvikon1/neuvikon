@@ -80,6 +80,32 @@ export const divisions: Division[] = [
         ],
       },
       {
+        name: "Shardbound",
+        tagline: "Her öldürülen bir ruh bırakır. Her ruh yeniden ayağa kalkabilir.",
+        description:
+          "PC ve Android için yukarıdan bakışlı bir roguelite zindan oyunu. " +
+          "Beş kahraman, dallanan odalardan oluşan üç bölüm, elitler, mini " +
+          "boss'lar ve boss'lar. Nekromansör düşenleri gölge ordusu olarak " +
+          "diriltiyor; ordu seviye atlıyor, ekipman kuşanıyor ve diziliş " +
+          "emirleri alıyor. Koşular arasında kamptaki kalıcı geliştirmeler " +
+          "kristallerle alınıyor; Heat ayarları her yeni koşuyu daha zor ve " +
+          "daha ödüllü yapıyor.",
+        status: "building",
+        tags: ["Roguelite", "Zindan", "Aksiyon", "PC", "Android"],
+        image: "/apps/shardbound.png",
+        media: [
+          { src: "/media/shardbound/01.jpg", alt: "Kamp: ateşin başında kahramanını seç", wide: true },
+          { src: "/media/shardbound/02.jpg", alt: "Kahraman paneli: Nekromansör ve Arise yeteneği", wide: true },
+          { src: "/media/shardbound/03.jpg", alt: "1. bölüm haritası: Yosunlu Katakomplar, yolunu seç", wide: true },
+          { src: "/media/shardbound/04.jpg", alt: "Nekromansör dört iskeletle odaya giriyor", wide: true },
+          { src: "/media/shardbound/05.jpg", alt: "Çatışma: gölge ordusu goblinlere ve yaban domuzuna karşı", wide: true },
+          { src: "/media/shardbound/06.jpg", alt: "Kutsama seçimi: yol için bir lütuf", wide: true },
+          { src: "/media/shardbound/07.jpg", alt: "Gölge Ordusu: seviye, ekipman ve diziliş emirleri", wide: true },
+          { src: "/media/shardbound/08.jpg", alt: "Demirhane: kalıcı geliştirmeler ve silah planları", wide: true },
+          { src: "/media/shardbound/09.jpg", alt: "Üç bölümün boss'ları ve mini boss'ları", wide: true },
+        ],
+      },
+      {
         name: "UnderCard",
         tagline: "Elin en düşükse çağır. Değilse kaybettin.",
         description:

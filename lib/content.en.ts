@@ -80,6 +80,31 @@ export const divisions: Division[] = [
         ],
       },
       {
+        name: "Shardbound",
+        tagline: "Every kill leaves a soul. Every soul can stand back up.",
+        description:
+          "A top-down roguelite dungeon crawler for PC and Android. Five " +
+          "heroes, three acts of branching rooms, elites, mini-bosses and " +
+          "bosses. The Necromancer raises the fallen as a shadow army that " +
+          "levels up, wears gear and takes formation orders. Between runs, " +
+          "shards buy permanent upgrades at the camp; Heat modifiers make " +
+          "each new run harder and better paid.",
+        status: "building",
+        tags: ["Roguelite", "Dungeon crawler", "Action", "PC", "Android"],
+        image: "/apps/shardbound.png",
+        media: [
+          { src: "/media/shardbound/01.jpg", alt: "Camp: choose your hero around the fire", wide: true },
+          { src: "/media/shardbound/02.jpg", alt: "Hero panel: the Necromancer and the Arise skill", wide: true },
+          { src: "/media/shardbound/03.jpg", alt: "Act 1 map: Mossy Catacombs, choose your path", wide: true },
+          { src: "/media/shardbound/04.jpg", alt: "The Necromancer enters a room with four skeletons", wide: true },
+          { src: "/media/shardbound/05.jpg", alt: "Fight: the shadow army against goblins and a boar", wide: true },
+          { src: "/media/shardbound/06.jpg", alt: "Choose a blessing: one boon for the road ahead", wide: true },
+          { src: "/media/shardbound/07.jpg", alt: "Shadow Army: levels, gear and formation orders", wide: true },
+          { src: "/media/shardbound/08.jpg", alt: "The Forge: permanent upgrades and weapon blueprints", wide: true },
+          { src: "/media/shardbound/09.jpg", alt: "Bosses and mini-bosses across the three acts", wide: true },
+        ],
+      },
+      {
         name: "UnderCard",
         tagline: "Call it when your hand is lowest. Be wrong and you lose.",
         description:
