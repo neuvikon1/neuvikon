@@ -159,6 +159,34 @@ export const divisions: Division[] = [
         ],
       },
       {
+        name: "Kor ve Kül",
+        tagline: "Ateşi harla ya da soğut — onda taşar.",
+        description:
+          "Türk-Altay mitolojisinden beslenen, dikey ekran mobil roguelike " +
+          "deste kurma oyunu. Genç ocak bekçisi Alaz, sönmüş Ulu Ocak'ı yeniden " +
+          "yakmak için yeraltına iner ve oradaki yaratıklarla kartlarla " +
+          "savaşır. Her savaşın kalbinde Isı var: turlar arasında kalır, " +
+          "yükseldikçe Alaz'ı güçlendirir, ama 10'a ulaşınca taşar ve patlar; " +
+          "soğutmak ise boşaltılan ısıyı blok ya da hasara çevirir. Dallanan " +
+          "harita, olaylar, tüccar, dinlenip kart dövülen ocak, tılsımlar ve " +
+          "boss'lar.",
+        status: "building",
+        tags: ["Roguelike", "Deste kurma", "Türk mitolojisi", "Tek oyunculu"],
+        image: "/apps/kor-ve-kul.png",
+        media: [
+          { src: "/media/kor-ve-kul/01.jpg", alt: "Ana menü" },
+          { src: "/media/kor-ve-kul/02.jpg", alt: "Savaş: Isı göstergesi, enerji ve el" },
+          { src: "/media/kor-ve-kul/03.jpg", alt: "Kart yakın görünümü" },
+          { src: "/media/kor-ve-kul/04.jpg", alt: "Aşağıdan yukarı, boss'a tırmanılan harita" },
+          { src: "/media/kor-ve-kul/05.jpg", alt: "Olay: Yaşlı Kam" },
+          { src: "/media/kor-ve-kul/06.jpg", alt: "Ocak: dinlen ya da kart döv" },
+          { src: "/media/kor-ve-kul/07.jpg", alt: "Gezgin Tüccar" },
+          { src: "/media/kor-ve-kul/08.jpg", alt: "Hazine sandığı" },
+          { src: "/media/kor-ve-kul/09.jpg", alt: "Boss tılsımı seçimi" },
+          { src: "/media/kor-ve-kul/10.jpg", alt: "Zafer ve koşu özeti" },
+        ],
+      },
+      {
         name: "Muavin-Sim",
         tagline: "Direksiyonda değilsin — kapıdasın.",
         description:

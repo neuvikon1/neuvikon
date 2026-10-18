@@ -159,6 +159,34 @@ export const divisions: Division[] = [
         ],
       },
       {
+        name: "Kor ve Kül",
+        tagline: "Stoke the fire or cool it down — at ten, it overflows.",
+        description:
+          "A roguelike deckbuilder for portrait mobile, drawn from Turkic-Altai " +
+          "mythology. Alaz, a young hearth keeper, descends underground to " +
+          "relight the extinguished Great Hearth and fights its creatures with " +
+          "cards. At the heart of every fight is Heat: it carries over between " +
+          "turns and makes Alaz stronger as it climbs, but at ten it overflows " +
+          "and explodes, and cooling it down turns the spent heat into block " +
+          "or damage. A branching map, events, a merchant, a hearth to rest " +
+          "or forge at, relics and bosses.",
+        status: "building",
+        tags: ["Roguelike", "Deckbuilder", "Turkish mythology", "Single player"],
+        image: "/apps/kor-ve-kul.png",
+        media: [
+          { src: "/media/kor-ve-kul/01.jpg", alt: "Main menu" },
+          { src: "/media/kor-ve-kul/02.jpg", alt: "Combat: Heat gauge, energy and the hand" },
+          { src: "/media/kor-ve-kul/03.jpg", alt: "Card close-up" },
+          { src: "/media/kor-ve-kul/04.jpg", alt: "The map, climbed bottom to top toward the boss" },
+          { src: "/media/kor-ve-kul/05.jpg", alt: "Event: the Old Shaman" },
+          { src: "/media/kor-ve-kul/06.jpg", alt: "The hearth: rest or forge a card" },
+          { src: "/media/kor-ve-kul/07.jpg", alt: "The wandering merchant" },
+          { src: "/media/kor-ve-kul/08.jpg", alt: "Treasure chest" },
+          { src: "/media/kor-ve-kul/09.jpg", alt: "Boss relic choice" },
+          { src: "/media/kor-ve-kul/10.jpg", alt: "Victory and run summary" },
+        ],
+      },
+      {
         name: "Muavin-Sim",
         tagline: "You are not at the wheel — you are at the door.",
         description:
