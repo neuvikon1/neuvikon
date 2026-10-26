@@ -374,7 +374,7 @@ export const about: About = {
   facts: [
     { label: "Kuruluş", value: "2026" },
     { label: "Konum", value: "Türkiye" },
-    { label: "Ekip", value: "5 kişi" },
+    { label: "Ekip", value: "7 kişi" },
     { label: "Bölüm", value: "3" },
   ],
   principles: [
@@ -408,7 +408,7 @@ export const about: About = {
         "bırakılan erişilebilirlik hiç gelmiyor.",
     },
   ],
-  team: ["Vural Bilgin", "Oğulcan Bozkurt", "Arda Özan", "İrem Bozkurt", "Selinay Kıyak"],
+  team: ["Vural Bilgin", "Oğulcan Bozkurt", "Arda Özan", "İrem Bozkurt", "Selinay Kıyak", "Eylül Dardoğan", "Zeynep Saygı"],
 };
 
 export const careers: Careers = {

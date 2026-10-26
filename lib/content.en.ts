@@ -377,7 +377,7 @@ export const about: About = {
   facts: [
     { label: "Founded", value: "2026" },
     { label: "Location", value: "Türkiye" },
-    { label: "Team", value: "5 people" },
+    { label: "Team", value: "7 people" },
     { label: "Divisions", value: "3" },
   ],
   principles: [
@@ -412,7 +412,7 @@ export const about: About = {
     },
   ],
   /** No roles: in a studio this size everyone does several jobs. */
-  team: ["Vural Bilgin", "Oğulcan Bozkurt", "Arda Özan", "İrem Bozkurt", "Selinay Kıyak"],
+  team: ["Vural Bilgin", "Oğulcan Bozkurt", "Arda Özan", "İrem Bozkurt", "Selinay Kıyak", "Eylül Dardoğan", "Zeynep Saygı"],
 };
 
 export const careers: Careers = {
