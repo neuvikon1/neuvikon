@@ -331,14 +331,6 @@ export const divisions: Division[] = [
           { src: "/media/eclosion/05.png", alt: "Ödül mağazası: seri kalkanı ve kişisel ödüller" },
         ],
       },
-      {
-        name: "Neu-Chat",
-        tagline: "Stüdyonun kendi sohbet katmanı.",
-        description: "Sohbet uygulaması. Ayrıntılar yayına hazır olduğunda eklenecek.",
-        status: "building",
-        tags: ["Sohbet", "Mesajlaşma"],
-        image: "/apps/neu-chat.png",
-      },
     ],
   },
   {

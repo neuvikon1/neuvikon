@@ -332,15 +332,6 @@ export const divisions: Division[] = [
           { src: "/media/eclosion/05.png", alt: "Rewards shop: streak shields and personal rewards" },
         ],
       },
-      {
-        name: "Neu-Chat",
-        tagline: "The studio's own chat layer.",
-        description:
-          "A chat application. Details will be added once it is ready to show.",
-        status: "building",
-        tags: ["Chat", "Messaging"],
-        image: "/apps/neu-chat.png",
-      },
     ],
   },
   {
