@@ -261,6 +261,7 @@ export const divisions: Division[] = [
           "agent is working on and how many tokens it spent.",
         status: "released",
         tags: ["Developer tool", "Project management", "AI agents"],
+        image: "/apps/neu-source.png",
         links: [
           { label: "neuvikon.space", href: "https://www.neuvikon.space/" },
         ],

@@ -262,6 +262,7 @@ export const divisions: Division[] = [
           "çalıştığını ve ne kadar token harcadığını bildiriyor.",
         status: "released",
         tags: ["Geliştirici aracı", "Proje yönetimi", "Yapay zekâ ajanları"],
+        image: "/apps/neu-source.png",
         links: [{ label: "neuvikon.space", href: "https://www.neuvikon.space/" }],
         media: [
           { src: "/media/neu-source/01.png", alt: "Ana sayfa ve canlı ajan panosu", wide: true },
