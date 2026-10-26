@@ -211,16 +211,6 @@ export const divisions: Division[] = [
           { src: "/media/kor-ve-kul/10.jpg", alt: "Victory and run summary" },
         ],
       },
-      {
-        name: "Muavin-Sim",
-        tagline: "You are not at the wheel — you are at the door.",
-        description:
-          "A simulation game about working as a bus conductor. Details will " +
-          "be added once it is ready to show.",
-        status: "building",
-        tags: ["Simulation"],
-        image: "/apps/muavin-sim.png",
-      },
     ],
   },
   {

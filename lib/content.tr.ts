@@ -212,16 +212,6 @@ export const divisions: Division[] = [
           { src: "/media/kor-ve-kul/10.jpg", alt: "Zafer ve koşu özeti" },
         ],
       },
-      {
-        name: "Muavin-Sim",
-        tagline: "Direksiyonda değilsin — kapıdasın.",
-        description:
-          "Otobüs muavinliği üzerine simülasyon oyunu. Ayrıntılar yayına " +
-          "hazır olduğunda eklenecek.",
-        status: "building",
-        tags: ["Simülasyon"],
-        image: "/apps/muavin-sim.png",
-      },
     ],
   },
   {
