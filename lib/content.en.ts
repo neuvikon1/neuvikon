@@ -225,37 +225,6 @@ export const divisions: Division[] = [
     capabilities: [],
     projects: [
       {
-        name: "Today's Word",
-        tagline: "The word of the day.",
-        description:
-          "One English word a day, the same one for everyone: its meaning, " +
-          "real-world examples and where it comes from, then a short quiz. " +
-          "Words you have learned come back later so they actually stick, " +
-          "and a daily tracker keeps the streak. No accounts.",
-        status: "released",
-        tags: ["Education", "Language learning", "Vocabulary", "Daily"],
-        image: "/apps/todays-word.jpg",
-        links: [{ label: "App Store", href: "https://apps.apple.com/app/todays-word-learn-everyday/id6810232514" }],
-        media: [
-          { src: "/media/today-s-word/store-en-01.jpg", alt: "One new word every day" },
-          { src: "/media/today-s-word/store-en-02.jpg", alt: "See it in real sentences" },
-          { src: "/media/today-s-word/store-en-03.jpg", alt: "Where it comes from" },
-          { src: "/media/today-s-word/store-en-04.jpg", alt: "A little quiz to make it stick" },
-          { src: "/media/today-s-word/store-en-05.jpg", alt: "A streak that forgives you" },
-          { src: "/media/today-s-word/store-en-06.jpg", alt: "Words that stay" },
-          { src: "/media/today-s-word/01.jpg", alt: "The word of the day" },
-          { src: "/media/today-s-word/02.jpg", alt: "Where the word comes from" },
-          { src: "/media/today-s-word/03.jpg", alt: "Review quiz" },
-          { src: "/media/today-s-word/04.jpg", alt: "Daily quiz" },
-          { src: "/media/today-s-word/05.jpg", alt: "Quiz result" },
-          { src: "/media/today-s-word/06.jpg", alt: "A year of progress" },
-          { src: "/media/today-s-word/07.jpg", alt: "A word from a past day" },
-          { src: "/media/today-s-word/08.jpg", alt: "Words learned so far" },
-          { src: "/media/today-s-word/09.jpg", alt: "Practice" },
-          { src: "/media/today-s-word/10.jpg", alt: "Settings" },
-        ],
-      },
-      {
         name: "WordDeck",
         tagline: "Exam vocabulary, just before you forget it.",
         description:

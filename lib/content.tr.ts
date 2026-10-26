@@ -226,37 +226,6 @@ export const divisions: Division[] = [
     capabilities: [],
     projects: [
       {
-        name: "Today's Word",
-        tagline: "Günün kelimesi.",
-        description:
-          "Her gün herkese aynı İngilizce kelime: anlamı, gerçek hayattan " +
-          "örnekleri ve nereden geldiği, ardından kısa bir test. Öğrenilen " +
-          "kelimeler sonradan geri geliyor, böylece gerçekten akılda " +
-          "kalıyor; günlük takip seriyi tutuyor. Hesap yok.",
-        status: "released",
-        tags: ["Eğitim", "Dil öğrenme", "Kelime", "Günlük"],
-        image: "/apps/todays-word.jpg",
-        links: [{ label: "App Store", href: "https://apps.apple.com/app/todays-word-learn-everyday/id6810232514" }],
-        media: [
-          { src: "/media/today-s-word/store-tr-01.jpg", alt: "Her gün yeni bir kelime" },
-          { src: "/media/today-s-word/store-tr-02.jpg", alt: "Gerçek cümlelerde gör" },
-          { src: "/media/today-s-word/store-tr-03.jpg", alt: "Nereden geldiğini öğren" },
-          { src: "/media/today-s-word/store-tr-04.jpg", alt: "Kalıcı olsun diye kısa bir test" },
-          { src: "/media/today-s-word/store-tr-05.jpg", alt: "Seni affeden bir seri" },
-          { src: "/media/today-s-word/store-tr-06.jpg", alt: "Unutulmayan kelimeler" },
-          { src: "/media/today-s-word/01.jpg", alt: "Günün kelimesi" },
-          { src: "/media/today-s-word/02.jpg", alt: "Kelimenin geçmişi" },
-          { src: "/media/today-s-word/03.jpg", alt: "Tekrar testi" },
-          { src: "/media/today-s-word/04.jpg", alt: "Günlük test" },
-          { src: "/media/today-s-word/05.jpg", alt: "Test sonucu" },
-          { src: "/media/today-s-word/06.jpg", alt: "Yıllık ilerleme" },
-          { src: "/media/today-s-word/07.jpg", alt: "Geçmiş bir günün kelimesi" },
-          { src: "/media/today-s-word/08.jpg", alt: "Öğrenilen kelimeler" },
-          { src: "/media/today-s-word/09.jpg", alt: "Alıştırma" },
-          { src: "/media/today-s-word/10.jpg", alt: "Ayarlar" },
-        ],
-      },
-      {
         name: "WordDeck",
         tagline: "Sınav kelimeleri, unutmadan hemen önce.",
         description:
