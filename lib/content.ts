@@ -116,7 +116,10 @@ export function orderedProjects(division: Division): Project[] {
 }
 
 /** External accounts, the same in both languages. Company socials (LinkedIn, TikTok, Instagram) go here as they open. */
-export const links: ProjectLink[] = [];
+export const links: ProjectLink[] = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/neuvikon-tech-135a35428/" },
+  { label: "Instagram", href: "https://www.instagram.com/neuvikon/" },
+];
 
 /**
  * The data controller, as the KVKK notice and the privacy policy print it.
