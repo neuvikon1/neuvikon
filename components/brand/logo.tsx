@@ -5,17 +5,15 @@ import { useId } from "react";
 
 import { cn } from "@/lib/utils";
 import glyph from "@/public/neuvikon-n.png";
-import wordmarkOnDark from "@/public/neuvikon-logo.png";
-import wordmarkOnLight from "@/public/neuvikon-logo-light.png";
 
 /**
  * The Neuvikon marks, as the original artwork.
  *
- * The header, footer and glyph still use the old signature, which is a drawn
- * PNG and so is never redrawn as type or as an SVG path - the smallest
- * difference in a curve reads as a forgery. The hero carries the current mark
- * (`SignedWordmark`), which is a vector original in Figma and ships as its own
- * paths.
+ * The wordmark is the current mark, a vector original in Figma: `Wordmark`
+ * serves the design system's SVG (the same file the header shows), and the
+ * hero's `SignedWordmark` ships its paths so it can animate them. The glyph is
+ * still the old signature, a drawn PNG, and so is never redrawn as type or as
+ * an SVG path - the smallest difference in a curve reads as a forgery.
  *
  * Both ink versions are printed and CSS picks between them. Choosing one in
  * JavaScript would show the wrong ink for the first frame, before next-themes
@@ -36,8 +34,13 @@ type MarkProps = {
   className?: string;
 };
 
+/** The design system wordmark's own width over its height. */
+const WORDMARK_RATIO = 115.938 / 20.0069;
+
 /**
- * The full wordmark.
+ * The full wordmark, as the header shows it: the design system's SVG, with a
+ * copy whose letters are set in the dark theme's foreground. The green N is
+ * the same in both.
  *
  * Neither copy carries alt text: only one ink version is displayed at a time,
  * so a name on the image would disappear with it in the other theme. The name
@@ -49,24 +52,27 @@ export function Wordmark({
   priority = false,
   className,
 }: MarkProps) {
+  const width = Math.round(height * WORDMARK_RATIO);
   return (
     <>
       <Image
-        src={wordmarkOnLight}
+        src="/brand/neuvikon-wordmark.svg"
         alt=""
         aria-hidden
+        width={width}
         height={height}
-        style={{ height, width: "auto" }}
         priority={priority}
+        unoptimized
         className={cn(INK.light, className)}
       />
       <Image
-        src={wordmarkOnDark}
+        src="/brand/neuvikon-wordmark-dark.svg"
         alt=""
         aria-hidden
+        width={width}
         height={height}
-        style={{ height, width: "auto" }}
         priority={priority}
+        unoptimized
         className={cn(INK.dark, className)}
       />
     </>
