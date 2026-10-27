@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { LegalLink, LegalPage, LegalSection } from "@/components/legal";
 import { getContent } from "@/lib/content";
+import { href, pageAlternates } from "@/lib/i18n";
 
 const { org } = getContent("tr");
 
@@ -17,6 +18,7 @@ const { org } = getContent("tr");
 export const metadata: Metadata = {
   title: "Gizlilik Politikası",
   description: "Bu sitenin hangi verileri topladığı, neden topladığı ve ne kadar sakladığı.",
+  alternates: pageAlternates("tr", href("tr", "privacy")),
 };
 
 export default function PrivacyPage() {

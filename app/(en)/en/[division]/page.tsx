@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { DivisionView } from "@/components/views/division";
 import { getContent, getDivision } from "@/lib/content";
+import { divisionHref, pageAlternates } from "@/lib/i18n";
 
 type Params = { division: string };
 
@@ -14,7 +15,13 @@ export function generateStaticParams(): Params[] {
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const division = getDivision("en", (await params).division);
-  return division ? { title: division.name, description: division.tagline } : {};
+  return division
+    ? {
+        title: division.name,
+        description: division.tagline,
+        alternates: pageAlternates("en", divisionHref("en", division.slug)),
+      }
+    : {};
 }
 
 export default async function DivisionPage({ params }: { params: Promise<Params> }) {

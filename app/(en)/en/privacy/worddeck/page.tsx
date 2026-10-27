@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { LegalLink, LegalPage, LegalSection } from "@/components/legal";
 import { getContent } from "@/lib/content";
+import { href, pageAlternates } from "@/lib/i18n";
 
 const { org } = getContent("en");
 
@@ -13,6 +14,7 @@ const CONTACT = org.email;
 export const metadata: Metadata = {
   title: "WordDeck Privacy Policy",
   description: "What WordDeck stores, why it stores it and how to delete it.",
+  alternates: pageAlternates("en", href("en", "worddeckPrivacy")),
 };
 
 export default function WordDeckPrivacyPage() {

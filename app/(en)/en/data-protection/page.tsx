@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { LegalEntityTable, LegalLink, LegalPage, LegalSection } from "@/components/legal";
 import { getContent } from "@/lib/content";
+import { href, pageAlternates } from "@/lib/i18n";
 
 const { org } = getContent("en");
 
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
   title: "Data Protection Notice",
   description:
     "Information notice under Turkish Personal Data Protection Law no. 6698 (KVKK).",
+  alternates: pageAlternates("en", href("en", "dataProtection")),
 };
 
 export default function DataProtectionPage() {

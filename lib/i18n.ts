@@ -85,6 +85,46 @@ export function counterpart(path: string, from: Locale): string {
 }
 
 /**
+ * The address the site is published at. Canonical links, hreflang and the
+ * sitemap all point here, even from the github.io build under a base path -
+ * that copy is the mirror, this is the original.
+ */
+export const SITE_URL = "https://neuvikon.com";
+
+/**
+ * A path as a full address, with the trailing slash the static export writes
+ * (`/hakkimizda` → `https://neuvikon.com/hakkimizda/`). Search engines treat
+ * the two spellings as different pages; the canonical one is the one served.
+ */
+export function absoluteUrl(path: string): string {
+  const current = normalizePath(path);
+  return `${SITE_URL}${current === "/" ? "/" : `${current}/`}`;
+}
+
+/** A page's address in both languages, from its address in one of them. */
+export function localizedUrls(locale: Locale, path: string): Record<Locale, string> {
+  const other = otherLocale(locale);
+  return {
+    [locale]: absoluteUrl(path),
+    [other]: absoluteUrl(counterpart(path, locale)),
+  } as Record<Locale, string>;
+}
+
+/**
+ * Canonical and hreflang for one page, given its own path. Every page sets
+ * this itself: a layout-level value would be inherited by every page under it
+ * and point them all at the home page. Turkish is the `x-default` - the
+ * primary audience, and the version without a prefix.
+ */
+export function pageAlternates(locale: Locale, path: string) {
+  const urls = localizedUrls(locale, path);
+  return {
+    canonical: urls[locale],
+    languages: { tr: urls.tr, en: urls.en, "x-default": urls.tr },
+  };
+}
+
+/**
  * Interface strings - the page frame, not the content. Divisions, projects
  * and the studio's own words live in `content.tr.ts` / `content.en.ts`.
  */
