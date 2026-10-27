@@ -95,8 +95,10 @@ Kayıt eklenince ana sayfa, bölüm sayfası, proje sayfası
 `media` boşsa proje sayfası "görseller henüz eklenmedi" yazar.
 
 Yollar her zaman `public/` sonrasından, `/` ile başlayarak yazılır
-(`public/apps/x.png` → `"/apps/x.png"`). Görselleri eklemeden önce WebP'ye
-çevirip boyutlarını küçült.
+(`public/apps/x.webp` → `"/apps/x.webp"`). Yeni görselleri `public/apps` ya da
+`public/media` altına koyup `node scripts/optimize-images.mjs` çalıştır: hepsini
+WebP'ye çevirip küçültür ve orijinalleri siler (`--keep` ile silmez). Sonra içerik
+dosyalarındaki yolları `.webp` olarak güncelle.
 
 ### Hakkımızda, ekip, kariyer
 
