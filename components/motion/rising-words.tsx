@@ -48,7 +48,8 @@ type RisingWordsProps = {
   stagger?: number;
   /**
    * Wait to be scrolled into view. Off for the hero, which is already on screen
-   * when the page loads and should not wait to be scrolled to.
+   * when the page loads and should not wait to be scrolled to - or for
+   * hydration, so off also means the rise runs in CSS.
    */
   inView?: boolean;
 };
@@ -59,9 +60,33 @@ export function RisingWords({
   stagger = 0.055,
   inView = true,
 }: RisingWordsProps) {
-  const cue = inView
-    ? ({ whileInView: "shown", viewport: VIEWPORT } as const)
-    : ({ animate: "shown" } as const);
+  // Already on screen: run in CSS from the first paint rather than wait for
+  // hydration (see `.enter-rise` in globals.css). Same travel, timing and curve.
+  if (!inView) {
+    return (
+      <span>
+        {children.split(" ").map((word, index) => (
+          <Fragment key={`${word}-${index}`}>
+            {index > 0 && " "}
+            <span
+              className="inline-block overflow-hidden"
+              style={{
+                paddingBottom: `${DESCENDER}em`,
+                marginBottom: `-${DESCENDER}em`,
+              }}
+            >
+              <span
+                className="enter-rise inline-block"
+                style={{ animationDelay: `${delay + index * stagger}s` }}
+              >
+                {word}
+              </span>
+            </span>
+          </Fragment>
+        ))}
+      </span>
+    );
+  }
 
   return (
     <motion.span
@@ -70,7 +95,8 @@ export function RisingWords({
         hidden: {},
         shown: { transition: { staggerChildren: stagger, delayChildren: delay } },
       }}
-      {...cue}
+      whileInView="shown"
+      viewport={VIEWPORT}
     >
       {children.split(" ").map((word, index) => (
         <Fragment key={`${word}-${index}`}>

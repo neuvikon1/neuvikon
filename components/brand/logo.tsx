@@ -11,9 +11,11 @@ import wordmarkOnLight from "@/public/neuvikon-logo-light.png";
 /**
  * The Neuvikon marks, as the original artwork.
  *
- * The logo is a drawn signature, so it is never redrawn as type or as an SVG
- * path - the smallest difference in a curve reads as a forgery. What ships is
- * always the original PNG, carried over from the previous site.
+ * The header, footer and glyph still use the old signature, which is a drawn
+ * PNG and so is never redrawn as type or as an SVG path - the smallest
+ * difference in a curve reads as a forgery. The hero carries the current mark
+ * (`SignedWordmark`), which is a vector original in Figma and ships as its own
+ * paths.
  *
  * Both ink versions are printed and CSS picks between them. Choosing one in
  * JavaScript would show the wrong ink for the first frame, before next-themes
@@ -72,49 +74,96 @@ export function Wordmark({
 }
 
 /**
- * The pen's path through the N - not the outline of the letter but the line
- * the pen travelled, its three strokes traced from the PNG's alpha channel:
- * up from the bottom left, diagonally down from the top, back up on the right.
- * Carried over from the previous site.
+ * The current mark, drawn from the Figma "Main logo" (file neuvikon, node
+ * 198:511): the green wave-N and the geometric "euvikon" beside it. Unlike the
+ * old signature this is a vector original, so the paths below are the artwork
+ * itself, copied out of Figma - each letter at its offset in the logo.
  *
- * It is drawn as a thick white stroke into a mask and opened with
- * stroke-dashoffset, so the real artwork underneath is revealed in the order
- * the hand wrote it. The artwork itself is still never redrawn.
+ * The N alone is set a touch lighter than in Figma: its outline is pulled in
+ * by 1.5 units all round (strokes ~15 -> ~12), keeping its shape. The right
+ * foot was held to the baseline while doing so, so it still sits level with
+ * "euvikon".
+ */
+const MARK = {
+  n: "M 2.06 34.12 L 2.74 34.73 L 3.46 35.31 L 4.21 35.85 L 4.79 36.22 L 5.59 36.66 L 6.20 36.94 L 7.02 37.26 L 7.64 37.45 L 8.46 37.63 L 9.08 37.71 L 9.69 37.74 L 10.30 37.71 L 10.91 37.63 L 11.52 37.50 L 12.12 37.30 L 12.73 37.04 L 13.53 36.58 L 14.13 36.12 L 15 35.31 L 16.28 34 L 19.05 30.92 L 25.70 23.28 L 27.04 21.80 L 28.17 20.63 L 28.40 20.44 L 28.66 20.30 L 28.95 20.22 L 29.25 20.19 L 29.69 20.27 L 29.96 20.39 L 30.20 20.56 L 30.41 20.78 L 30.57 21.03 L 30.67 21.31 L 30.72 21.60 L 30.87 24.56 L 30.96 27.54 L 31.01 33.11 L 30.92 43.46 L 30.90 59.09 L 30.85 62.23 L 30.91 63.82 L 31.09 65.07 L 31.28 65.81 L 31.50 66.41 L 31.82 67.08 L 32.23 67.73 L 32.70 68.33 L 33.22 68.86 L 33.79 69.33 L 34.41 69.74 L 35.07 70.09 L 35.76 70.38 L 36.48 70.61 L 37.49 70.82 L 38.26 70.91 L 39.30 70.92 L 40.08 70.86 L 40.85 70.73 L 41.86 70.47 L 42.83 70.09 L 43.73 69.61 L 44.37 69.18 L 44.96 68.69 L 45.51 68.14 L 46.50 66.98 L 47.46 65.77 L 49.19 63.40 L 53.34 57.32 L 58.79 49.64 L 69.29 34.63 L 72.72 29.80 L 76.32 24.83 L 78.97 20.93 L 80.19 19.29 L 81.32 17.95 L 82.01 17.22 L 82.53 16.73 L 83.29 16.08 L 83.84 15.67 L 84.45 15.27 L 85.05 14.93 L 85.68 14.64 L 86.33 14.39 L 87.01 14.20 L 87.71 14.06 L 88.43 14 L 89.10 14 L 89.85 14.06 L 90.30 14.14 L 91.06 14.32 L 91.78 14.56 L 92.56 14.89 L 93.21 15.23 L 93.78 15.58 L 94.52 16.13 L 95.04 16.60 L 95.66 17.26 L 96.09 17.79 L 96.59 18.52 L 96.93 19.10 L 97.35 19.93 L 97.70 20.76 L 98.01 21.63 L 98.27 22.53 L 98.50 23.45 L 98.67 24.36 L 98.86 25.57 L 98.99 26.77 L 99.10 28.24 L 99.18 31.25 L 99.19 73.29 L 110.19 73.29 L 110.31 65.02 L 110.29 64.76 L 110.40 56.77 L 110.45 50.24 L 110.45 43.48 L 110.36 36.80 L 110.15 30.47 L 109.87 25.68 L 109.64 23.10 L 109.47 21.52 L 109.17 19.40 L 108.94 18.18 L 108.70 17.13 L 108.45 16.26 L 107.88 14.88 L 107.39 13.88 L 106.85 12.93 L 105.96 11.55 L 105.30 10.69 L 104.24 9.46 L 103.48 8.69 L 102.68 7.96 L 101.85 7.27 L 100.54 6.32 L 99.64 5.74 L 98.22 4.96 L 96.76 4.29 L 95.76 3.91 L 94.23 3.42 L 93.19 3.16 L 91.62 2.88 L 90.56 2.75 L 88.96 2.67 L 87.89 2.69 L 86.29 2.83 L 85.23 2.99 L 83.65 3.35 L 82.61 3.67 L 81.07 4.26 L 80.06 4.73 L 79.08 5.27 L 77.92 6.02 L 77.04 6.68 L 76.01 7.57 L 75.04 8.52 L 74.11 9.54 L 73.05 10.83 L 72.03 12.19 L 68.33 17.52 L 65.54 21.41 L 63.14 24.83 L 54.03 38.19 L 50.26 43.61 L 47.80 47.03 L 45.64 49.94 L 45.33 50.24 L 44.95 50.45 L 44.67 50.52 L 44.38 50.53 L 44.10 50.49 L 43.82 50.40 L 43.57 50.26 L 43.36 50.07 L 43.18 49.84 L 43.05 49.58 L 42.97 49.31 L 42.91 48.68 L 42.67 45.23 L 42.50 40.78 L 42.46 36.32 L 42.50 31.37 L 42.67 21.53 L 42.71 16.96 L 42.87 11.89 L 42.83 10.10 L 42.68 8.60 L 42.46 7.40 L 42.11 6.28 L 41.90 5.75 L 41.65 5.25 L 41.15 4.46 L 40.49 3.69 L 39.72 3.03 L 38.88 2.49 L 37.96 2.06 L 37.38 1.87 L 36.78 1.71 L 36.17 1.60 L 35.54 1.53 L 34.91 1.50 L 34.27 1.52 L 33.63 1.57 L 32.78 1.71 L 31.95 1.92 L 31.35 2.13 L 30.76 2.37 L 30.19 2.65 L 29.64 2.97 L 29.13 3.32 L 28 4.24 L 26.93 5.26 L 25.90 6.36 L 24.76 7.68 L 22.12 10.90 L 20.82 12.42 L 11.81 22.21 L 8.08 26.39 L 5.68 29.21 L 3.67 31.72 L 1.94 34.01 Z",
+  rest: [
+    { x: 115.11, y: 39.79, d: "M 6.89 3.58 C 14.21 -2.06 24.94 -0.93 30.83 6.2 C 32.53 8.26 34.04 10.55 34.38 13.22 L 34.46 16.88 L 34.46 20.44 L 11.84 20.29 L 11.83 14.43 L 28.34 14.4 C 27.84 11.85 26.4 9.56 24.25 8.01 C 15.68 1.81 3.4 9.97 6.83 20.28 C 7.38 21.94 8.35 23.43 9.58 24.67 C 11.01 26.11 12.89 27.13 14.84 27.65 C 17.47 28.36 20.4 28.24 23.1 27.95 C 26.79 27.54 29.77 26.04 32.96 24.28 C 31.55 35.08 17.15 35.81 9.37 31.83 C 4.74 29.46 1.46 25.15 0.43 20.62 C -0.14 18.09 -0.14 15.41 0.43 12.88 C 1.23 9.36 3.63 6.09 6.89 3.58 Z" },
+    { x: 151.7, y: 40.18, d: "M 27.15 0.07 C 29.23 -0.24 31.47 0.47 32.88 2.08 C 34.82 4.27 38.26 16.49 39.4 20.02 C 39.86 21.43 40.7 25.45 41.96 26.13 C 44.61 27.55 45.5 22.61 46.04 20.98 C 47.5 16.57 48.99 12.18 50.49 7.78 C 51.33 5.32 52.06 2.79 53.11 0.42 L 59.01 0.4 C 58.64 2.62 57.7 4.8 56.96 6.95 C 55.52 11.14 54.06 15.32 52.62 19.51 C 51.61 22.49 50.4 27.65 48.77 30.13 C 46.38 33.78 41.1 34.39 37.95 31.36 C 35.73 29.22 32.22 16.75 31.07 13.11 C 30.67 11.86 29.62 7.75 28.88 6.96 C 28.65 6.73 28.37 6.77 28.14 6.6 C 27.95 6.81 27.65 6.82 27.48 7.1 C 26.87 8.15 27.25 11.43 27.24 12.73 C 27.24 17.1 27.77 21.78 25.86 25.86 C 19.97 38.36 1.77 35.53 0 20.73 L 0 0.38 L 5.61 0.41 C 5.61 4.61 5.77 8.73 5.77 12.79 C 5.61 15.59 5.63 18.05 5.8 20.66 C 6.29 28.31 16.26 30.17 20.27 24.03 C 24.3 17.85 16.84 1.62 27.15 0.07 Z" },
+    { x: 214.16, y: 39.92, d: "M 5.92 32.77 L 0.01 32.78 L 0 0 L 5.92 0 L 5.92 32.77 Z" },
+    { x: 224.01, y: 33.33, d: "M 5.88 0.02 L 5.92 19.4 C 6.88 18.3 7.8 17.1 8.97 16.18 C 13.91 12.33 17.01 12.38 20.78 6.54 L 27.54 6.63 C 24.81 14.99 18.05 16.44 11.77 21.08 C 14.01 21.58 16.09 22.1 17.97 23.51 C 21.01 25.8 23.31 30.23 25.5 33.35 C 26.92 35.37 28.49 37.27 29.97 39.25 C 28.8 39.32 23.38 39.63 22.62 39.17 C 22.14 38.88 21.81 38.31 21.44 37.9 C 19.38 35.6 15.85 29.67 14.21 28.36 C 12.04 26.61 7.68 25.76 6.29 28.95 C 5.71 30.28 5.88 31.85 5.88 33.26 C 5.88 35.23 5.9 37.2 5.85 39.16 L 0 39.36 L 0 0 L 5.88 0.02 Z" },
+    { x: 249.1, y: 39.06, d: "M 17.17 0 C 26.66 0 34.35 7.69 34.35 17.17 C 34.35 26.66 26.66 34.35 17.17 34.35 C 7.69 34.35 0 26.66 0 17.17 C 0 7.69 7.69 0 17.17 0 Z M 17.17 5.99 C 11 5.99 5.99 11 5.99 17.17 C 5.99 23.35 11 28.36 17.17 28.36 C 23.35 28.36 28.36 23.35 28.36 17.17 C 28.36 11 23.35 5.99 17.17 5.99 Z" },
+    { x: 285.51, y: 39.12, d: "M 4.44 3.49 C 10.83 -2.1 20.97 -0.88 25.51 6.45 C 28.08 10.6 27.6 15.35 27.6 20.03 C 27.6 24.46 27.6 28.96 27.45 33.51 L 21.79 33.47 C 21.79 28.63 21.7 23.27 21.69 18.22 C 21.68 15.59 22.07 12.71 20.84 10.28 C 17.78 4.29 8.82 4.66 6.3 10.92 C 4.81 14.64 5.58 28.3 5.58 33.52 L 0 33.55 L 0 20.03 C 0 11.37 0.64 6.82 4.44 3.49 Z" },
+  ],
+  /** The dot over the i. */
+  dot: { cx: 217.12, cy: 34.96, r: 2.96 },
+};
+
+/** The green of the N, as set in Figma. */
+const MARK_GREEN = "#4AB166";
+
+/**
+ * The pen's path through the N - not its outline but the line a pen would
+ * travel: up the short flick on the left, down the left stem, up the diagonal,
+ * over the arch and down the right stem. The same path animates the N in the
+ * Figma file.
+ *
+ * It is drawn as a thick white stroke into a mask and opened by animating its
+ * path length, so the N underneath is revealed in the order it is written. The
+ * artwork itself is never redrawn.
  */
 const PEN =
-  "M 4.0 327.0 C 4.3 325.2 5.4 319.8 6.0 316.0 C 6.6 312.2 6.9 308.0 7.5 304.0 C 8.1 300.0 9.1 296.0 9.5 292.0 C 9.9 288.0 9.8 284.0 10.0 280.0 C 10.3 276.0 10.8 272.0 11.0 268.0 C 11.3 264.0 11.3 260.0 11.5 256.0 C 11.8 252.0 12.3 248.0 12.5 244.0 C 12.8 240.0 12.8 236.0 13.0 232.0 C 13.2 228.0 13.3 224.0 13.5 220.0 C 13.7 216.0 13.9 212.0 14.0 208.0 C 14.1 204.0 14.0 200.0 14.0 196.0 C 14.0 192.0 14.0 188.0 14.0 184.0 C 14.0 180.0 14.0 176.0 14.0 172.0 C 14.0 168.0 14.0 164.0 14.0 160.0 C 14.0 156.0 14.0 152.0 14.0 148.0 C 14.0 144.0 14.0 140.0 14.0 136.0 C 14.0 132.0 14.0 128.0 14.0 124.0 C 14.0 120.0 14.0 116.0 14.0 112.0 C 14.0 108.0 14.0 104.0 14.0 100.0 C 14.0 96.0 13.9 92.0 14.0 88.0 C 14.1 84.0 14.4 80.0 14.5 76.0 C 14.6 72.0 14.5 68.0 14.5 64.0 C 14.5 60.0 14.4 56.0 14.5 52.0 C 14.6 48.0 14.7 44.0 15.0 40.0 C 15.3 36.0 15.8 32.0 16.5 28.0 C 17.3 24.0 17.7 20.0 19.5 16.0 C 21.3 12.0 24.3 4.8 27.5 4.0 C 30.8 3.2 35.0 7.8 39.0 11.0 C 43.0 14.2 47.7 19.0 51.5 23.0 C 55.3 27.0 58.8 31.0 62.0 35.0 C 65.3 39.0 68.1 43.0 71.0 47.0 C 73.9 51.0 76.9 55.0 79.5 59.0 C 82.1 63.0 84.2 67.0 86.5 71.0 C 88.8 75.0 91.2 79.0 93.5 83.0 C 95.8 87.0 98.3 91.0 100.5 95.0 C 102.7 99.0 104.6 103.0 106.5 107.0 C 108.4 111.0 110.2 115.0 112.0 119.0 C 113.8 123.0 115.8 127.0 117.5 131.0 C 119.3 135.0 120.9 139.0 122.5 143.0 C 124.1 147.0 125.5 151.0 127.0 155.0 C 128.5 159.0 130.1 163.0 131.5 167.0 C 132.9 171.0 134.3 175.0 135.5 179.0 C 136.8 183.0 137.8 187.0 139.0 191.0 C 140.2 195.0 141.3 199.0 142.5 203.0 C 143.7 207.0 145.0 211.0 146.0 215.0 C 147.0 219.0 147.8 224.0 148.5 227.0 C 149.2 230.0 148.5 230.7 150.0 233.0 C 151.5 235.3 156.1 237.7 157.5 241.0 C 158.9 244.3 158.2 249.0 158.5 253.0 C 158.8 257.0 159.3 261.0 159.5 265.0 C 159.7 269.0 159.3 273.0 159.5 277.0 C 159.7 281.0 160.3 285.2 160.5 289.0 C 160.7 292.8 159.9 310.0 160.5 300.0 C 161.1 290.0 163.3 242.8 164.0 229.0 C 164.7 215.2 164.4 221.0 164.5 217.0 C 164.6 213.0 164.4 209.0 164.5 205.0 C 164.6 201.0 164.8 197.0 165.0 193.0 C 165.2 189.0 165.3 185.0 165.5 181.0 C 165.8 177.0 166.3 173.0 166.5 169.0 C 166.7 165.0 166.4 161.0 166.5 157.0 C 166.6 153.0 166.9 149.0 167.0 145.0 C 167.1 141.0 166.9 137.0 167.0 133.0 C 167.1 129.0 167.4 125.0 167.5 121.0 C 167.6 117.0 167.5 113.0 167.5 109.0 C 167.5 105.0 167.5 101.0 167.5 97.0 C 167.5 93.0 167.5 89.0 167.5 85.0 C 167.5 81.0 167.5 77.0 167.5 73.0 C 167.5 69.0 167.5 65.0 167.5 61.0 C 167.5 57.0 167.5 53.0 167.5 49.0 C 167.5 45.0 167.4 41.0 167.5 37.0 C 167.6 33.0 167.8 29.0 168.0 25.0 C 168.3 21.0 168.8 17.0 169.0 13.0 C 169.3 9.0 169.4 3.0 169.5 1.0";
+  "M 5 36 L 29 10 C 32 6.5 36.8 6 36.8 14 L 36.8 58 C 36.8 66 42 64 48 56 L 79 12 C 85 4 98 2 103 12 C 105 16 104.7 22 104.7 28 L 104.7 76";
 
-/** The thickest stroke is ~25 units; a round 32 covers all of them. */
-const PEN_WIDTH = 32;
+/** The N's strokes are ~15 units thick; 22 covers them and their joins. */
+const PEN_WIDTH = 22;
 
-/** The artwork's own size; the mask is drawn in this coordinate space. */
-const ART = { w: 643, h: 329 };
+/**
+ * How far "euvikon" rises, in viewBox units: 120% of its own height, as the
+ * hero's `RisingWords` travel, so it starts wholly below its clip.
+ */
+const RISE_FROM = 50;
 
-/** Where the N ends and "euvikon" begins. Everything right of it stays put. */
-const REST_X = 180;
+/** Where "euvikon" begins; its clip starts here so the N is never cut. */
+const REST_X = 110;
+
+/** The mark's own box; a unit of headroom covers the arch's overshoot. */
+const ART = { x: 0, y: -1, w: 314, h: 75 };
 
 /**
  * The wordmark, signing itself: the N is written out stroke by stroke, then
- * holds. For the header, where it is the first thing on every page. Under
- * reduced motion the stroke starts finished (see `.pen-draw` in globals.css).
+ * holds, while "euvikon" stands still beside it. For the hero, where it is the
+ * first thing the page shows. The letters take the text colour, so the mark
+ * follows the theme without a second copy; the N keeps its green.
+ *
+ * Both run in CSS (`.enter-pen`, `.enter-rise` in globals.css), so they start
+ * on the first paint, on the same frame as the hero's rising words, rather
+ * than after hydration. Both take the words' `slow` duration so the name and
+ * the statement land together. The pen's curve is the symmetrical one, not
+ * the words' `EASE`: a pen travels rather than arrives, and the house curve
+ * front-loads so hard that the N would be four-fifths drawn in the first few
+ * frames and read as a pop instead of being written. Under reduced motion the
+ * N is simply whole and "euvikon" does not move.
+ *
+ * "euvikon" moves the way the hero's text does (see `RisingWords`): it climbs
+ * out from behind a clip the height of the mark.
  */
 export function SignedWordmark({ height = 24, className }: Omit<MarkProps, "priority">) {
   const maskId = useId();
+  const clipId = useId();
 
   return (
     <svg
-      viewBox={`0 0 ${ART.w} ${ART.h}`}
+      viewBox={`${ART.x} ${ART.y} ${ART.w} ${ART.h}`}
       height={height}
       style={{ height, width: "auto" }}
       aria-hidden
-      className={className}
+      className={cn("text-foreground", className)}
     >
       <defs>
-        <mask id={maskId} maskUnits="userSpaceOnUse" x="0" y="0" width={ART.w} height={ART.h}>
-          <rect x={REST_X} y="0" width={ART.w - REST_X} height={ART.h} fill="#fff" />
+        <mask id={maskId} maskUnits="userSpaceOnUse" x={ART.x} y={ART.y} width={ART.w} height={ART.h}>
           <path
             d={PEN}
-            className="pen-draw"
+            className="enter-pen"
             pathLength={1}
             fill="none"
             stroke="#fff"
@@ -123,21 +172,23 @@ export function SignedWordmark({ height = 24, className }: Omit<MarkProps, "prio
             strokeLinejoin="round"
           />
         </mask>
+        <clipPath id={clipId}>
+          <rect x={REST_X} y={ART.y} width={ART.w - REST_X} height={ART.h} />
+        </clipPath>
       </defs>
-      <image
-        href={wordmarkOnLight.src}
-        width={ART.w}
-        height={ART.h}
-        mask={`url(#${maskId})`}
-        className={INK.light}
-      />
-      <image
-        href={wordmarkOnDark.src}
-        width={ART.w}
-        height={ART.h}
-        mask={`url(#${maskId})`}
-        className={INK.dark}
-      />
+      <path d={MARK.n} fill={MARK_GREEN} mask={`url(#${maskId})`} />
+      <g clipPath={`url(#${clipId})`}>
+        <g
+          className="enter-rise"
+          fill="currentColor"
+          style={{ "--enter-from": `${RISE_FROM}px` } as React.CSSProperties}
+        >
+          {MARK.rest.map((letter) => (
+            <path key={letter.x} d={letter.d} transform={`translate(${letter.x} ${letter.y})`} />
+          ))}
+          <circle {...MARK.dot} />
+        </g>
+      </g>
     </svg>
   );
 }
