@@ -162,7 +162,7 @@ export const divisions: Division[] = [
           },
           {
             label: "App Store",
-            href: "https://apps.apple.com/ng/app/guessfast/id6758861605",
+            href: "https://apps.apple.com/app/guessfast/id6758861605",
           },
         ],
         media: [
