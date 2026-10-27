@@ -27,6 +27,14 @@ const geistMono = Geist_Mono({
 /** The metadata both root layouts share, in their own language. */
 export function siteMetadata(locale: Locale): Metadata {
   const { org } = getContent(locale);
+  // The card WhatsApp, LinkedIn and X show for a shared link; kept centred so
+  // the square crop some of them take still holds the whole wordmark.
+  const shareImage = {
+    url: locale === "tr" ? "/og.png" : "/og-en.png",
+    width: 1200,
+    height: 630,
+    alt: `${org.name} — ${org.tagline}`,
+  };
   return {
     // Pages give canonical and hreflang as full addresses (`pageAlternates`);
     // this is the base any relative URL in metadata resolves against.
@@ -42,6 +50,11 @@ export function siteMetadata(locale: Locale): Metadata {
       siteName: org.name,
       type: "website",
       locale: locale === "tr" ? "tr_TR" : "en_GB",
+      images: [shareImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: [shareImage],
     },
   };
 }
