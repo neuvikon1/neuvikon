@@ -3,7 +3,8 @@ import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
 import { SignedWordmark } from "@/components/brand/logo";
 import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
-import { Reveal, RevealGroup, RevealRow } from "@/components/motion/reveal";
+import { Reveal } from "@/components/motion/reveal";
+import { STAGGER } from "@/components/motion/tokens";
 import { RisingWords } from "@/components/motion/rising-words";
 import { HeroBackdrop } from "@/components/sections/hero-backdrop";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -41,35 +42,41 @@ const CUE = {
 function DivisionIndex({ divisions, label }: { divisions: Division[]; label: string }) {
   return (
     <Stack gap="sm" className="w-full">
-      <Eyebrow>{label}</Eyebrow>
-      <RevealGroup inView={false} delay={CUE.index} className="w-full">
-        <ul className="w-full">
-          {divisions.map((division, index) => (
-            <RevealRow key={division.slug} className="border-t border-rule">
-              <a
-                href={`#${division.slug}`}
-                className="group flex items-baseline gap-4 py-4 transition-colors hover:text-foreground"
-              >
-                <span className="font-mono text-xs text-muted-foreground tabular-nums">
-                  {String(index + 1).padStart(2, "0")}
+      {/* The label rises the way the statement does, on the index's cue, so
+          the column's heading arrives with its rows instead of waiting there. */}
+      <Eyebrow>
+        <RisingWords inView={false} delay={CUE.index}>{label}</RisingWords>
+      </Eyebrow>
+      <ul className="w-full">
+        {divisions.map((division, index) => (
+          <li
+            key={division.slug}
+            className="enter-fade-up border-t border-rule"
+            style={{ animationDelay: `${CUE.index + index * STAGGER}s` }}
+          >
+            <a
+              href={`#${division.slug}`}
+              className="group flex items-baseline gap-4 py-4 transition-colors hover:text-foreground"
+            >
+              <span className="font-mono text-xs text-muted-foreground tabular-nums">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="min-w-0 flex-1">
+                <span lang="en" className="block text-base tracking-tight">
+                  {division.name}
                 </span>
-                <span className="min-w-0 flex-1">
-                  <span lang="en" className="block text-base tracking-tight">
-                    {division.name}
-                  </span>
-                  <span className="mt-0.5 block text-sm text-muted-foreground">
-                    {division.tagline}
-                  </span>
+                <span className="mt-0.5 block text-sm text-muted-foreground">
+                  {division.tagline}
                 </span>
-                <ArrowUpRight
-                  aria-hidden
-                  className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground"
-                />
-              </a>
-            </RevealRow>
-          ))}
-        </ul>
-      </RevealGroup>
+              </span>
+              <ArrowUpRight
+                aria-hidden
+                className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground"
+              />
+            </a>
+          </li>
+        ))}
+      </ul>
     </Stack>
   );
 }
@@ -131,11 +138,11 @@ export function Hero({ locale }: { locale: Locale }) {
             stat rule. */}
         <div className="grid w-full flex-1 content-center gap-12 py-10 lg:grid-cols-12 lg:gap-16">
           <Stack gap="lg" className="lg:col-span-7">
-            {/* The signature, large, writing itself as the page opens - the
-                first thing the old site showed, and the mark the green line
-                down the page is drawn in. The size rides the viewport; the
-                inline height SignedWordmark sets is only its default. */}
-            <SignedWordmark className="!h-[clamp(4.5rem,11vw,8.5rem)] -ml-1" />
+            {/* The mark, large, its N writing itself as the page opens. The
+                size rides the viewport; the inline height SignedWordmark sets
+                is only its default. The mark is four times as wide as it is
+                tall, so this height keeps it inside a phone's width. */}
+            <SignedWordmark className="!h-[clamp(3.5rem,7vw,5.5rem)]" />
             <Stack gap="md">
               <Title as="h1" level="display">
                 <RisingWords inView={false}>{org.tagline}</RisingWords>

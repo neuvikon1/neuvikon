@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useScroll, useSpring } from "motion/react";
 
+import { afterIntro } from "@/components/motion/after-intro";
 import { usePrefersReducedMotion } from "@/hooks/use-media-query";
 
 /** The green of the N in the logo, sampled from the artwork itself. */
@@ -90,55 +91,70 @@ export function ScrollInk() {
     const path = pathRef.current;
     if (!path || !geometry) return;
 
-    const total = path.getTotalLength();
-    const samples: { y: number; length: number }[] = [];
-    let reached = -Infinity;
-    for (let length = 0; length <= total; length += 4) {
-      const { y } = path.getPointAtLength(length);
-      if (y > reached) {
-        reached = y;
-        samples.push({ y, length });
+    // The sampling walks the whole page-long path and holds the main thread
+    // for a few hundred milliseconds, so it waits out the hero's entrance; the
+    // line starts below the hero and has nothing to show before then.
+    const start = () => {
+      const total = path.getTotalLength();
+      const samples: { y: number; length: number }[] = [];
+      let reached = -Infinity;
+      for (let length = 0; length <= total; length += 4) {
+        const { y } = path.getPointAtLength(length);
+        if (y > reached) {
+          reached = y;
+          samples.push({ y, length });
+        }
       }
-    }
-    samples.push({ y: path.getPointAtLength(total).y, length: total });
+      samples.push({ y: path.getPointAtLength(total).y, length: total });
 
-    // Over the last screen of scrolling the nib slides from its usual height
-    // to the bottom of the window, so the line finishes as the page does
-    // instead of stopping wherever NIB_AT left it.
-    const progressFor = (scroll: number) => {
-      const viewport = window.innerHeight;
-      const maxScroll = document.documentElement.scrollHeight - viewport;
-      const end = Math.min(1, Math.max(0, (scroll - (maxScroll - viewport)) / viewport));
-      const nib = NIB_AT + (1 - NIB_AT) * end;
-      const target = scroll + viewport * nib - mainTop.current;
-      const hit = samples.find((sample) => sample.y >= target);
-      return (hit ? hit.length : total) / total;
+      // Over the last screen of scrolling the nib slides from its usual height
+      // to the bottom of the window, so the line finishes as the page does
+      // instead of stopping wherever NIB_AT left it.
+      const progressFor = (scroll: number) => {
+        const viewport = window.innerHeight;
+        const maxScroll = document.documentElement.scrollHeight - viewport;
+        const end = Math.min(1, Math.max(0, (scroll - (maxScroll - viewport)) / viewport));
+        const nib = NIB_AT + (1 - NIB_AT) * end;
+        const target = scroll + viewport * nib - mainTop.current;
+        const hit = samples.find((sample) => sample.y >= target);
+        return (hit ? hit.length : total) / total;
+      };
+
+      if (reducedMotion) {
+        drawn.jump(1);
+        ink.jump(1);
+        nibOpacity.set(0);
+        return;
+      }
+
+      drawn.jump(progressFor(scrollY.get()));
+      ink.jump(drawn.get());
+      const stopScroll = scrollY.on("change", (scroll) => drawn.set(progressFor(scroll)));
+
+      // The nib rides the eased value, so it never runs ahead of its own ink.
+      const placeNib = (progress: number) => {
+        const point = path.getPointAtLength(progress * total);
+        nibX.set(point.x);
+        nibY.set(point.y);
+        nibOpacity.set(progress > 0.001 && progress < 0.999 ? 1 : 0);
+      };
+      placeNib(ink.get());
+      const stopInk = ink.on("change", placeNib);
+
+      return () => {
+        stopScroll();
+        stopInk();
+      };
     };
 
-    if (reducedMotion) {
-      drawn.jump(1);
-      ink.jump(1);
-      nibOpacity.set(0);
-      return;
-    }
-
-    drawn.jump(progressFor(scrollY.get()));
-    ink.jump(drawn.get());
-    const stopScroll = scrollY.on("change", (scroll) => drawn.set(progressFor(scroll)));
-
-    // The nib rides the eased value, so it never runs ahead of its own ink.
-    const placeNib = (progress: number) => {
-      const point = path.getPointAtLength(progress * total);
-      nibX.set(point.x);
-      nibY.set(point.y);
-      nibOpacity.set(progress > 0.001 && progress < 0.999 ? 1 : 0);
-    };
-    placeNib(ink.get());
-    const stopInk = ink.on("change", placeNib);
-
+    let cancelled = false;
+    let stop: (() => void) | void;
+    afterIntro().then(() => {
+      if (!cancelled) stop = start();
+    });
     return () => {
-      stopScroll();
-      stopInk();
+      cancelled = true;
+      stop?.();
     };
   }, [geometry, reducedMotion, scrollY, drawn, ink, nibX, nibY, nibOpacity]);
 

@@ -27,7 +27,10 @@ type RevealProps = React.ComponentProps<typeof motion.div> & {
   still?: boolean;
   /**
    * Wait to be scrolled into view. Off above the fold, where the content is
-   * already on screen at load and has nothing to be scrolled to.
+   * already on screen at load and has nothing to be scrolled to. Off also runs
+   * the entrance in CSS from the first paint instead of after hydration (see
+   * `.enter-fade-up` in globals.css), so it renders a plain `div` and takes
+   * only `className` and `children`.
    */
   inView?: boolean;
 };
@@ -40,13 +43,23 @@ export function Reveal({
   inView = true,
   ...props
 }: RevealProps) {
+  if (!inView) {
+    return (
+      <div
+        className={cn(still ? "enter-fade" : "enter-fade-up", className)}
+        style={{ animationDelay: `${delay}s` }}
+      >
+        {props.children as React.ReactNode}
+      </div>
+    );
+  }
+
   return (
     <motion.div
       data-motion
       initial="hidden"
-      {...(inView
-        ? { whileInView: "shown", viewport: VIEWPORT }
-        : { animate: "shown" })}
+      whileInView="shown"
+      viewport={VIEWPORT}
       variants={still ? fade : fadeUp}
       transition={{ duration: DURATION.base, delay }}
       className={className}
