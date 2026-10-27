@@ -115,10 +115,8 @@ export function orderedProjects(division: Division): Project[] {
   ];
 }
 
-/** External accounts, the same in both languages. Added as they open. */
-export const links: ProjectLink[] = [
-  { label: "GitHub", href: "https://github.com/Zer0desu1" },
-];
+/** External accounts, the same in both languages. Company socials (LinkedIn, TikTok, Instagram) go here as they open. */
+export const links: ProjectLink[] = [];
 
 /**
  * The data controller, as the KVKK notice and the privacy policy print it.
