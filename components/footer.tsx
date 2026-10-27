@@ -35,7 +35,7 @@ export function Footer({ locale }: { locale: Locale }) {
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
               <Link href={href(locale, "home")} aria-label={org.name} className="shrink-0">
-                <Wordmark height={18} />
+                <Wordmark height={14} />
               </Link>
               {divisions.map((division) => (
                 <Link key={division.slug} href={divisionHref(locale, division.slug)} lang="en" className={LINK}>
