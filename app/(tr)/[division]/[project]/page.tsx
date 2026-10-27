@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ProjectView } from "@/components/views/project";
 import { getContent, getProject } from "@/lib/content";
-import { projectSlug } from "@/lib/i18n";
+import { pageAlternates, projectHref, projectSlug } from "@/lib/i18n";
 
 type Params = { division: string; project: string };
 
@@ -21,7 +21,13 @@ export function generateStaticParams(): Params[] {
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { division, project } = await params;
   const found = getProject("tr", division, project);
-  return found ? { title: found.project.name, description: found.project.tagline } : {};
+  return found
+    ? {
+        title: found.project.name,
+        description: found.project.tagline,
+        alternates: pageAlternates("tr", projectHref("tr", found.division.slug, found.project.name)),
+      }
+    : {};
 }
 
 export default async function ProjectPage({ params }: { params: Promise<Params> }) {

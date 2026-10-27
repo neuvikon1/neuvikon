@@ -10,7 +10,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toast";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { getContent } from "@/lib/content";
-import { routes, ui, type Locale } from "@/lib/i18n";
+import { SITE_URL, ui, type Locale } from "@/lib/i18n";
 
 // latin-ext carries ğ, ş, ı and İ. Without it the Turkish pages fall back to a
 // system face for every one of those letters, mid-word.
@@ -28,6 +28,9 @@ const geistMono = Geist_Mono({
 export function siteMetadata(locale: Locale): Metadata {
   const { org } = getContent(locale);
   return {
+    // Pages give canonical and hreflang as full addresses (`pageAlternates`);
+    // this is the base any relative URL in metadata resolves against.
+    metadataBase: new URL(SITE_URL),
     title: {
       default: `${org.name} — ${org.tagline}`,
       template: `%s — ${org.name}`,
@@ -39,9 +42,6 @@ export function siteMetadata(locale: Locale): Metadata {
       siteName: org.name,
       type: "website",
       locale: locale === "tr" ? "tr_TR" : "en_GB",
-    },
-    alternates: {
-      languages: { tr: routes.home.tr, en: routes.home.en },
     },
   };
 }

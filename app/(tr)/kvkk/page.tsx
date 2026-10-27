@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { LegalEntityTable, LegalLink, LegalPage, LegalSection } from "@/components/legal";
 import { getContent } from "@/lib/content";
+import { href, pageAlternates } from "@/lib/i18n";
 
 const { org } = getContent("tr");
 
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
   title: "KVKK Aydınlatma Metni",
   description:
     "6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında aydınlatma metni.",
+  alternates: pageAlternates("tr", href("tr", "dataProtection")),
 };
 
 export default function KvkkPage() {
