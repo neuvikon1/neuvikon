@@ -39,11 +39,11 @@ export function HomeView({ locale }: { locale: Locale }) {
           <Reveal delay={0.1}>
             <Text level="lead">{about.lead}</Text>
           </Reveal>
+          {/* Inside the grid: the reel is clipped at the rails, so the screens
+              slide in and out at the section's own edges. */}
+          <Showreel label={t.showreel} />
         </Stack>
       </Section>
-
-      {/* Full bleed, outside the grid: the screens run off both edges. */}
-      <Showreel label={t.showreel} />
 
       {divisions.map((division) => (
         <DivisionSection key={division.slug} division={division} locale={locale} />

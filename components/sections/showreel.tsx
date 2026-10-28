@@ -80,11 +80,11 @@ export function Showreel({ label }: { label: string }) {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
 
   return (
-    <section ref={ref} aria-label={label} className="relative w-full overflow-hidden py-6 md:py-10">
+    <div ref={ref} role="group" aria-label={label} className="relative mt-6 w-full overflow-hidden md:mt-10">
       <div className="flex flex-col gap-3 md:gap-4">
         <Row frames={TOP} from="0%" to="-22%" progress={scrollYProgress} />
         <Row frames={BOTTOM} from="-22%" to="0%" progress={scrollYProgress} />
       </div>
-    </section>
+    </div>
   );
 }
