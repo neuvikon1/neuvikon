@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal, RevealCell, RevealGroup } from "@/components/motion/reveal";
-import { ProjectScene } from "@/components/motion/project-scene";
+import { EmberField } from "@/components/motion/ember-field";
 import { RisingWords } from "@/components/motion/rising-words";
 import { MediaGallery } from "@/components/media-gallery";
 import { ProjectCard, ProjectLinks } from "@/components/sections/division";
@@ -38,10 +38,8 @@ export function ProjectView({
 
   return (
     <>
-      <ProjectScene
-        slug={projectSlug(project.name)}
-        icon={project.image ? asset(project.image) : undefined}
-      />
+      {/* Kor ve Kül is a game about tending a fire; its page sits over one. */}
+      {projectSlug(project.name) === "kor-ve-kul" && <EmberField />}
       <Section className="scroll-mt-20">
         <Stack gap="lg" className="w-full">
           <Reveal still inView={false}>
@@ -97,7 +95,7 @@ export function ProjectView({
         </Stack>
       </Section>
 
-      <Section id="media">
+      <Section>
         <Stack gap="sm" className="w-full">
           <Reveal still>
             <Eyebrow>{t.media}</Eyebrow>
@@ -113,7 +111,7 @@ export function ProjectView({
       </Section>
 
       {others.length > 0 && (
-        <Section id="more">
+        <Section>
           <Stack gap="lg" className="w-full">
             <Stack gap="sm" className="w-full">
               <Reveal still>
