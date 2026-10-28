@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal, RevealCell, RevealGroup } from "@/components/motion/reveal";
+import { BumpDiscs } from "@/components/motion/bump-discs";
 import { EmberField } from "@/components/motion/ember-field";
 import { ShardboundBackdrop } from "@/components/motion/shardbound-backdrop";
 import { RisingWords } from "@/components/motion/rising-words";
@@ -25,6 +26,8 @@ const BACKDROPS: Record<string, () => React.ReactNode> = {
   "kor-ve-kul": EmberField,
   // A dungeon crawler: crystal shards adrift, or torchlight and dust (see the file).
   shardbound: ShardboundBackdrop,
+  // An arena brawler: discs bumping, one charging and knocking another out.
+  pushbump: BumpDiscs,
 };
 
 /**
