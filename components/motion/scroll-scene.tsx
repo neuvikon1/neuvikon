@@ -7,7 +7,8 @@ import { useEffect, useRef } from "react";
  * becomes each division as it is scrolled to.
  *
  * The signature's N opens the page, then the cloud folds into a twenty-sided
- * die for Games, a lattice for Tech and a gear for Robotics, and opens out
+ * die for Games, a lattice for Tech and a working robot arm for Robotics -
+ * turning, reaching and closing its gripper while its section is read - and opens out
  * into a ring for the studio below. Every shape is held as its own position
  * attribute on the same points, so a morph is one uniform moving between them
  * in the vertex shader: one draw call, nothing rebuilt while scrolling.
@@ -30,6 +31,9 @@ const VERTEX = /* glsl */ `
   attribute vec3 p4;
   attribute vec3 aDir;
   attribute float aRand;
+  // Which part of the robot arm a point belongs to (shape p3): 0 base,
+  // 1 lower arm, 2 upper arm, 3 wrist, 4 and 5 the gripper's fingers.
+  attribute float aLink;
 
   uniform float uMorph;
   uniform float uTime;
@@ -46,12 +50,45 @@ const VERTEX = /* glsl */ `
     return t * t * (3.0 - 2.0 * t);
   }
 
+  vec2 rot(vec2 v, float a) {
+    float c = cos(a), s = sin(a);
+    return vec2(c * v.x - s * v.y, s * v.x + c * v.y);
+  }
+
+  // The robot arm, posed: each point is stored in its own link's frame and
+  // carried out along the chain (forward kinematics), so the arm moves as a
+  // jointed whole - turning on its base, reaching, bending at the elbow and
+  // wrist, and opening and closing its gripper.
+  vec3 arm(vec3 p, float link) {
+    if (link < 0.5) return p;
+    float t = uTime;
+    float yaw = sin(t * 0.35) * 0.7;
+    float a1 = -0.45 + sin(t * 0.6) * 0.35;
+    float a2 = 1.1 + sin(t * 0.8 + 1.3) * 0.45;
+    float a3 = -0.6 + sin(t * 1.1 + 0.4) * 0.5;
+    float grip = 0.5 + 0.5 * sin(t * 1.5);
+    vec2 shoulder = vec2(0.0, -1.1);
+    float ang2 = a1 + a2;
+    vec2 elbow = shoulder + rot(vec2(0.0, 1.35), a1);
+    vec2 wrist = elbow + rot(vec2(0.0, 1.15), ang2);
+    vec2 q;
+    if (link < 1.5) q = shoulder + rot(p.xy, a1);
+    else if (link < 2.5) q = elbow + rot(p.xy, ang2);
+    else {
+      vec2 l = p.xy;
+      if (link > 3.5) l.x += (link < 4.5 ? -1.0 : 1.0) * grip * 0.12;
+      q = wrist + rot(l, ang2 + a3);
+    }
+    float c = cos(yaw), s = sin(yaw);
+    return vec3(c * q.x + s * p.z, q.y, -s * q.x + c * p.z);
+  }
+
   void main() {
     float s1 = step_(1.0);
     float s2 = step_(2.0);
     float s3 = step_(3.0);
     float s4 = step_(4.0);
-    vec3 pos = mix(mix(mix(mix(position, p1, s1), p2, s2), p3, s3), p4, s4);
+    vec3 pos = mix(mix(mix(mix(position, p1, s1), p2, s2), arm(p3, aLink), s3), p4, s4);
 
     // Mid-flight the points lift off their path, so the cloud breathes open
     // between shapes and closes again on arrival.
@@ -201,39 +238,61 @@ function lattice(count: number, r: Rand) {
   return out;
 }
 
-/** A twelve-tooth gear with a hub and spokes. */
-function gear(count: number, r: Rand) {
-  const out: number[] = [];
-  const teeth = 12;
-  const inner = 1.15;
-  const outer = 1.5;
-  const tip = 1.82;
-  const depth = 0.5;
+/** Points on the surface of a box spanning y0..y1, centred on x = cx. */
+function slab(r: Rand, cx: number, y0: number, y1: number, w: number, d: number) {
+  const u = r(), v = r();
+  const face = r();
+  const y = y0 + u * (y1 - y0);
+  if (face < 0.4) return [cx + (v - 0.5) * w, y, (r() < 0.5 ? -0.5 : 0.5) * d];
+  if (face < 0.8) return [cx + (r() < 0.5 ? -0.5 : 0.5) * w, y, (v - 0.5) * d];
+  return [cx + (v - 0.5) * w, r() < 0.5 ? y0 : y1, (r() - 0.5) * d];
+}
+
+/** A point on a sphere's surface. */
+function ball(r: Rand, cy: number, rad: number) {
+  const u = r() * 2 - 1, t = r() * Math.PI * 2, s = Math.sqrt(1 - u * u);
+  return [rad * s * Math.cos(t), cy + rad * u, rad * s * Math.sin(t)];
+}
+
+/**
+ * A robot arm, each point in its own link's frame (y along the link) with its
+ * link number alongside; the shader poses it. Base, lower arm, upper arm,
+ * wrist and two fingers.
+ */
+function robotArm(count: number, r: Rand) {
+  const pos: number[] = [];
+  const link: number[] = [];
   for (let i = 0; i < count; i++) {
     const pick = r();
-    const z = (r() - 0.5) * depth;
-    if (pick < 0.55) {
-      // The rim and its teeth, profile and faces.
-      const ang = r() * Math.PI * 2;
-      const phase = ((ang / (Math.PI * 2)) * teeth) % 1;
-      const onTooth = phase > 0.15 && phase < 0.55;
-      const rad = inner + r() * ((onTooth ? tip : outer) - inner);
-      const face = r() < 0.6;
-      out.push(Math.cos(ang) * rad, Math.sin(ang) * rad, face ? Math.sign(z) * depth * 0.5 : z);
-    } else if (pick < 0.75) {
-      // Hub.
-      const ang = r() * Math.PI * 2;
-      const rad = 0.3 + r() * 0.15;
-      out.push(Math.cos(ang) * rad, Math.sin(ang) * rad, z * 1.4);
+    let p: number[];
+    let k: number;
+    if (pick < 0.18) {
+      // Base: a flat turntable on a short pedestal.
+      k = 0;
+      const a = r() * Math.PI * 2;
+      if (r() < 0.6) {
+        const rad = Math.sqrt(r()) * 0.75;
+        p = [Math.cos(a) * rad, -1.55 + (r() < 0.5 ? 0 : 0.12), Math.sin(a) * rad];
+      } else p = [Math.cos(a) * 0.3, -1.43 + r() * 0.33, Math.sin(a) * 0.3];
+    } else if (pick < 0.46) {
+      k = 1;
+      p = r() < 0.2 ? ball(r, 0, 0.27) : slab(r, 0, 0, 1.35, 0.34, 0.34);
+    } else if (pick < 0.7) {
+      k = 2;
+      p = r() < 0.2 ? ball(r, 0, 0.21) : slab(r, 0, 0, 1.15, 0.26, 0.28);
+    } else if (pick < 0.8) {
+      k = 3;
+      p = r() < 0.3 ? ball(r, 0, 0.15) : slab(r, 0, 0.05, 0.22, 0.46, 0.3);
     } else {
-      // Five spokes.
-      const spoke = Math.floor(r() * 5);
-      const ang = (spoke / 5) * Math.PI * 2 + (r() - 0.5) * 0.12;
-      const rad = 0.45 + r() * (inner - 0.45);
-      out.push(Math.cos(ang) * rad, Math.sin(ang) * rad, z * 0.6);
+      // Two fingers, either side of the wrist; the shader opens and closes them.
+      const left = r() < 0.5;
+      k = left ? 4 : 5;
+      p = slab(r, left ? -0.13 : 0.13, 0.22, 0.66, 0.08, 0.16);
     }
+    pos.push(p[0], p[1], p[2]);
+    link.push(k);
   }
-  return out;
+  return { pos, link };
 }
 
 /** A tilted orbit, the three divisions' paths opened out into one ring. */
@@ -309,7 +368,9 @@ export function ScrollScene() {
       geometry.setAttribute("position", new THREE.Float32BufferAttribute(monogram(count, r), 3));
       geometry.setAttribute("p1", new THREE.Float32BufferAttribute(die(count, r), 3));
       geometry.setAttribute("p2", new THREE.Float32BufferAttribute(lattice(count, r), 3));
-      geometry.setAttribute("p3", new THREE.Float32BufferAttribute(gear(count, r), 3));
+      const arm = robotArm(count, r);
+      geometry.setAttribute("p3", new THREE.Float32BufferAttribute(arm.pos, 3));
+      geometry.setAttribute("aLink", new THREE.Float32BufferAttribute(arm.link, 1));
       geometry.setAttribute("p4", new THREE.Float32BufferAttribute(ring(count, r), 3));
       const dirs = new Float32Array(count * 3);
       const rands = new Float32Array(count);
@@ -371,7 +432,7 @@ export function ScrollScene() {
           material.uniforms.uOpacity.value = 0.2;
         } else {
           // On a wide screen it takes the right third the copy leaves open,
-          // sized so the widest shape (the gear's teeth) stays clear of it.
+          // sized so the widest shape (the die) stays clear of it.
           group.position.set(visibleW * 0.3, 0, 0);
           group.scale.setScalar(Math.min(1, visibleH / 6.6, visibleW / 13));
           material.uniforms.uOpacity.value = 0.95;

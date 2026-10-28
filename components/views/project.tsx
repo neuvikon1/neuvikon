@@ -6,7 +6,6 @@ import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal, RevealCell, RevealGroup } from "@/components/motion/reveal";
 import { BumpDiscs } from "@/components/motion/bump-discs";
-import { Butterflies } from "@/components/motion/butterflies";
 import { Confetti } from "@/components/motion/confetti";
 import { EdgePush } from "@/components/motion/edge-push";
 import { EmberField } from "@/components/motion/ember-field";
@@ -24,11 +23,16 @@ import { Eyebrow, Text, Title } from "@/components/ui/typography";
 import { asset, getContent, orderedProjects, type Division, type Project } from "@/lib/content";
 import { divisionHref, href, projectSlug, ui, type Locale } from "@/lib/i18n";
 
+/** Eclosion's dark, violet world: the hearth's sparks, in violet and sparser. */
+function VioletSparks() {
+  return <EmberField palette="violet" density={0.35} />;
+}
+
 /**
  * Living backgrounds, for the projects that have one: each is drawn from the
  * game's own world and sits behind the whole page.
  */
-const BACKDROPS: Record<string, () => React.ReactNode> = {
+const BACKDROPS: Record<string, React.ComponentType> = {
   // A game about tending a fire: sparks rising from it.
   "kor-ve-kul": EmberField,
   // A dungeon crawler: crystal shards adrift, or torchlight and dust (see the file).
@@ -47,8 +51,7 @@ const BACKDROPS: Record<string, () => React.ReactNode> = {
   worddeck: WordFlips,
   // A ticket tracker: work moving across three lanes.
   "neu-source": TicketLanes,
-  // Eclosion is a butterfly's emergence.
-  eclosion: Butterflies,
+  eclosion: VioletSparks,
 };
 
 /**

@@ -67,12 +67,20 @@ const FRAGMENT = /* glsl */ `
 `;
 
 /** On black the sparks glow; on white they are drawn a step deeper to hold contrast. */
-const PALETTE = {
-  dark: { hot: 0xffe08a, warm: 0xff8a2a, cool: 0xc4361c, strength: 0.95 },
-  light: { hot: 0xf59f00, warm: 0xe8590c, cool: 0xb02a14, strength: 0.9 },
+const PALETTES = {
+  // Kor ve Kül's hearth: yellow cooling through orange to red.
+  fire: {
+    dark: { hot: 0xffe08a, warm: 0xff8a2a, cool: 0xc4361c, strength: 0.95 },
+    light: { hot: 0xf59f00, warm: 0xe8590c, cool: 0xb02a14, strength: 0.9 },
+  },
+  // Eclosion's violet flame: pale lilac cooling through violet to deep purple.
+  violet: {
+    dark: { hot: 0xf3d6ff, warm: 0xb46cff, cool: 0x5b21b6, strength: 0.95 },
+    light: { hot: 0xc084fc, warm: 0x9333ea, cool: 0x581c87, strength: 0.85 },
+  },
 };
 
-export function EmberField() {
+export function EmberField({ palette = "fire", density = 1 }: { palette?: keyof typeof PALETTES; density?: number }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -85,7 +93,7 @@ export function EmberField() {
       if (disposed) return;
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
       const small = window.matchMedia("(max-width: 1023px)");
-      const count = small.matches ? 140 : 320;
+      const count = Math.round((small.matches ? 140 : 320) * density);
 
       let renderer: InstanceType<typeof THREE.WebGLRenderer>;
       try {
@@ -128,7 +136,7 @@ export function EmberField() {
 
       const applyTheme = () => {
         const dark = document.documentElement.classList.contains("dark");
-        const p = dark ? PALETTE.dark : PALETTE.light;
+        const p = dark ? PALETTES[palette].dark : PALETTES[palette].light;
         material.uniforms.uHot.value.set(p.hot);
         material.uniforms.uWarm.value.set(p.warm);
         material.uniforms.uCool.value.set(p.cool);
@@ -194,7 +202,7 @@ export function EmberField() {
       disposed = true;
       cleanup();
     };
-  }, []);
+  }, [palette, density]);
 
   return (
     <canvas
