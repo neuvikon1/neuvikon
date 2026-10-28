@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal, RevealCell, RevealGroup } from "@/components/motion/reveal";
+import { ProjectScene } from "@/components/motion/project-scene";
 import { RisingWords } from "@/components/motion/rising-words";
 import { MediaGallery } from "@/components/media-gallery";
 import { ProjectCard, ProjectLinks } from "@/components/sections/division";
@@ -12,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Eyebrow, Text, Title } from "@/components/ui/typography";
 import { asset, getContent, orderedProjects, type Division, type Project } from "@/lib/content";
-import { divisionHref, href, ui, type Locale } from "@/lib/i18n";
+import { divisionHref, href, projectSlug, ui, type Locale } from "@/lib/i18n";
 
 /**
  * One project's own page: what it is, what it looks like from inside, and
@@ -37,12 +38,16 @@ export function ProjectView({
 
   return (
     <>
+      <ProjectScene
+        slug={projectSlug(project.name)}
+        icon={project.image ? asset(project.image) : undefined}
+      />
       <Section className="scroll-mt-20">
         <Stack gap="lg" className="w-full">
           <Reveal still inView={false}>
             <Link
               href={divisionHref(locale, division.slug)}
-              className="inline-flex items-center gap-2 font-mono text-xs tracking-widest text-muted-foreground uppercase transition-colors hover:text-foreground"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               <ArrowLeft aria-hidden className="size-3.5" />
               <span lang="en">{t.backToDivision(division.name)}</span>
@@ -92,7 +97,7 @@ export function ProjectView({
         </Stack>
       </Section>
 
-      <Section>
+      <Section id="media">
         <Stack gap="sm" className="w-full">
           <Reveal still>
             <Eyebrow>{t.media}</Eyebrow>
@@ -108,7 +113,7 @@ export function ProjectView({
       </Section>
 
       {others.length > 0 && (
-        <Section>
+        <Section id="more">
           <Stack gap="lg" className="w-full">
             <Stack gap="sm" className="w-full">
               <Reveal still>

@@ -15,8 +15,9 @@ import { cn } from "@/lib/utils";
  * A project's screenshots: a grid of thumbnails, and a viewer that opens over
  * the page when one is clicked.
  *
- * Phone screenshots are tall and narrow, so they sit four to a row on a wide
- * screen; desktop captures (`wide`) take two. In the viewer, the arrow keys
+ * Phone screenshots are tall and narrow, so they sit three to a row on a wide
+ * screen; desktop captures (`wide`) take two. The grid keeps to the left two
+ * thirds of the page: the right third belongs to the project's point cloud. In the viewer, the arrow keys
  * and the buttons either side step through the set, and Escape or the
  * backdrop closes it. Videos play in place in the grid instead - a viewer
  * around a player that already has its own controls would be a frame around a
@@ -37,8 +38,8 @@ export function MediaGallery({ media, locale }: { media: ProjectMedia[]; locale:
       <RevealGroup
         stagger={0.05}
         className={cn(
-          "grid w-full gap-4",
-          wide ? "md:grid-cols-2" : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4",
+          "grid w-full gap-4 lg:w-2/3",
+          wide ? "md:grid-cols-2" : "grid-cols-2 sm:grid-cols-3",
         )}
       >
         {media.map((item) => (
