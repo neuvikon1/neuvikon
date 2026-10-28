@@ -6,9 +6,15 @@ import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal, RevealCell, RevealGroup } from "@/components/motion/reveal";
 import { BumpDiscs } from "@/components/motion/bump-discs";
+import { Butterflies } from "@/components/motion/butterflies";
+import { Confetti } from "@/components/motion/confetti";
+import { EdgePush } from "@/components/motion/edge-push";
 import { EmberField } from "@/components/motion/ember-field";
+import { GuessRows } from "@/components/motion/guess-rows";
 import { PeekCards } from "@/components/motion/peek-cards";
 import { ShardboundBackdrop } from "@/components/motion/shardbound-backdrop";
+import { TicketLanes } from "@/components/motion/ticket-lanes";
+import { WordFlips } from "@/components/motion/word-flips";
 import { RisingWords } from "@/components/motion/rising-words";
 import { MediaGallery } from "@/components/media-gallery";
 import { ProjectCard, ProjectLinks } from "@/components/sections/division";
@@ -31,6 +37,18 @@ const BACKDROPS: Record<string, () => React.ReactNode> = {
   pushbump: BumpDiscs,
   // A card game of peeking and swapping: face-down cards doing both.
   undercard: PeekCards,
+  // An Abalone board: three marbles pushing two, one off the edge.
+  edgeout: EdgePush,
+  // A number to find: guesses turning green and yellow until one is all green.
+  guessfast: GuessRows,
+  // A party game: confetti, and a popper now and then.
+  "neu-pummel-party": Confetti,
+  // Flashcards: Turkish on the front, English on the back.
+  worddeck: WordFlips,
+  // A ticket tracker: work moving across three lanes.
+  "neu-source": TicketLanes,
+  // Eclosion is a butterfly's emergence.
+  eclosion: Butterflies,
 };
 
 /**
