@@ -225,9 +225,6 @@ export function DivisionSection({
     <Section id={division.slug} className="scroll-mt-20">
       <Stack gap="xl" className="w-full">
         <Stack gap="md">
-          <Reveal still>
-            <Eyebrow lang="en">{division.short}</Eyebrow>
-          </Reveal>
           <DivisionHeading division={division} as={as} />
           <Reveal delay={0.1}>
             <Text level="lead">{division.tagline}</Text>

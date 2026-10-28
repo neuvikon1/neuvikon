@@ -1,181 +1,80 @@
-import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { SignedWordmark } from "@/components/brand/logo";
 import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal } from "@/components/motion/reveal";
-import { STAGGER } from "@/components/motion/tokens";
 import { RisingWords } from "@/components/motion/rising-words";
-import { HeroBackdrop } from "@/components/sections/hero-backdrop";
 import { ButtonLink } from "@/components/ui/button-link";
-import { Eyebrow, Text, Title } from "@/components/ui/typography";
-import { getContent, type Division } from "@/lib/content";
+import { Text, Title } from "@/components/ui/typography";
+import { getContent } from "@/lib/content";
 import { ui, type Locale } from "@/lib/i18n";
 
 /**
  * The first screen, in order of arrival.
  *
  * Nothing here waits to be scrolled to - it is all already on screen - so the
- * sequence is held by hand instead: the statement rises word by word, the
- * supporting line and the buttons follow it up, the index comes in beside them,
- * and the figures land last, on the floor of the screen. Read top-left to
- * bottom-right, which is the order the page wants to be read in anyway.
- *
- * The numbers are the one thing that moves on its own after it has arrived, and
- * the delay here is what buys that: the roll starts while the row is still
- * fading up, so no figure is ever seen sitting still before it counts.
+ * sequence is held by hand instead: the signature writes itself, the statement
+ * rises word by word, and the supporting line and the buttons follow it up.
  */
 const CUE = {
   lead: 0.42,
   actions: 0.56,
-  index: 0.5,
-  floor: 0.78,
 };
-
-/**
- * The three divisions as a numbered index, opposite the statement.
- *
- * It earns the right half of the screen that a lone headline would leave
- * empty, and it is the page's table of contents: the primary call to action
- * scrolls to the divisions, these jump straight into one.
- */
-function DivisionIndex({ divisions, label }: { divisions: Division[]; label: string }) {
-  return (
-    <Stack gap="sm" className="w-full">
-      {/* The label rises the way the statement does, on the index's cue, so
-          the column's heading arrives with its rows instead of waiting there. */}
-      <Eyebrow>
-        <RisingWords inView={false} delay={CUE.index}>{label}</RisingWords>
-      </Eyebrow>
-      <ul className="w-full">
-        {divisions.map((division, index) => (
-          <li
-            key={division.slug}
-            className="enter-fade-up border-t border-rule"
-            style={{ animationDelay: `${CUE.index + index * STAGGER}s` }}
-          >
-            <a
-              href={`#${division.slug}`}
-              className="group flex items-baseline gap-4 py-4 transition-colors hover:text-foreground"
-            >
-              <span className="font-mono text-xs text-muted-foreground tabular-nums">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span lang="en" className="block text-base tracking-tight">
-                  {division.name}
-                </span>
-                <span className="mt-0.5 block text-sm text-muted-foreground">
-                  {division.tagline}
-                </span>
-              </span>
-              <ArrowUpRight
-                aria-hidden
-                className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground"
-              />
-            </a>
-          </li>
-        ))}
-      </ul>
-    </Stack>
-  );
-}
-
-/**
- * Where the first screen ends. Everything below the fold starts at the rule
- * under the hero, so the next section announces itself by its own top edge.
- */
-function ScrollCue({ label }: { label: string }) {
-  return (
-    <a
-      href="#divisions"
-      className="hidden shrink-0 items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground md:flex"
-    >
-      {label}
-      <ArrowDown
-        aria-hidden
-        className="size-3.5 motion-safe:animate-hero-cue"
-      />
-    </a>
-  );
-}
 
 /**
  * Page-opening hero, one screen tall, and the only section with no frame of
  * its own: no top rule, because the header's edge already sits above it, and
- * no rails, so the grid starts at the divisions. The first screen is the
- * statement; the ruled grid is what the page turns into below it.
+ * no rails, so the grid starts below it.
+ *
+ * The copy keeps to the left seven columns. The right of the screen belongs
+ * to the point cloud behind the page (`ScrollScene`), which opens as the
+ * signature's N and becomes each division further down - so the first screen
+ * has one large thing on each side: the statement and the mark.
  *
  * The height is `100svh` less the header rather than `100vh`: on mobile the
- * large viewport unit would hide the stat row behind the browser chrome, and
- * the whole point of that row is that it is readable without scrolling.
- *
- * Two bands inside the container. The statement band takes all the slack and
- * centres its content in it, so the title sits optically mid-screen at any
- * window height; the stat band is pinned to the bottom above its own hairline,
- * which lands just above the fold and reads as the floor of the first screen.
- *
- * The prism backdrop is clipped to this section and sits behind the content;
- * the wrapper owns the stacking context so the shader can't escape it.
+ * large viewport unit would hide the actions behind the browser chrome.
  */
 export function Hero({ locale }: { locale: Locale }) {
   const t = ui[locale];
-  const { org, divisions } = getContent(locale);
+  const { org } = getContent(locale);
   return (
-    <div className="relative isolate overflow-hidden">
-      <HeroBackdrop />
-      <Section
-        rails={false}
-        rule={false}
-        inset={false}
-        className="flex min-h-[calc(100svh-var(--header-h))] flex-col"
-        containerClassName="flex flex-1 flex-col"
-      >
-        {/* The padding here is only a floor. This band takes the slack and
-            centres in it, so on a tall window the space above and below the
-            content is set by the centring, not by this number - it matters
-            only on a short one, where it is what keeps the headline off the
-            stat rule. */}
-        <div className="grid w-full flex-1 content-center gap-12 py-10 lg:grid-cols-12 lg:gap-16">
-          <Stack gap="lg" className="lg:col-span-7">
-            {/* The mark, large, its N writing itself as the page opens. The
-                size rides the viewport; the inline height SignedWordmark sets
-                is only its default. The mark is four times as wide as it is
-                tall, so this height keeps it inside a phone's width. */}
-            <SignedWordmark className="!h-[clamp(3.5rem,7vw,5.5rem)]" />
-            <Stack gap="md">
-              <Title as="h1" level="display">
-                <RisingWords inView={false}>{org.tagline}</RisingWords>
-              </Title>
-              <Reveal inView={false} delay={CUE.lead}>
-                <Text level="lead" className="text-sm md:text-sm">{org.description}</Text>
-              </Reveal>
-            </Stack>
-
-            <Reveal inView={false} delay={CUE.actions}>
-              <Actions>
-                <ButtonLink href="#divisions" size="lg">
-                  {t.exploreDivisions}
-                  <ArrowRight data-icon="inline-end" />
-                </ButtonLink>
-                <ButtonLink
-                  href={`mailto:${org.email}`}
-                  size="lg"
-                  variant="outline"
-                >
-                  {org.email}
-                </ButtonLink>
-              </Actions>
+    <Section
+      rails={false}
+      rule={false}
+      inset={false}
+      className="flex min-h-[calc(100svh-var(--header-h))] flex-col"
+      containerClassName="flex flex-1 flex-col"
+    >
+      <div className="grid w-full flex-1 content-center gap-12 py-16 lg:grid-cols-12">
+        <Stack gap="lg" className="lg:col-span-7">
+          {/* The mark, large, its N writing itself as the page opens. The
+              size rides the viewport; the inline height SignedWordmark sets
+              is only its default. The mark is four times as wide as it is
+              tall, so this height keeps it inside a phone's width. */}
+          <SignedWordmark className="!h-[clamp(3.5rem,7vw,5.5rem)]" />
+          <Stack gap="md">
+            <Title as="h1" level="display">
+              <RisingWords inView={false}>{org.tagline}</RisingWords>
+            </Title>
+            <Reveal inView={false} delay={CUE.lead}>
+              <Text level="lead">{org.description}</Text>
             </Reveal>
           </Stack>
 
-          {/* Bottom-aligned, so the index hangs off the same optical baseline
-              as the actions rather than floating beside the headline. */}
-          <div className="lg:col-span-5 lg:self-end">
-            <DivisionIndex divisions={divisions} label={t.divisions} />
-          </div>
-        </div>
-      </Section>
-    </div>
+          <Reveal inView={false} delay={CUE.actions}>
+            <Actions>
+              <ButtonLink href="#divisions" size="lg">
+                {t.exploreDivisions}
+                <ArrowRight data-icon="inline-end" />
+              </ButtonLink>
+              <ButtonLink href={`mailto:${org.email}`} size="lg" variant="outline">
+                {org.email}
+              </ButtonLink>
+            </Actions>
+          </Reveal>
+        </Stack>
+      </div>
+    </Section>
   );
 }

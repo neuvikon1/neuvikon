@@ -5,6 +5,15 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal, RevealCell, RevealGroup } from "@/components/motion/reveal";
+import { BumpDiscs } from "@/components/motion/bump-discs";
+import { Confetti } from "@/components/motion/confetti";
+import { EdgePush } from "@/components/motion/edge-push";
+import { EmberField } from "@/components/motion/ember-field";
+import { GuessRows } from "@/components/motion/guess-rows";
+import { PeekCards } from "@/components/motion/peek-cards";
+import { ShardboundBackdrop } from "@/components/motion/shardbound-backdrop";
+import { TicketLanes } from "@/components/motion/ticket-lanes";
+import { WordFlips } from "@/components/motion/word-flips";
 import { RisingWords } from "@/components/motion/rising-words";
 import { MediaGallery } from "@/components/media-gallery";
 import { ProjectCard, ProjectLinks } from "@/components/sections/division";
@@ -12,7 +21,38 @@ import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Eyebrow, Text, Title } from "@/components/ui/typography";
 import { asset, getContent, orderedProjects, type Division, type Project } from "@/lib/content";
-import { divisionHref, href, ui, type Locale } from "@/lib/i18n";
+import { divisionHref, href, projectSlug, ui, type Locale } from "@/lib/i18n";
+
+/** Eclosion's dark, violet world: the hearth's sparks, in violet and sparser. */
+function VioletSparks() {
+  return <EmberField palette="violet" density={0.35} />;
+}
+
+/**
+ * Living backgrounds, for the projects that have one: each is drawn from the
+ * game's own world and sits behind the whole page.
+ */
+const BACKDROPS: Record<string, React.ComponentType> = {
+  // A game about tending a fire: sparks rising from it.
+  "kor-ve-kul": EmberField,
+  // A dungeon crawler: crystal shards adrift, or torchlight and dust (see the file).
+  shardbound: ShardboundBackdrop,
+  // An arena brawler: discs bumping, one charging and knocking another out.
+  pushbump: BumpDiscs,
+  // A card game of peeking and swapping: face-down cards doing both.
+  undercard: PeekCards,
+  // An Abalone board: three marbles pushing two, one off the edge.
+  edgeout: EdgePush,
+  // A number to find: guesses turning green and yellow until one is all green.
+  guessfast: GuessRows,
+  // A party game: confetti, and a popper now and then.
+  "neu-pummel-party": Confetti,
+  // Flashcards: Turkish on the front, English on the back.
+  worddeck: WordFlips,
+  // A ticket tracker: work moving across three lanes.
+  "neu-source": TicketLanes,
+  eclosion: VioletSparks,
+};
 
 /**
  * One project's own page: what it is, what it looks like from inside, and
@@ -35,14 +75,17 @@ export function ProjectView({
   const { statusLabel } = getContent(locale);
   const others = orderedProjects(division).filter((p) => p.name !== project.name);
 
+  const Backdrop = BACKDROPS[projectSlug(project.name)];
+
   return (
     <>
+      {Backdrop && <Backdrop />}
       <Section className="scroll-mt-20">
         <Stack gap="lg" className="w-full">
           <Reveal still inView={false}>
             <Link
               href={divisionHref(locale, division.slug)}
-              className="inline-flex items-center gap-2 font-mono text-xs tracking-widest text-muted-foreground uppercase transition-colors hover:text-foreground"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               <ArrowLeft aria-hidden className="size-3.5" />
               <span lang="en">{t.backToDivision(division.name)}</span>

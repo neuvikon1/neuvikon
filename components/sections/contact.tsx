@@ -6,7 +6,7 @@ import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal } from "@/components/motion/reveal";
 import { RisingWords } from "@/components/motion/rising-words";
 import { ButtonLink } from "@/components/ui/button-link";
-import { Eyebrow, Text, Title } from "@/components/ui/typography";
+import { Text, Title } from "@/components/ui/typography";
 import { getContent } from "@/lib/content";
 import { ui, type Locale } from "@/lib/i18n";
 
@@ -26,9 +26,6 @@ export function ContactSection({ locale, as = "h2" }: { locale: Locale; as?: "h1
     <Section id="contact" className="scroll-mt-20">
       <Stack gap="lg">
         <Stack gap="md">
-          <Reveal still>
-            <Eyebrow>{t.contact}</Eyebrow>
-          </Reveal>
           <Title as={as}>
             <RisingWords>{t.contactTitle}</RisingWords>
           </Title>
