@@ -6,6 +6,7 @@ import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal, RevealCell, RevealGroup } from "@/components/motion/reveal";
 import { EmberField } from "@/components/motion/ember-field";
+import { TorchDust } from "@/components/motion/torch-dust";
 import { RisingWords } from "@/components/motion/rising-words";
 import { MediaGallery } from "@/components/media-gallery";
 import { ProjectCard, ProjectLinks } from "@/components/sections/division";
@@ -14,6 +15,17 @@ import { ButtonLink } from "@/components/ui/button-link";
 import { Eyebrow, Text, Title } from "@/components/ui/typography";
 import { asset, getContent, orderedProjects, type Division, type Project } from "@/lib/content";
 import { divisionHref, href, projectSlug, ui, type Locale } from "@/lib/i18n";
+
+/**
+ * Living backgrounds, for the projects that have one: each is drawn from the
+ * game's own world and sits behind the whole page.
+ */
+const BACKDROPS: Record<string, () => React.ReactNode> = {
+  // A game about tending a fire: sparks rising from it.
+  "kor-ve-kul": EmberField,
+  // A dungeon crawler: torchlight and the dust hanging in it.
+  shardbound: TorchDust,
+};
 
 /**
  * One project's own page: what it is, what it looks like from inside, and
@@ -36,10 +48,11 @@ export function ProjectView({
   const { statusLabel } = getContent(locale);
   const others = orderedProjects(division).filter((p) => p.name !== project.name);
 
+  const Backdrop = BACKDROPS[projectSlug(project.name)];
+
   return (
     <>
-      {/* Kor ve Kül is a game about tending a fire; its page sits over one. */}
-      {projectSlug(project.name) === "kor-ve-kul" && <EmberField />}
+      {Backdrop && <Backdrop />}
       <Section className="scroll-mt-20">
         <Stack gap="lg" className="w-full">
           <Reveal still inView={false}>

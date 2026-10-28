@@ -252,21 +252,21 @@ function ring(count: number, r: Rand) {
 /* ---------- Scroll to morph. ---------- */
 
 /**
- * Where the scroll is, as a shape index. Each anchor's shape is reached as its
- * section's top crosses the middle of the screen, and the morph into it runs
- * over the screen before that, so the new form is assembled by the time its
- * heading is read.
+ * Where the scroll is, as a shape index. A section's shape holds for the whole
+ * of that section; the change into the next one happens only at the boundary,
+ * while the next section's top edge rises through the screen, and is complete
+ * by the time its heading is read.
  */
 function morphTarget(tops: number[], viewport: number, scroll: number) {
-  const probe = scroll + viewport * 0.5;
-  // Each change is spread over a screen and a half, so a shape is still
-  // forming as its section is read rather than snapping in.
-  const run = viewport * 1.5;
   let m = 0;
   for (let k = 0; k < tops.length; k++) {
-    const start = tops[k] - run;
-    if (probe <= start) break;
-    m = k + Math.min(1, (probe - start) / run);
+    // Where the section's top edge is on screen, 0 = top, 1 = bottom.
+    const edge = (tops[k] - scroll) / viewport;
+    // The change runs while that edge climbs from 80% to 30% of the screen;
+    // either side of it the shape holds, for the whole of its section.
+    const t = Math.min(1, Math.max(0, (0.8 - edge) / 0.5));
+    if (t === 0) break;
+    m = k + t;
   }
   return m;
 }
