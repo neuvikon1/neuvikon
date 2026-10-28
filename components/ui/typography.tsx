@@ -14,7 +14,7 @@ import { cn } from "cn"
  */
 
 const eyebrowVariants = cva(
-  "font-mono text-xs tracking-widest text-muted-foreground uppercase"
+  "text-sm text-muted-foreground"
 )
 
 function Eyebrow({ className, ...props }: React.ComponentProps<"p">) {
@@ -27,9 +27,9 @@ const titleVariants = cva("tracking-tight text-balance", {
   variants: {
     level: {
       /** Page-opening statement. One per page. */
-      display: "max-w-4xl text-4xl lg:text-5xl",
+      display: "max-w-4xl text-5xl md:text-6xl lg:text-7xl",
       /** Section headline. */
-      section: "max-w-xl text-3xl md:text-4xl",
+      section: "max-w-2xl text-4xl md:text-5xl",
       /** Subsection or card headline. */
       sub: "max-w-md text-2xl",
     },
@@ -56,9 +56,9 @@ const textVariants = cva("text-muted-foreground", {
   variants: {
     level: {
       /** Supporting paragraph under a display title. */
-      lead: "max-w-xl text-base md:text-lg",
+      lead: "max-w-[60ch] text-lg md:text-xl",
       /** Body copy. */
-      body: "max-w-prose text-sm",
+      body: "max-w-[68ch] text-base",
     },
   },
   defaultVariants: { level: "body" },

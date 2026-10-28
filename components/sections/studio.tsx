@@ -21,9 +21,6 @@ export function StudioSection({ locale, as = "h2" }: { locale: Locale; as?: "h1"
     <Section id="studio" className="scroll-mt-20">
       <Stack gap="xl" className="w-full">
         <Stack gap="md">
-          <Reveal still>
-            <Eyebrow>{t.studio}</Eyebrow>
-          </Reveal>
           <Title as={as}>
             <RisingWords>{t.howWeWork}</RisingWords>
           </Title>

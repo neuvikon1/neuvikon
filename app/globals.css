@@ -36,6 +36,10 @@
   --text-4xl--line-height: calc(42 / 36);
   --text-5xl: calc(48rem / 12);
   --text-5xl--line-height: calc(52 / 48);
+  --text-6xl: calc(64rem / 12);
+  --text-6xl--line-height: calc(66 / 64);
+  --text-7xl: calc(84rem / 12);
+  --text-7xl--line-height: calc(84 / 84);
 }
 
 @theme inline {
@@ -337,4 +341,13 @@
   ::view-transition-group(root) {
     animation: none !important;
   }
+}
+
+/* The browser's own surfaces, in the house green rather than its defaults. */
+::selection {
+  background: oklch(0.72 0.15 150 / 35%);
+  color: var(--foreground);
+}
+html {
+  scrollbar-color: oklch(0.72 0.15 150 / 55%) transparent;
 }
