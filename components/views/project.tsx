@@ -6,7 +6,7 @@ import { Section } from "@/components/layout/section";
 import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal, RevealCell, RevealGroup } from "@/components/motion/reveal";
 import { EmberField } from "@/components/motion/ember-field";
-import { TorchDust } from "@/components/motion/torch-dust";
+import { ShardboundBackdrop } from "@/components/motion/shardbound-backdrop";
 import { RisingWords } from "@/components/motion/rising-words";
 import { MediaGallery } from "@/components/media-gallery";
 import { ProjectCard, ProjectLinks } from "@/components/sections/division";
@@ -23,8 +23,8 @@ import { divisionHref, href, projectSlug, ui, type Locale } from "@/lib/i18n";
 const BACKDROPS: Record<string, () => React.ReactNode> = {
   // A game about tending a fire: sparks rising from it.
   "kor-ve-kul": EmberField,
-  // A dungeon crawler: torchlight and the dust hanging in it.
-  shardbound: TorchDust,
+  // A dungeon crawler: crystal shards adrift, or torchlight and dust (see the file).
+  shardbound: ShardboundBackdrop,
 };
 
 /**
