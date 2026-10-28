@@ -7,6 +7,7 @@ import { Actions, Stack } from "@/components/layout/stack";
 import { Reveal, RevealCell, RevealGroup } from "@/components/motion/reveal";
 import { BumpDiscs } from "@/components/motion/bump-discs";
 import { EmberField } from "@/components/motion/ember-field";
+import { PeekCards } from "@/components/motion/peek-cards";
 import { ShardboundBackdrop } from "@/components/motion/shardbound-backdrop";
 import { RisingWords } from "@/components/motion/rising-words";
 import { MediaGallery } from "@/components/media-gallery";
@@ -28,6 +29,8 @@ const BACKDROPS: Record<string, () => React.ReactNode> = {
   shardbound: ShardboundBackdrop,
   // An arena brawler: discs bumping, one charging and knocking another out.
   pushbump: BumpDiscs,
+  // A card game of peeking and swapping: face-down cards doing both.
+  undercard: PeekCards,
 };
 
 /**
