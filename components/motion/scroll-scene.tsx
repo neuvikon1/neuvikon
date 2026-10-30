@@ -3,37 +3,26 @@
 import { useEffect, useRef } from "react";
 
 /**
- * The home page's one authored moment: a cloud of points behind the page that
- * becomes each division as it is scrolled to.
+ * The hero's mark: a cloud of points that gathers into the signature's N.
  *
- * The signature's N opens the page, then the cloud folds into a twenty-sided
- * die for Games, a lattice for Tech and a working robot arm for Robotics -
- * turning, reaching and closing its gripper while its section is read - and opens out
- * into a ring for the studio below. Every shape is held as its own position
- * attribute on the same points, so a morph is one uniform moving between them
- * in the vertex shader: one draw call, nothing rebuilt while scrolling.
+ * The page opens on the points scattered across the right of the hero; the
+ * first stretch of scroll pulls them together into the N, and from there the
+ * N holds its shape and leaves with the hero like any other content - the
+ * canvas lives inside the hero, so nothing follows the reader further down.
+ * Both states are held as position attributes on the same points, so the
+ * gathering is one uniform moving between them in the vertex shader.
  *
- * Scroll decides *which* shape and *how far* into the next one; time only
- * turns it. Under reduced motion the turn stops and the cloud steps between
- * shapes instead of flowing - the page still says which division you are in.
+ * Scroll decides *how far* the N has gathered; time only turns it. Under
+ * reduced motion there is no gathering: the N is simply there.
  *
  * three.js is imported inside the effect, so it never sits on the first-load
- * path: the page is complete without this layer, and it fades in once ready.
+ * path: the hero is complete without this layer, and it fades in once ready.
  */
-
-/** Section anchors, in page order, and the shape each one wakes. */
-const ANCHORS = ["games", "tech", "robotics", "studio"] as const;
 
 const VERTEX = /* glsl */ `
   attribute vec3 p1;
-  attribute vec3 p2;
-  attribute vec3 p3;
-  attribute vec3 p4;
   attribute vec3 aDir;
   attribute float aRand;
-  // Which part of the robot arm a point belongs to (shape p3): 0 base,
-  // 1 lower arm, 2 upper arm, 3 wrist, 4 and 5 the gripper's fingers.
-  attribute float aLink;
 
   uniform float uMorph;
   uniform float uTime;
@@ -42,65 +31,40 @@ const VERTEX = /* glsl */ `
 
   varying float vAlpha;
 
-  // How far this point has travelled from shape k-1 to shape k. Each point
-  // leaves on its own beat (aRand), so a morph reads as a flock turning
-  // rather than a rigid body sliding.
-  float step_(float k) {
-    float t = clamp((uMorph - (k - 1.0)) * 1.35 - aRand * 0.35, 0.0, 1.0);
-    return t * t * (3.0 - 2.0 * t);
-  }
-
-  vec2 rot(vec2 v, float a) {
-    float c = cos(a), s = sin(a);
-    return vec2(c * v.x - s * v.y, s * v.x + c * v.y);
-  }
-
-  // The robot arm, posed: each point is stored in its own link's frame and
-  // carried out along the chain (forward kinematics), so the arm moves as a
-  // jointed whole - turning on its base, reaching, bending at the elbow and
-  // wrist, and opening and closing its gripper.
-  vec3 arm(vec3 p, float link) {
-    if (link < 0.5) return p;
-    float t = uTime;
-    float yaw = sin(t * 0.35) * 0.7;
-    float a1 = -0.45 + sin(t * 0.6) * 0.35;
-    float a2 = 1.1 + sin(t * 0.8 + 1.3) * 0.45;
-    float a3 = -0.6 + sin(t * 1.1 + 0.4) * 0.5;
-    float grip = 0.5 + 0.5 * sin(t * 1.5);
-    vec2 shoulder = vec2(0.0, -1.1);
-    float ang2 = a1 + a2;
-    vec2 elbow = shoulder + rot(vec2(0.0, 1.35), a1);
-    vec2 wrist = elbow + rot(vec2(0.0, 1.15), ang2);
-    vec2 q;
-    if (link < 1.5) q = shoulder + rot(p.xy, a1);
-    else if (link < 2.5) q = elbow + rot(p.xy, ang2);
-    else {
-      vec2 l = p.xy;
-      if (link > 3.5) l.x += (link < 4.5 ? -1.0 : 1.0) * grip * 0.12;
-      q = wrist + rot(l, ang2 + a3);
-    }
-    float c = cos(yaw), s = sin(yaw);
-    return vec3(c * q.x + s * p.z, q.y, -s * q.x + c * p.z);
-  }
-
   void main() {
-    float s1 = step_(1.0);
-    float s2 = step_(2.0);
-    float s3 = step_(3.0);
-    float s4 = step_(4.0);
-    vec3 pos = mix(mix(mix(mix(position, p1, s1), p2, s2), arm(p3, aLink), s3), p4, s4);
+    // Each point leaves on its own beat (aRand), so the gathering reads as a
+    // flock settling rather than a rigid body sliding.
+    float t = clamp(uMorph * 1.35 - aRand * 0.35, 0.0, 1.0);
+    t = t * t * (3.0 - 2.0 * t);
+    vec3 pos = mix(position, p1, t);
 
-    // Mid-flight the points lift off their path, so the cloud breathes open
-    // between shapes and closes again on arrival.
-    float flight = sin(3.14159 * fract(clamp(uMorph, 0.0, 3.999)));
-    pos += aDir * flight * 0.35;
-    // A slow shimmer at rest, small enough to keep every edge readable.
-    pos += aDir * sin(uTime * 0.8 + aRand * 6.2831) * 0.015;
+    // Mid-flight the points lift off their path, so the cloud breathes on its
+    // way in and closes on arrival.
+    pos += aDir * sin(3.14159 * t) * 0.35;
+    // A slow drift while scattered, settling to a shimmer small enough to keep
+    // every edge of the N readable.
+    // Each point wanders on its own beat and axis, so the scattered field
+    // never moves as one sheet - in the screen's plane only while scattered,
+    // so the field stays flat until it has gathered.
+    float ph = aRand * 6.2831;
+    vec3 wander = vec3(
+      sin(uTime * (0.3 + aRand * 0.5) + ph),
+      cos(uTime * (0.25 + aDir.x * 0.2) + ph * 1.7),
+      sin(uTime * 0.4 + ph * 2.3)
+    );
+    wander.z *= t;
+    pos += mix(wander * 0.22, aDir * sin(uTime * 0.8 + ph) * 0.015, t);
 
     vec4 mv = modelViewMatrix * vec4(pos, 1.0);
     gl_Position = projectionMatrix * mv;
     gl_PointSize = uSize * uPixelRatio * (0.6 + aRand * 0.8) / -mv.z;
-    vAlpha = 0.55 + aRand * 0.45;
+    // Scattered, only a few in three points show, so the field reads as a
+    // loose handful of motes; the rest fade in as the N gathers.
+    float shown = mix(step(fract(aRand * 7.31), 0.35), 1.0, t);
+    // Fade out towards the top and bottom of the canvas, so the cloud dissolves
+    // into the hero's edges rather than being cut off by them.
+    float edge = smoothstep(1.0, 0.7, abs(gl_Position.y / gl_Position.w));
+    vAlpha = (0.55 + aRand * 0.45) * shown * edge;
   }
 `;
 
@@ -133,205 +97,145 @@ function mulberry32(seed: number): Rand {
   };
 }
 
-/** A point on the surface of an axis-aligned box, weighted by face area. */
-function onBox(r: Rand, cx: number, cy: number, w: number, h: number, d: number, out: number[]) {
-  const faces = [w * h, w * h, w * d, w * d, h * d, h * d];
-  const total = faces.reduce((s, f) => s + f, 0);
-  let pick = r() * total;
-  let face = 0;
-  while (pick > faces[face]) pick -= faces[face++];
-  const u = r() - 0.5;
-  const v = r() - 0.5;
-  const side = face % 2 === 0 ? 0.5 : -0.5;
-  if (face < 2) out.push(cx + u * w, cy + v * h, side * d);
-  else if (face < 4) out.push(cx + u * w, cy + side * h, v * d);
-  else out.push(cx + side * w, cy + u * h, v * d);
+/**
+ * The signature's N, exactly as drawn in the brand file (Figma "n-green"):
+ * one continuous wave-stroke, kept here as its SVG path so the mark in the
+ * cloud is the mark everywhere else.
+ */
+const MARK_PATH =
+  "M89.9569 94.6093C104.097 75.8538 116.451 55.8141 130.275 36.8326C137.142 27.3825 142.502 16.9557 153.096 11.1681C174.04 -0.289573 201.139 10.6255 209.738 32.6546C215.857 48.3355 214.638 119.55 213.357 139.4L186.583 139.228C185.113 113.609 186.259 87.6008 186.241 61.9273C186.232 52.5496 187.332 39.1476 177.127 34.3095C163.853 28.0064 156.128 44.3203 149.821 52.9113C136.141 71.6125 123.273 90.8835 109.755 109.72C104.575 116.937 99.883 124.967 93.9544 131.605C85.8872 140.63 69.1661 139.635 63.8601 128.087C61.6944 123.376 62.3622 117.904 62.3532 112.867C62.3351 104.484 62.3622 96.0923 62.3712 87.7184C62.3802 73.2946 62.9397 58.6627 62.0283 44.3113C55.7478 50.4787 39.8479 70.6811 34.7404 74.009C25.3286 80.1402 14.6625 74.2803 8.4 67.2085C18.8315 52.441 32.1867 39.1567 44.3056 25.6824C49.3499 20.0666 53.8618 13.1938 59.8716 8.54559C67.3974 2.71275 79.7149 2.70371 85.8781 10.6436C91.4007 17.7696 89.5147 28.3953 89.5147 36.8506C89.5057 55.9588 88.2694 75.6186 89.9569 94.6093Z";
+
+/** An absolute M/L/C path, flattened to one closed polygon. */
+function flatten(d: string) {
+  const tok = d.match(/[MLCZ]|-?\d*\.?\d+(?:e-?\d+)?/gi) ?? [];
+  const poly: [number, number][] = [];
+  let i = 0;
+  let cmd = "";
+  const num = () => parseFloat(tok[i++]);
+  while (i < tok.length) {
+    if (/[MLCZ]/i.test(tok[i])) cmd = tok[i++].toUpperCase();
+    if (cmd === "Z") break;
+    if (cmd === "C") {
+      const [x0, y0] = poly[poly.length - 1];
+      const c = [num(), num(), num(), num(), num(), num()];
+      for (let k = 1; k <= 12; k++) {
+        const t = k / 12;
+        const u = 1 - t;
+        const a = u * u * u, b = 3 * u * u * t, e = 3 * u * t * t, f = t * t * t;
+        poly.push([a * x0 + b * c[0] + e * c[2] + f * c[4], a * y0 + b * c[1] + e * c[3] + f * c[5]]);
+      }
+    } else poly.push([num(), num()]);
+  }
+  return poly;
 }
 
-/** The signature's N, as three slabs: two stems and the diagonal between them. */
+function inside(poly: [number, number][], x: number, y: number) {
+  let hit = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const [xi, yi] = poly[i];
+    const [xj, yj] = poly[j];
+    if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) hit = !hit;
+  }
+  return hit;
+}
+
+/**
+ * The mark as a solid slab: the brand outline, extruded. Most points lie on
+ * its front and back faces, filling the stroke; the rest run along its edge
+ * at every depth, which is what keeps the outline crisp as it turns.
+ */
 function monogram(count: number, r: Rand) {
-  const out: number[] = [];
-  const h = 2.6;
-  const stem = 0.42;
+  const poly = flatten(MARK_PATH);
+  const xs = poly.map((p) => p[0]);
+  const ys = poly.map((p) => p[1]);
+  const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+  // 2.6 units tall, centred, y up.
+  const k = 2.6 / (y1 - y0);
+  const cx = (x0 + x1) / 2;
+  const cy = (y0 + y1) / 2;
   const depth = 0.45;
-  const span = 1.9;
-  for (let i = 0; i < count; i++) {
-    const pick = r();
-    if (pick < 0.3) onBox(r, -span / 2, 0, stem, h, depth, out);
-    else if (pick < 0.6) onBox(r, span / 2, 0, stem, h, depth, out);
-    else {
-      // The diagonal: a box sheared from the top of the left stem to the
-      // foot of the right one.
-      const t = r();
-      const x = -span / 2 + t * span;
-      const y = h / 2 - t * h;
-      const across = (r() - 0.5) * stem * 1.15;
-      const z = (r() - 0.5) * depth;
-      const edge = r() < 0.5;
-      out.push(x + across * 0.5, y + across * 0.6, edge ? Math.sign(z) * depth * 0.5 : z);
+  // Cumulative edge lengths, for picking a point evenly along the outline.
+  const lens = [0];
+  for (let i = 1; i <= poly.length; i++) {
+    const [ax, ay] = poly[i - 1];
+    const [bx, by] = poly[i % poly.length];
+    lens.push(lens[i - 1] + Math.hypot(bx - ax, by - ay));
+  }
+  const total = lens[lens.length - 1];
+  const out: number[] = [];
+  for (let n = 0; n < count; n++) {
+    let x: number, y: number, z: number;
+    if (r() < 0.3) {
+      const at = r() * total;
+      let i = 1;
+      while (lens[i] < at) i++;
+      const t = (at - lens[i - 1]) / (lens[i] - lens[i - 1]);
+      const [ax, ay] = poly[i - 1];
+      const [bx, by] = poly[i % poly.length];
+      x = ax + (bx - ax) * t;
+      y = ay + (by - ay) * t;
+      z = (r() - 0.5) * depth;
+    } else {
+      do {
+        x = x0 + r() * (x1 - x0);
+        y = y0 + r() * (y1 - y0);
+      } while (!inside(poly, x, y));
+      z = (r() < 0.5 ? -0.5 : 0.5) * depth;
     }
+    out.push((x - cx) * k, (cy - y) * k, z);
   }
   return out;
 }
 
-/** A d20: points on the faces of an icosahedron, with its edges drawn heavier. */
-function die(count: number, r: Rand) {
-  const t = (1 + Math.sqrt(5)) / 2;
-  const v = [
-    [-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0],
-    [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t],
-    [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1],
-  ].map(([x, y, z]) => {
-    const l = Math.hypot(x, y, z) / 1.75;
-    return [x / l, y / l, z / l];
-  });
-  const f = [
-    [0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11],
-    [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8],
-    [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9],
-    [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1],
-  ];
+/**
+ * The points before they gather: a soft, irregular nebula rather than a box.
+ * Each point is thrown out from the centre at a random angle, and how far it
+ * can go depends on that angle through a few lobes of different frequency -
+ * so the outline swells and pinches with no corners - and falls off softly,
+ * thinning towards the edge instead of stopping at it. It is flat - the
+ * scattered field moves only in the plane of the screen, and the turning
+ * starts once it has become the N (see the loop). It is sized to
+ * reach the hero's top and bottom; the shader fades the points out as they
+ * near those edges, so the canvas never cuts it along a hard straight line.
+ */
+function scatter(count: number, r: Rand) {
   const out: number[] = [];
+  // [frequency, amplitude, phase]. The phases are chosen, not drawn: picked so
+  // the outline never pinches in on the side facing the copy (the whole left,
+  // upper and lower), where a dent reads as a bite out of the cloud.
+  const lobes = [
+    [2, 0.16, 1.35],
+    [3, 0.12, 1.32],
+    [5, 0.06, 4.29],
+  ];
   for (let i = 0; i < count; i++) {
-    const [a, b, c] = f[Math.floor(r() * f.length)].map((k) => v[k]);
-    let u = r();
-    let w = r();
-    if (u + w > 1) {
-      u = 1 - u;
-      w = 1 - w;
-    }
-    // Two in five points ride an edge, which is what makes it read as a die.
-    if (r() < 0.4) {
-      w = 0;
-    }
+    const ang = r() * Math.PI * 2;
+    const reach = lobes.reduce((k, [f, amp, ph]) => k + amp * Math.sin(f * ang + ph), 1);
+    // Mostly near the middle, a few far out: a soft edge, not a rim.
+    const rad = Math.pow(r(), 0.75) * 3 * reach;
+    const curl = (r() - 0.5) * 0.5;
     out.push(
-      a[0] + u * (b[0] - a[0]) + w * (c[0] - a[0]),
-      a[1] + u * (b[1] - a[1]) + w * (c[1] - a[1]),
-      a[2] + u * (b[2] - a[2]) + w * (c[2] - a[2]),
+      Math.cos(ang + curl) * rad * 1.2,
+      Math.sin(ang + curl) * rad * 0.85,
+      0,
     );
   }
   return out;
 }
 
-/** A 4x4x4 lattice of edges with a node at every crossing - data, wired. */
-function lattice(count: number, r: Rand) {
-  const out: number[] = [];
-  const n = 4;
-  const size = 2.6;
-  const cell = size / (n - 1);
-  for (let i = 0; i < count; i++) {
-    const a = Math.floor(r() * n) * cell - size / 2;
-    const b = Math.floor(r() * n) * cell - size / 2;
-    if (r() < 0.25) {
-      // Nodes: a tight knot of points at a crossing.
-      const c = Math.floor(r() * n) * cell - size / 2;
-      const j = () => (r() - 0.5) * 0.09;
-      out.push(a + j(), b + j(), c + j());
-      continue;
-    }
-    const along = (r() - 0.5) * size;
-    const axis = Math.floor(r() * 3);
-    if (axis === 0) out.push(along, a, b);
-    else if (axis === 1) out.push(a, along, b);
-    else out.push(a, b, along);
-  }
-  return out;
-}
-
-/** Points on the surface of a box spanning y0..y1, centred on x = cx. */
-function slab(r: Rand, cx: number, y0: number, y1: number, w: number, d: number) {
-  const u = r(), v = r();
-  const face = r();
-  const y = y0 + u * (y1 - y0);
-  if (face < 0.4) return [cx + (v - 0.5) * w, y, (r() < 0.5 ? -0.5 : 0.5) * d];
-  if (face < 0.8) return [cx + (r() < 0.5 ? -0.5 : 0.5) * w, y, (v - 0.5) * d];
-  return [cx + (v - 0.5) * w, r() < 0.5 ? y0 : y1, (r() - 0.5) * d];
-}
-
-/** A point on a sphere's surface. */
-function ball(r: Rand, cy: number, rad: number) {
-  const u = r() * 2 - 1, t = r() * Math.PI * 2, s = Math.sqrt(1 - u * u);
-  return [rad * s * Math.cos(t), cy + rad * u, rad * s * Math.sin(t)];
-}
+/* ---------- Scroll to gather. ---------- */
 
 /**
- * A robot arm, each point in its own link's frame (y along the link) with its
- * link number alongside; the shader poses it. Base, lower arm, upper arm,
- * wrist and two fingers.
+ * How far the N has gathered, 0 scattered to 1 whole. The hero is held in
+ * place for 70% of a screen of scroll (see `Hero`); the N is whole by 55%, so
+ * it rests complete for a moment before the hero moves on.
  */
-function robotArm(count: number, r: Rand) {
-  const pos: number[] = [];
-  const link: number[] = [];
-  for (let i = 0; i < count; i++) {
-    const pick = r();
-    let p: number[];
-    let k: number;
-    if (pick < 0.18) {
-      // Base: a flat turntable on a short pedestal.
-      k = 0;
-      const a = r() * Math.PI * 2;
-      if (r() < 0.6) {
-        const rad = Math.sqrt(r()) * 0.75;
-        p = [Math.cos(a) * rad, -1.55 + (r() < 0.5 ? 0 : 0.12), Math.sin(a) * rad];
-      } else p = [Math.cos(a) * 0.3, -1.43 + r() * 0.33, Math.sin(a) * 0.3];
-    } else if (pick < 0.46) {
-      k = 1;
-      p = r() < 0.2 ? ball(r, 0, 0.27) : slab(r, 0, 0, 1.35, 0.34, 0.34);
-    } else if (pick < 0.7) {
-      k = 2;
-      p = r() < 0.2 ? ball(r, 0, 0.21) : slab(r, 0, 0, 1.15, 0.26, 0.28);
-    } else if (pick < 0.8) {
-      k = 3;
-      p = r() < 0.3 ? ball(r, 0, 0.15) : slab(r, 0, 0.05, 0.22, 0.46, 0.3);
-    } else {
-      // Two fingers, either side of the wrist; the shader opens and closes them.
-      const left = r() < 0.5;
-      k = left ? 4 : 5;
-      p = slab(r, left ? -0.13 : 0.13, 0.22, 0.66, 0.08, 0.16);
-    }
-    pos.push(p[0], p[1], p[2]);
-    link.push(k);
-  }
-  return { pos, link };
+function gatherTarget(viewport: number, scroll: number) {
+  return Math.min(1, Math.max(0, scroll / (viewport * 0.55)));
 }
 
-/** A tilted orbit, the three divisions' paths opened out into one ring. */
-function ring(count: number, r: Rand) {
-  const out: number[] = [];
-  for (let i = 0; i < count; i++) {
-    const ang = r() * Math.PI * 2;
-    const band = Math.floor(r() * 3);
-    const rad = 1.35 + band * 0.32 + (r() - 0.5) * 0.06;
-    const lift = (r() - 0.5) * 0.08;
-    out.push(Math.cos(ang) * rad, lift, Math.sin(ang) * rad);
-  }
-  return out;
-}
-
-/* ---------- Scroll to morph. ---------- */
-
-/**
- * Where the scroll is, as a shape index. A section's shape holds for the whole
- * of that section; the change into the next one happens only at the boundary,
- * while the next section's top edge rises through the screen, and is complete
- * by the time its heading is read.
- */
-function morphTarget(tops: number[], viewport: number, scroll: number) {
-  let m = 0;
-  for (let k = 0; k < tops.length; k++) {
-    // Where the section's top edge is on screen, 0 = top, 1 = bottom.
-    const edge = (tops[k] - scroll) / viewport;
-    // The change runs while that edge climbs from 80% to 30% of the screen;
-    // either side of it the shape holds, for the whole of its section.
-    const t = Math.min(1, Math.max(0, (0.8 - edge) / 0.5));
-    if (t === 0) break;
-    m = k + t;
-  }
-  return m;
-}
-
-/** The brand green, a step deeper on white so it holds its contrast there. */
-const COLOR = { light: 0x2f8f4a, dark: 0x5cc777 };
+/** The mark's green from the brand file, the same on either theme. */
+const COLOR = { light: 0x4ab166, dark: 0x4ab166 };
 
 export function ScrollScene() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -365,13 +269,8 @@ export function ScrollScene() {
 
       const r = mulberry32(20260128);
       const geometry = new THREE.BufferGeometry();
-      geometry.setAttribute("position", new THREE.Float32BufferAttribute(monogram(count, r), 3));
-      geometry.setAttribute("p1", new THREE.Float32BufferAttribute(die(count, r), 3));
-      geometry.setAttribute("p2", new THREE.Float32BufferAttribute(lattice(count, r), 3));
-      const arm = robotArm(count, r);
-      geometry.setAttribute("p3", new THREE.Float32BufferAttribute(arm.pos, 3));
-      geometry.setAttribute("aLink", new THREE.Float32BufferAttribute(arm.link, 1));
-      geometry.setAttribute("p4", new THREE.Float32BufferAttribute(ring(count, r), 3));
+      geometry.setAttribute("position", new THREE.Float32BufferAttribute(scatter(count, r), 3));
+      geometry.setAttribute("p1", new THREE.Float32BufferAttribute(monogram(count, r), 3));
       const dirs = new Float32Array(count * 3);
       const rands = new Float32Array(count);
       for (let i = 0; i < count; i++) {
@@ -414,13 +313,16 @@ export function ScrollScene() {
       scene.add(group);
 
       /* Layout: where the cloud sits, and how loud it is. */
-      let tops: number[] = [];
+      // The canvas fills the hero, not the window, so it is sized from itself;
+      // the gathering is still paced by the window's height.
       let viewport = window.innerHeight;
       const measure = () => {
-        const w = window.innerWidth;
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
         viewport = window.innerHeight;
-        renderer.setSize(w, viewport, false);
-        camera.aspect = w / viewport;
+        if (!w || !h) return;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
         camera.updateProjectionMatrix();
         const visibleH = 2 * Math.tan((camera.fov * Math.PI) / 360) * camera.position.z;
         const visibleW = visibleH * camera.aspect;
@@ -432,19 +334,22 @@ export function ScrollScene() {
           material.uniforms.uOpacity.value = 0.2;
         } else {
           // On a wide screen it takes the right third the copy leaves open,
-          // sized so the widest shape (the die) stays clear of it.
+          // sized so the scattered cloud stays clear of it.
           group.position.set(visibleW * 0.3, 0, 0);
           group.scale.setScalar(Math.min(1, visibleH / 6.6, visibleW / 13));
           material.uniforms.uOpacity.value = 0.95;
         }
-        tops = ANCHORS.map((id) => {
-          const el = document.getElementById(id);
-          return el ? el.getBoundingClientRect().top + window.scrollY : Infinity;
-        });
       };
       measure();
       const resize = new ResizeObserver(measure);
-      resize.observe(document.body);
+      resize.observe(canvas);
+
+      // Once the hero has scrolled away there is nothing to draw.
+      let onScreen = true;
+      const seen = new IntersectionObserver(([entry]) => {
+        onScreen = entry.isIntersecting;
+      });
+      seen.observe(canvas);
 
       /* Pointer: a few degrees of parallax, desktop only. */
       const pointer = { x: 0, y: 0 };
@@ -459,24 +364,32 @@ export function ScrollScene() {
 
       /* Loop. */
       const clock = new THREE.Clock();
-      let morph = morphTarget(tops, viewport, window.scrollY);
+      let morph = reduced.matches ? 1 : gatherTarget(viewport, window.scrollY);
       let spin = 0;
       let frame = 0;
       const tick = () => {
         frame = requestAnimationFrame(tick);
         const dt = Math.min(clock.getDelta(), 0.05);
-        const target = morphTarget(tops, viewport, window.scrollY);
+        if (!onScreen) return;
+        const target = gatherTarget(viewport, window.scrollY);
         if (reduced.matches) {
-          morph = Math.round(target);
+          morph = 1;
         } else {
           // Damped, so a flick of the wheel glides rather than jumps.
           morph += (target - morph) * (1 - Math.exp(-dt * 1.8));
-          spin += dt * 0.1;
         }
+        // How fully the N has formed: 0 until it is nearly whole, 1 once it is.
+        const formed = Math.min(1, Math.max(0, (morph - 0.85) / 0.15));
+        // The turning only runs on the finished N; scrolled back into a
+        // scattered field it starts over from facing the reader.
+        if (formed === 0) spin = 0;
+        else if (!reduced.matches) spin += dt * 0.2 * formed;
         material.uniforms.uMorph.value = morph;
         material.uniforms.uTime.value = reduced.matches ? 0 : clock.elapsedTime;
-        group.rotation.y = spin + window.scrollY * 0.0002 + pointer.x * 0.35;
-        group.rotation.x = 0.18 + pointer.y * 0.2;
+        // Scattered, the field lies flat on the screen - no turn, no tilt, no
+        // parallax; the N, once whole, turns and follows the pointer.
+        group.rotation.y = (spin + pointer.x * 0.35) * formed;
+        group.rotation.x = (0.18 + pointer.y * 0.2) * formed;
         renderer.render(scene, camera);
       };
 
@@ -496,6 +409,7 @@ export function ScrollScene() {
         document.removeEventListener("visibilitychange", onVisibility);
         window.removeEventListener("pointermove", onPointer);
         resize.disconnect();
+        seen.disconnect();
         themeWatch.disconnect();
         geometry.dispose();
         material.dispose();
@@ -513,7 +427,7 @@ export function ScrollScene() {
     <canvas
       ref={ref}
       aria-hidden
-      className="pointer-events-none fixed inset-0 -z-10 h-svh w-full opacity-0 transition-opacity duration-1000 ease-house data-[ready]:opacity-100"
+      className="pointer-events-none absolute inset-0 -z-10 size-full opacity-0 transition-opacity duration-1000 ease-house data-[ready]:opacity-100"
     />
   );
 }

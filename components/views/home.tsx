@@ -2,7 +2,6 @@ import { Section } from "@/components/layout/section";
 import { Stack } from "@/components/layout/stack";
 import { Reveal } from "@/components/motion/reveal";
 import { RisingWords } from "@/components/motion/rising-words";
-import { ScrollScene } from "@/components/motion/scroll-scene";
 import { CareersSection } from "@/components/sections/careers";
 import { ContactSection } from "@/components/sections/contact";
 import { DivisionSection } from "@/components/sections/division";
@@ -17,10 +16,6 @@ import { ui, type Locale } from "@/lib/i18n";
  * The whole studio on one page: the statement, the work, the three divisions,
  * how we work, careers and contact. Each of those also has a page of its own;
  * this is the overview that hands off to them.
- *
- * Behind all of it runs `ScrollScene`, the point cloud that takes the shape of
- * whichever division is on screen. The sections keep the left of the grid for
- * their copy so the cloud has the right side to itself.
  */
 export function HomeView({ locale }: { locale: Locale }) {
   const t = ui[locale];
@@ -28,7 +23,6 @@ export function HomeView({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <ScrollScene />
       <Hero locale={locale} />
 
       <Section id="divisions" className="scroll-mt-20">
