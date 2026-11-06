@@ -47,7 +47,7 @@ export const saksi: ProductPolicy = {
     deletion:
       "Ayarlar > Veri > Sıfırla kaydınızı siler. Oyunu kaldırmak ya da uygulama verilerini temizlemek de aynı sonucu verir. Sunucuda kopya olmadığı için geri getiremeyiz. Destek yazışmanızın silinmesi için bize yazın.",
     children:
-      "Oyun yaş, ad ya da iletişim bilgisi sormaz. Yaş derecelendirmesi mağaza sayfasında görünür. Bir çocuk bize yazdıysa velisinin talebiyle yazışmayı sileriz.",
+      "Saksı genel kitleye yöneliktir, çocuklar da oynayabilir. Oyun yaş, ad ya da iletişim bilgisi sormaz ve oyuncudan veri toplamaz. Bir çocuk bize yazdıysa velisinin talebiyle yazışmayı sileriz.",
     extra: [
       {
         title: "Oyun motoru ve izinler",
@@ -118,7 +118,7 @@ export const saksi: ProductPolicy = {
     deletion:
       "Settings > Data > Reset deletes your save. Uninstalling the game or clearing its app data does the same. With no copy on a server, we cannot restore it. Write to us to have your support messages deleted.",
     children:
-      "The game does not ask for an age, name or contact details. The age rating is shown on the store page. If a child has written to us, we delete the conversation at a parent's request.",
+      "Saksı is made for a general audience and children can play it too. The game asks for no age, name or contact details and collects no data from players. If a child has written to us, we delete the conversation at a parent's request.",
     extra: [
       {
         title: "Game engine and permissions",

@@ -10,7 +10,7 @@ const COPY = {
     short: "Kısaca",
     controller: "Veri sorumlusu",
     controllerLead: (name: string) =>
-      `${name}, Neuvikon markasıyla yayımlanır. 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında veri sorumlusu aşağıda künyesi verilen taraftır.`,
+      `${name}, Neuvikon tarafından yayımlanır. 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında veri sorumlusu Neuvikon'dur.`,
     contact: "Gizlilikle ilgili iletişim:",
     scope: "Bu metin neyi kapsar",
     data: "Hangi verileri, neden işliyoruz",
@@ -47,7 +47,7 @@ const COPY = {
     short: "In short",
     controller: "Who is responsible",
     controllerLead: (name: string) =>
-      `${name} is published under the Neuvikon brand. The data controller, under the GDPR and Turkey's Law No. 6698 (KVKK), is the party named below.`,
+      `${name} is published by Neuvikon. Neuvikon is the data controller under the GDPR and Turkey's Law No. 6698 (KVKK).`,
     contact: "Privacy contact:",
     scope: "What this covers",
     data: "What we process and why",

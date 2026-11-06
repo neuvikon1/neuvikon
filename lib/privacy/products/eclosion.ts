@@ -103,7 +103,7 @@ export const eclosion: ProductPolicy = {
         data: "Bize yazdığınızda e-posta adresiniz ve mesajınız",
         purpose: "Destek talebini cevaplamak",
         legalBasis: "KVKK m.5/2-(f): size cevap verme meşru menfaati",
-        retention: "Konu kapandıktan sonra silinmesini isteyene kadar",
+        retention: "Konu kapandıktan sonra en çok 1 yıl",
       },
     ],
     collection:
@@ -175,7 +175,7 @@ export const eclosion: ProductPolicy = {
     deletion:
       `Uygulama içinden: Ayarlar, Hesabı Sil. Web'den: ${DELETE_URL} adresinde hesabınıza bağlı e-postaya gelen kodla. Misafir hesapları yalnızca uygulama içinden silinir. Uygulamayı kaldırmak sunucudaki verileri silmez; misafir hesabınızı silmeden uygulamayı kaldırırsanız veriler sunucuda kalır ve bize yazmanız gerekir. Silme; ilerleme, ruh hâli, yemin, sohbet, künye, bağlaşık, düello, bildirim, ürün olayı ve rıza kayıtlarını siler. Şunlar kalır: hız sınırı sayaçları, sağlayıcıların kendi süreleriyle tuttuğu Sentry, Firebase, AdMob ve e-posta kayıtları ve sunucu günlükleri. Silmeden önce Ayarlar, Verimi indir (JSON) ile verinizin kopyasını alabilirsiniz.`,
     children:
-      "Eclosion'u kullanmak için en az 13 yaşında olmak gerekir; 13-18 yaş arasındakiler Kullanım Şartları'nı ebeveyn ya da vasi izniyle kabul eder. Uygulamada yaş doğrulaması yoktur. 13 yaşından küçük bir kullanıcının hesabını öğrenirsek hesabı ve verilerini sileriz.",
+      "Eclosion'u kullanmak için en az 16 yaşında olmak gerekir; 16-18 yaş arasındakiler Kullanım Şartları'nı ebeveyn ya da vasi izniyle kabul eder. Uygulamada ruh hâli, alkol, sigara ve benzeri hassas alışkanlıklar kaydedildiği için bu sınır konmuştur. Yaş doğrulaması yoktur. 16 yaşından küçük bir kullanıcının hesabını öğrenirsek hesabı ve verilerini sileriz.",
     extra: [
       {
         title: "Hassas olabilecek veriler",
@@ -296,7 +296,7 @@ export const eclosion: ProductPolicy = {
         data: "Your email address and message when you write to us",
         purpose: "Answering your support request",
         legalBasis: "GDPR Art. 6(1)(f): legitimate interest in answering you",
-        retention: "After the matter closes, until you ask us to delete it",
+        retention: "Up to 1 year after the matter closes",
       },
     ],
     collection:
@@ -368,7 +368,7 @@ export const eclosion: ProductPolicy = {
     deletion:
       `In the app: Settings, Delete Account. On the web: ${DELETE_URL} with a code sent to the email on your account. Guest accounts can only be deleted in the app. Uninstalling does not delete data on the server; if you uninstall without deleting a guest account, the data stays on the server and you need to write to us. Deletion removes progress, mood, vow, chat, player card, ally, duel, notification, product event and consent records. What stays: rate limit counters, Sentry, Firebase, AdMob and email records held for those providers' own periods, and server logs. Before deleting you can take a copy with Settings, Export my data (JSON).`,
     children:
-      "You must be at least 13 to use Eclosion; users aged 13 to 18 accept the Terms with a parent's or guardian's permission. The app has no age check. If we learn an account belongs to someone under 13, we delete it and its data.",
+      "You must be at least 16 to use Eclosion; users aged 16 to 18 accept the Terms with a parent's or guardian's permission. The limit exists because the app records mood, alcohol, smoking and similar sensitive habits. The app has no age check. If we learn an account belongs to someone under 16, we delete it and its data.",
     extra: [
       {
         title: "Data that may be sensitive",

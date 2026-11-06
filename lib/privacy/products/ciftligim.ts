@@ -63,7 +63,7 @@ export const ciftligim: ProductPolicy = {
     deletion:
       "Oyun içinde Ayarlar > Çiftliği sıfırla ilerlemenizi siler; çiftliğin adı kalır. Her şeyi kaldırmak için tarayıcınızın bu site için tuttuğu verileri temizleyin. İkisi de geri alınamaz. Bize yazdığınız e-postaların silinmesini isteyebilirsiniz.",
     children:
-      "Oyun yaş sormaz ve bizde oyuncu kaydı yoktur, dolayısıyla oyun üzerinden çocuklardan veri toplamayız. Çocuğunuz bize e-posta gönderdiyse yazın, sileriz.",
+      "Çiftliğim genel kitleye yöneliktir, çocuklar da oynayabilir. Oyun yaş, ad ya da iletişim bilgisi sormaz ve oyuncudan veri toplamaz. Bir çocuk bize yazdıysa velisinin talebiyle yazışmayı sileriz.",
   },
   en: {
     summary:
@@ -124,6 +124,6 @@ export const ciftligim: ProductPolicy = {
     deletion:
       "In the game, Settings > Reset the farm erases your progress and keeps the farm's name. To remove everything, clear your browser's data for this site. Neither can be undone. You can ask us to delete your emails.",
     children:
-      "The game does not ask for age and we hold no player records, so we do not collect data from children through it. If your child emailed us, write to us and we will delete it.",
+      "Çiftliğim is made for a general audience and children can play it too. The game asks for no age, name or contact details and collects no data from players. If a child has written to us, we delete the conversation at a parent's request.",
   },
 };

@@ -48,7 +48,7 @@ export const shardbound: ProductPolicy = {
     deletion:
       "Android'de oyunu kaldırdığınızda ya da uygulama verilerini temizlediğinizde kayıtlar silinir. Windows'ta kayıtlar kullanıcı klasörünüzde AppData\\LocalLow\\Shardbound Studio\\Shardbound altındadır; bu klasörü silerek temizleyebilirsiniz. Destek yazışmalarınızın silinmesi için bize yazın.",
     children:
-      "Oyun hiçbir yaş grubundan hesap, ad ya da iletişim bilgisi istemez. Yaş derecelendirmesi mağaza sayfasında görünür. Bir çocuk bize e-posta yazdıysa, velisinin talebiyle yazışmayı sileriz.",
+      "Shardbound 13 yaş ve üzeri oyuncular içindir, çünkü karanlık tema ve ölüleri diriltme içeren savaşlar barındırır. Oyun yaş sormaz. Çocuklardan bilerek kişisel veri toplamayız; 13 yaşından küçük birine ait veri olduğunu öğrenirsek sileriz.",
     extra: [
       {
         title: "Oyun motoru ve ağ",
@@ -113,7 +113,7 @@ export const shardbound: ProductPolicy = {
     deletion:
       "On Android, uninstalling the game or clearing its app data deletes your saves. On Windows, saves are in your user folder under AppData\\LocalLow\\Shardbound Studio\\Shardbound, and deleting that folder clears them. Write to us to have your support messages deleted.",
     children:
-      "The game asks no age group for an account, name or contact details. The age rating is shown on the store page. If a child has emailed us, we delete the conversation at a parent's request.",
+      "Shardbound is for players aged 13 and over because it has a dark theme and battles built around raising the dead. The game does not ask your age. We do not knowingly collect personal data from children and delete it if we learn it belongs to someone under 13.",
     extra: [
       {
         title: "Game engine and network",

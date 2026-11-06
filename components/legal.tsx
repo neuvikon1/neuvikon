@@ -3,9 +3,8 @@ import Link from "next/link";
 import { Section } from "@/components/layout/section";
 import { Stack } from "@/components/layout/stack";
 import { Eyebrow, Title } from "@/components/ui/typography";
-import { legalEntity, PENDING } from "@/lib/content";
+import { getContent, legalEntity } from "@/lib/content";
 import { ui, type Locale } from "@/lib/i18n";
-import { cn } from "@/lib/utils";
 
 /**
  * The shared frame for legal texts.
@@ -73,38 +72,28 @@ export function LegalLink({ href, children }: { href: string; children: React.Re
 }
 
 /**
- * The data controller's particulars. Unfilled fields are shown as unfilled:
- * in a legal notice, hiding a missing detail only hides that the notice is
- * not valid yet.
+ * The data controller's particulars: the filled fields and the contact address.
  */
 export function LegalEntityTable({ locale }: { locale: Locale }) {
   const labels =
     locale === "en"
-      ? { title: "Data controller", address: "Address", mersis: "MERSIS no", tax: "Tax office / number" }
-      : { title: "Veri sorumlusu", address: "Adres", mersis: "MERSİS no", tax: "Vergi dairesi / no" };
+      ? { title: "Data controller", email: "Email", address: "Address", mersis: "MERSIS no", tax: "Tax office / number" }
+      : { title: "Veri sorumlusu", email: "E-posta", address: "Adres", mersis: "MERSİS no", tax: "Vergi dairesi / no" };
 
   const rows = [
     { label: labels.title, value: legalEntity.title },
+    { label: labels.email, value: getContent(locale).org.email },
     { label: labels.address, value: legalEntity.address },
     { label: labels.mersis, value: legalEntity.mersis },
     { label: labels.tax, value: legalEntity.taxOffice },
-  ];
+  ].filter((row) => row.value);
 
   return (
     <dl className="flex flex-col">
       {rows.map((row) => (
         <div key={row.label} className="border-t border-rule py-3 sm:flex sm:gap-6">
           <dt className="font-mono text-xs tracking-widest uppercase sm:w-52 sm:shrink-0">{row.label}</dt>
-          <dd
-            className={cn(
-              "mt-1 sm:mt-0",
-              row.value
-                ? "text-foreground"
-                : "font-mono text-xs tracking-widest text-muted-foreground/70 uppercase",
-            )}
-          >
-            {row.value ?? PENDING[locale]}
-          </dd>
+          <dd className="mt-1 text-foreground sm:mt-0">{row.value}</dd>
         </div>
       ))}
     </dl>

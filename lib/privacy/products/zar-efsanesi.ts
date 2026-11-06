@@ -46,7 +46,7 @@ export const zarEfsanesi: ProductPolicy = {
     deletion:
       "Android'de oyunu kaldırmak ya da uygulama verilerini temizlemek kayıtları siler ve geri getirilemez. Windows'ta kayıtlar AppData\\LocalLow\\neuvikon\\Zar Efsanesi altındadır, ayarlar Windows kayıt defterinde tutulur. Destek yazışmalarınızın silinmesi için bize yazın.",
     children:
-      "Oyun yaş, ad ya da iletişim bilgisi sormaz. Yaş derecelendirmesi mağaza sayfasında görünür. Bir çocuk bize yazdıysa velisinin talebiyle yazışmayı sileriz.",
+      "Zar Efsanesi genel kitleye yöneliktir, çocuklar da oynayabilir. Oyun yaş, ad ya da iletişim bilgisi sormaz ve oyuncudan veri toplamaz. Bir çocuk bize yazdıysa velisinin talebiyle yazışmayı sileriz.",
     extra: [
       {
         title: "Oyun motoru ve izinler",
@@ -110,7 +110,7 @@ export const zarEfsanesi: ProductPolicy = {
     deletion:
       "On Android, uninstalling the game or clearing its app data deletes your saves for good. On Windows, saves are under AppData\\LocalLow\\neuvikon\\Zar Efsanesi and settings are in the Windows registry. Write to us to have your support messages deleted.",
     children:
-      "The game does not ask for an age, name or contact details. The age rating is shown on the store page. If a child has written to us, we delete the conversation at a parent's request.",
+      "Zar Efsanesi is made for a general audience and children can play it too. The game asks for no age, name or contact details and collects no data from players. If a child has written to us, we delete the conversation at a parent's request.",
     extra: [
       {
         title: "Game engine and permissions",

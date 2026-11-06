@@ -36,7 +36,7 @@ export const undercard: ProductPolicy = {
         data: "Bize yazdığınızda e-posta adresiniz ve mesajınız",
         purpose: "Destek talebini cevaplamak",
         legalBasis: "KVKK m.5/2-(f): size cevap verme meşru menfaati",
-        retention: "Konu kapandıktan sonra silinmesini isteyene kadar",
+        retention: "Konu kapandıktan sonra en çok 1 yıl",
       },
     ],
     collection:
@@ -132,7 +132,7 @@ export const undercard: ProductPolicy = {
         data: "Your email address and message when you write to us",
         purpose: "Answering your support request",
         legalBasis: "GDPR Art. 6(1)(f): legitimate interest in answering you",
-        retention: "After the matter closes, until you ask us to delete it",
+        retention: "Up to 1 year after the matter closes",
       },
     ],
     collection:

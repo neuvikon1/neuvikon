@@ -123,17 +123,11 @@ export const links: ProjectLink[] = [
 
 /**
  * The data controller, as the KVKK notice and the privacy policy print it.
- *
- * Still unfilled. A data controller's identity is a required part of a KVKK
- * notice, so the gaps are printed as gaps rather than hidden - hiding them
- * would only hide that the notice is not valid yet. Without a legal entity
- * this is a real person's name and address; MERSIS and tax details only
- * apply to a company.
+ * Only filled fields are printed. Address, MERSIS and tax details belong here
+ * as soon as they exist.
  */
-export const PENDING = { tr: "EKLENECEK", en: "PENDING" } as const;
-
 export const legalEntity = {
-  title: null as string | null,
+  title: "Neuvikon" as string | null,
   address: null as string | null,
   mersis: null as string | null,
   taxOffice: null as string | null,

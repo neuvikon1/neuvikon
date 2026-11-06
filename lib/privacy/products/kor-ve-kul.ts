@@ -55,7 +55,7 @@ export const korVeKul: ProductPolicy = {
     deletion:
       "Oyunu kaldırdığınızda ya da uygulama verilerini temizlediğinizde cihazınızdaki tüm kayıtlar silinir ve bu geri alınamaz. Satın alma geçmişi Google hesabınızda kalır. Destek yazışmalarınızın silinmesi için bize yazabilirsiniz.",
     children:
-      "Oyun şiddet ve korku teması içerir ve küçük çocuklara yönelik değildir. Çocuklardan bilerek kişisel veri toplamayız. Böyle bir veriye ulaştığımızı öğrenirsek sileriz.",
+      "Kor ve Kül 13 yaş ve üzeri oyuncular içindir, çünkü şiddet ve korku teması içerir. Oyun yaş sormaz. Çocuklardan bilerek kişisel veri toplamayız; 13 yaşından küçük birine ait veri olduğunu öğrenirsek sileriz.",
   },
   en: {
     summary:
@@ -107,6 +107,6 @@ export const korVeKul: ProductPolicy = {
     deletion:
       "Uninstalling the game or clearing its app data deletes all saves on your device, permanently. Purchase history stays in your Google account. Write to us to have your support messages deleted.",
     children:
-      "The game has violent and horror themes and is not aimed at young children. We do not knowingly collect personal data from children and delete it if we learn we hold any.",
+      "Kor ve Kül is for players aged 13 and over because it has violent and horror themes. The game does not ask your age. We do not knowingly collect personal data from children and delete it if we learn it belongs to someone under 13.",
   },
 };

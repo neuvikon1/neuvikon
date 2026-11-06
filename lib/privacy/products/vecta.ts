@@ -207,7 +207,7 @@ export const vecta: ProductPolicy = {
     deletion:
       "Hesap olmadığı için kapatılacak bir hesap da yoktur. Uygulamayı kaldırdığınızda telefondaki anahtarlar, ayarlar, kütüphane ve yedekler silinir. Kütüphane öğelerini uygulamadan da silebilirsiniz; Spotify bağlantısını kesebilir, izinleri Android ayarlarından geri alabilirsiniz. Firestore'daki ses notları, çizimler ve mesajlar için uygulamada ve cihazda silme yolu yoktur ve kendiliğinden silinmezler. Silinmeleri için oda adınızı bize yazın, odadaki kayıtları elle sileriz; aynı odadaki kişilerin içeriği de birlikte gidebilir. Google'daki Gemini kayıtları için Google'a başvurmanız gerekir.",
     children:
-      "Vecta yaş sormaz ve çocuklara özel bir sürümü yoktur. Gemini asistanı için Google 18 yaş şartı koyar. Ses notu ve oda özelliği, oda adını bilen başkalarıyla içerik paylaştığı için çocukların kullanımına uygun değildir. Veliyseniz ve çocuğunuza ait bir kayıt olduğunu düşünüyorsanız oda adıyla bize yazın, sileriz.",
+      "Vecta 18 yaş ve üzeri kullanıcılar içindir. Mikrofon, konum ve bildirimlere geniş erişimi vardır, Gemini asistanı için de Google 18 yaş şartı koyar. Uygulama yaş sormaz. 18 yaşından küçük birine ait kayıt olduğunu öğrenirsek sileriz; veliyseniz oda adıyla bize yazın.",
   },
   en: {
     summary:
@@ -412,6 +412,6 @@ export const vecta: ProductPolicy = {
     deletion:
       "With no account, there is no account to close. Uninstalling the app deletes keys, settings, the library and backups on the phone. You can also delete library items in the app, disconnect Spotify and withdraw permissions in Android settings. There is no way to delete voice memos, drawings or messages in Firestore from the app or the device, and they do not expire. To have them removed, send us your room name and we will delete that room's records by hand; content from other people in the room may go with them. For Gemini records, you need to contact Google.",
     children:
-      "Vecta does not ask for age and has no children's version. Google requires Gemini users to be 18 or older. Voice memos and rooms share content with anyone who knows the room name, so they are not suitable for children. If you are a parent and think a record belongs to your child, send us the room name and we will delete it.",
+      "Vecta is for users aged 18 and over. It has broad access to the microphone, location and notifications, and Google requires Gemini users to be 18 or older. The app does not ask your age. If we learn a record belongs to someone under 18, we delete it; parents can send us the room name.",
   },
 };
