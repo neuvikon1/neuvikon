@@ -24,7 +24,7 @@ function navItems(locale: Locale): NavItem[] {
       section: division.slug,
       lang: "en",
     })),
-    { href: href(locale, "about"), label: t.studio, section: "studio" },
+    { href: href(locale, "about"), label: t.about, section: "studio" },
     { href: href(locale, "careers"), label: t.careers, section: "careers" },
   ];
 }
