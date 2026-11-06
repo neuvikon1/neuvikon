@@ -1,12 +1,14 @@
+import { CareersSection } from "@/components/sections/careers";
+import { ContactSection } from "@/components/sections/contact";
 import { DivisionPreview } from "@/components/sections/division";
 import { Hero } from "@/components/sections/hero";
-import { StudioLinks } from "@/components/sections/studio-links";
+import { StudioSection } from "@/components/sections/studio";
 import { getContent } from "@/lib/content";
 import { type Locale } from "@/lib/i18n";
 
 /**
- * The overview, and only that: the statement, each division's projects and the
- * way on to everything else. Detail belongs to the page it is about.
+ * The whole studio on one page: the statement, each division's projects, how we
+ * work, careers and contact. Project detail belongs to the project's own page.
  */
 export function HomeView({ locale }: { locale: Locale }) {
   const { divisions } = getContent(locale);
@@ -22,7 +24,9 @@ export function HomeView({ locale }: { locale: Locale }) {
         ))}
       </div>
 
-      <StudioLinks locale={locale} />
+      <StudioSection locale={locale} />
+      <CareersSection locale={locale} />
+      <ContactSection locale={locale} />
     </>
   );
 }

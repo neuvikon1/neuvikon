@@ -11,8 +11,8 @@ import { getContent } from "@/lib/content";
 import { ui, type Locale } from "@/lib/i18n";
 
 /**
- * Open roles, or the honest absence of them. The whole of the Careers page.
- * Applying is an email with the role already in the subject,
+ * Open roles, or the honest absence of them. On the home page and the
+ * Careers page. Applying is an email with the role already in the subject,
  * so it lands in the inbox sorted.
  */
 export function CareersSection({ locale, as = "h2" }: { locale: Locale; as?: "h1" | "h2" }) {
