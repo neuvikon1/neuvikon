@@ -25,6 +25,7 @@ import {
   type Project,
 } from "@/lib/content";
 import { divisionHref, projectHref, ui, type Locale } from "@/lib/i18n";
+import { projectLinks } from "@/lib/privacy";
 import { divisionLogos } from "@/lib/division-logos";
 import { cn } from "@/lib/utils";
 
@@ -46,6 +47,7 @@ export function ProjectCard({
   divisionSlug: string;
 }) {
   const { statusLabel } = getContent(locale);
+  const links = projectLinks(locale, project);
   return (
     <Card className="h-full transition-shadow duration-500 ease-house hover:ring-foreground/20">
       <CardContent>
@@ -94,7 +96,7 @@ export function ProjectCard({
             ))}
           </div>
 
-          {project.links && <ProjectLinks links={project.links} className="text-xs" />}
+          {links.length > 0 && <ProjectLinks links={links} className="text-xs" />}
         </Stack>
       </CardContent>
     </Card>

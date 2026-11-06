@@ -237,7 +237,6 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Eğitim", "Kelime kartları", "Aralıklı tekrar", "İngilizce"],
         image: "/apps/worddeck.webp",
-        links: [{ label: "Gizlilik Politikası", href: "/gizlilik/worddeck" }],
         media: [
           { src: "/media/worddeck/store-tr-01.webp", alt: "Sınav kelimelerini kalıcı öğren" },
           { src: "/media/worddeck/store-tr-02.webp", alt: "Kartı çevir, anlamını gör" },

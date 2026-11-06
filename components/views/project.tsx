@@ -22,6 +22,7 @@ import { ButtonLink } from "@/components/ui/button-link";
 import { Eyebrow, Text, Title } from "@/components/ui/typography";
 import { asset, getContent, orderedProjects, type Division, type Project } from "@/lib/content";
 import { divisionHref, href, projectSlug, ui, type Locale } from "@/lib/i18n";
+import { projectLinks } from "@/lib/privacy";
 
 /** Eclosion's dark, violet world: the hearth's sparks, in violet and sparser. */
 function VioletSparks() {
@@ -72,6 +73,7 @@ export function ProjectView({
   project: Project;
 }) {
   const t = ui[locale];
+  const links = projectLinks(locale, project);
   const { statusLabel } = getContent(locale);
   const others = orderedProjects(division).filter((p) => p.name !== project.name);
 
@@ -129,7 +131,7 @@ export function ProjectView({
                   </Badge>
                 ))}
               </div>
-              {project.links && <ProjectLinks links={project.links} className="text-sm" />}
+              {links.length > 0 && <ProjectLinks links={links} className="text-sm" />}
             </Stack>
           </Reveal>
         </Stack>

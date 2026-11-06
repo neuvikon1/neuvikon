@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalLink, LegalPage, LegalSection } from "@/components/legal";
+import { ProductPolicyList } from "@/components/privacy-policy";
 import { getContent } from "@/lib/content";
 import { href, pageAlternates } from "@/lib/i18n";
 
@@ -37,6 +38,8 @@ export default function PrivacyPage() {
         <p>
           Bu site tarayıcınıza çerez yazmaz. Oturum, tercih ya da reklam
           çerezi kullanılmadığından bir çerez onay penceresi de bulunmaz.
+          Açık ya da koyu tema seçiminiz yalnızca tarayıcınızın yerel
+          depolamasında durur ve bize gönderilmez.
         </p>
       </LegalSection>
 
@@ -89,6 +92,8 @@ export default function PrivacyPage() {
           bir değişiklik olursa ana sayfada duyurulur.
         </p>
       </LegalSection>
+
+      <ProductPolicyList locale="tr" />
 
       <LegalSection title="İlgili metin">
         <p>

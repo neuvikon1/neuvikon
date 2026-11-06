@@ -236,7 +236,6 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Education", "Flashcards", "Spaced repetition", "English"],
         image: "/apps/worddeck.webp",
-        links: [{ label: "Privacy Policy", href: "/en/privacy/worddeck" }],
         media: [
           { src: "/media/worddeck/store-tr-01.webp", alt: "Learn exam words for good" },
           { src: "/media/worddeck/store-tr-02.webp", alt: "Flip the card, see the meaning" },

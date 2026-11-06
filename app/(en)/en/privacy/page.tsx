@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalLink, LegalPage, LegalSection } from "@/components/legal";
+import { ProductPolicyList } from "@/components/privacy-policy";
 import { getContent } from "@/lib/content";
 import { href, pageAlternates } from "@/lib/i18n";
 
@@ -35,7 +36,8 @@ export default function PrivacyPage() {
         <p>
           This site writes no cookies to your browser. Because there are no
           session, preference or advertising cookies, there is no consent
-          banner either.
+          banner either. Your light or dark theme choice stays in your
+          browser&apos;s local storage and is not sent to us.
         </p>
       </LegalSection>
 
@@ -85,6 +87,8 @@ export default function PrivacyPage() {
           significant change is announced on the home page.
         </p>
       </LegalSection>
+
+      <ProductPolicyList locale="en" />
 
       <LegalSection title="Related">
         <p>

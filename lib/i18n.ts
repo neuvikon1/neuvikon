@@ -23,7 +23,6 @@ export const routes = {
   contact: { tr: "/iletisim", en: "/en/contact" },
   privacy: { tr: "/gizlilik", en: "/en/privacy" },
   dataProtection: { tr: "/kvkk", en: "/en/data-protection" },
-  worddeckPrivacy: { tr: "/gizlilik/worddeck", en: "/en/privacy/worddeck" },
 } as const;
 
 export type RouteKey = keyof typeof routes;
@@ -59,6 +58,11 @@ export function projectHref(locale: Locale, division: string, name: string): str
   return `${divisionHref(locale, division)}/${projectSlug(name)}`;
 }
 
+/** A product's own privacy notice. The slug is shared; only the prefix is translated. */
+export function privacyHref(locale: Locale, slug: string): string {
+  return `${routes.privacy[locale]}/${slug}`;
+}
+
 export function otherLocale(locale: Locale): Locale {
   return locale === "tr" ? "en" : "tr";
 }
@@ -80,6 +84,8 @@ export function counterpart(path: string, from: Locale): string {
   const to = otherLocale(from);
   const route = Object.values(routes).find((r) => r[from] === current);
   if (route) return route[to];
+  const prefix = `${routes.privacy[from]}/`;
+  if (current.startsWith(prefix)) return privacyHref(to, current.slice(prefix.length));
   if (from === "en") return current.replace(/^\/en(?=\/|$)/, "") || "/";
   return current === "/" ? "/en" : `/en${current}`;
 }
@@ -142,6 +148,10 @@ export const ui = {
     privacy: "Gizlilik",
     dataProtection: "KVKK",
     legal: "Yasal",
+    privacyLink: "Gizlilik Politikası",
+    productPolicies: "Ürünlerimizin gizlilik politikaları",
+    productPoliciesLead:
+      "Her ürünün işlediği veri farklıdır, bu yüzden her birinin kendi metni vardır. Bu sayfa yalnızca neuvikon.com sitesini anlatır.",
     toggleTheme: "Temayı değiştir",
     switchLanguage: "English",
     switchLanguageLabel: "Switch to English",
@@ -206,6 +216,10 @@ export const ui = {
     privacy: "Privacy",
     dataProtection: "Data protection",
     legal: "Legal",
+    privacyLink: "Privacy Policy",
+    productPolicies: "Privacy policies of our products",
+    productPoliciesLead:
+      "Each product handles different data, so each has its own text. This page covers the neuvikon.com site only.",
     toggleTheme: "Toggle theme",
     switchLanguage: "Türkçe",
     switchLanguageLabel: "Türkçeye geç",

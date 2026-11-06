@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 
 import { getContent } from "@/lib/content";
-import { divisionHref, locales, pageAlternates, projectHref, routes, type Locale } from "@/lib/i18n";
+import { divisionHref, locales, pageAlternates, privacyHref, projectHref, routes, type Locale } from "@/lib/i18n";
+import { policies } from "@/lib/privacy";
 
 // A static export only writes route handlers it is told are static.
 export const dynamic = "force-static";
@@ -24,6 +25,7 @@ function pathsFor(locale: Locale): string[] {
     ...divisions.flatMap((division) =>
       division.projects.map((project) => projectHref(locale, division.slug, project.name)),
     ),
+    ...policies.map((policy) => privacyHref(locale, policy.slug)),
   ];
 }
 
