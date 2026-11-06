@@ -37,23 +37,31 @@ export const divisions: Division[] = [
     capabilities: [],
     projects: [
       {
-        name: "PushBump",
-        tagline: "Tilt, charge, release. One shove changes everything.",
+        name: "Kor ve Kül",
+        tagline: "Stoke the fire or cool it down — at ten, it overflows.",
         description:
-          "An online multiplayer mobile arena game. You move by tilting the " +
-          "phone, then charge a shot and let it go. Characters with their own " +
-          "weapons and abilities, four arenas, a bot mode and a defence mode.",
+          "A roguelike deckbuilder for portrait mobile, drawn from Turkic-Altai " +
+          "mythology. Alaz, a young hearth keeper, descends underground to " +
+          "relight the extinguished Great Hearth and fights its creatures with " +
+          "cards. At the heart of every fight is Heat: it carries over between " +
+          "turns and makes Alaz stronger as it climbs, but at ten it overflows " +
+          "and explodes, and cooling it down turns the spent heat into block " +
+          "or damage. A branching map, events, a merchant, a hearth to rest " +
+          "or forge at, relics and bosses.",
         status: "building",
-        tags: ["Arena", "Action", "Multiplayer", "Mobile"],
-        image: "/apps/pushbump.webp",
+        tags: ["Roguelike", "Deckbuilder", "Turkish mythology", "Single player"],
+        image: "/apps/kor-ve-kul.webp",
         media: [
-          { src: "/media/pushbump/store-en-01.webp", alt: "Push. Bump. Win. — an arcade shape brawler" },
-          { src: "/media/pushbump/store-en-02.webp", alt: "17 unique shape heroes" },
-          { src: "/media/pushbump/store-en-03.webp", alt: "Pick your hero" },
-          { src: "/media/pushbump/store-en-04.webp", alt: "Survive endless waves" },
-          { src: "/media/pushbump/store-en-05.webp", alt: "Level up your build" },
-          { src: "/media/pushbump/store-en-06.webp", alt: "Unlock legendary skins" },
-          { src: "/media/pushbump/store-en-07.webp", alt: "Daily rewards, quests and streaks" },
+          { src: "/media/kor-ve-kul/01.webp", alt: "Main menu" },
+          { src: "/media/kor-ve-kul/02.webp", alt: "Combat: Heat gauge, energy and the hand" },
+          { src: "/media/kor-ve-kul/03.webp", alt: "Card close-up" },
+          { src: "/media/kor-ve-kul/04.webp", alt: "The map, climbed bottom to top toward the boss" },
+          { src: "/media/kor-ve-kul/05.webp", alt: "Event: the Old Shaman" },
+          { src: "/media/kor-ve-kul/06.webp", alt: "The hearth: rest or forge a card" },
+          { src: "/media/kor-ve-kul/07.webp", alt: "The wandering merchant" },
+          { src: "/media/kor-ve-kul/08.webp", alt: "Treasure chest" },
+          { src: "/media/kor-ve-kul/09.webp", alt: "Boss relic choice" },
+          { src: "/media/kor-ve-kul/10.webp", alt: "Victory and run summary" },
         ],
       },
       {
@@ -184,31 +192,23 @@ export const divisions: Division[] = [
         ],
       },
       {
-        name: "Kor ve Kül",
-        tagline: "Stoke the fire or cool it down — at ten, it overflows.",
+        name: "PushBump",
+        tagline: "Tilt, charge, release. One shove changes everything.",
         description:
-          "A roguelike deckbuilder for portrait mobile, drawn from Turkic-Altai " +
-          "mythology. Alaz, a young hearth keeper, descends underground to " +
-          "relight the extinguished Great Hearth and fights its creatures with " +
-          "cards. At the heart of every fight is Heat: it carries over between " +
-          "turns and makes Alaz stronger as it climbs, but at ten it overflows " +
-          "and explodes, and cooling it down turns the spent heat into block " +
-          "or damage. A branching map, events, a merchant, a hearth to rest " +
-          "or forge at, relics and bosses.",
+          "An online multiplayer mobile arena game. You move by tilting the " +
+          "phone, then charge a shot and let it go. Characters with their own " +
+          "weapons and abilities, four arenas, a bot mode and a defence mode.",
         status: "building",
-        tags: ["Roguelike", "Deckbuilder", "Turkish mythology", "Single player"],
-        image: "/apps/kor-ve-kul.webp",
+        tags: ["Arena", "Action", "Multiplayer", "Mobile"],
+        image: "/apps/pushbump.webp",
         media: [
-          { src: "/media/kor-ve-kul/01.webp", alt: "Main menu" },
-          { src: "/media/kor-ve-kul/02.webp", alt: "Combat: Heat gauge, energy and the hand" },
-          { src: "/media/kor-ve-kul/03.webp", alt: "Card close-up" },
-          { src: "/media/kor-ve-kul/04.webp", alt: "The map, climbed bottom to top toward the boss" },
-          { src: "/media/kor-ve-kul/05.webp", alt: "Event: the Old Shaman" },
-          { src: "/media/kor-ve-kul/06.webp", alt: "The hearth: rest or forge a card" },
-          { src: "/media/kor-ve-kul/07.webp", alt: "The wandering merchant" },
-          { src: "/media/kor-ve-kul/08.webp", alt: "Treasure chest" },
-          { src: "/media/kor-ve-kul/09.webp", alt: "Boss relic choice" },
-          { src: "/media/kor-ve-kul/10.webp", alt: "Victory and run summary" },
+          { src: "/media/pushbump/store-en-01.webp", alt: "Push. Bump. Win. — an arcade shape brawler" },
+          { src: "/media/pushbump/store-en-02.webp", alt: "17 unique shape heroes" },
+          { src: "/media/pushbump/store-en-03.webp", alt: "Pick your hero" },
+          { src: "/media/pushbump/store-en-04.webp", alt: "Survive endless waves" },
+          { src: "/media/pushbump/store-en-05.webp", alt: "Level up your build" },
+          { src: "/media/pushbump/store-en-06.webp", alt: "Unlock legendary skins" },
+          { src: "/media/pushbump/store-en-07.webp", alt: "Daily rewards, quests and streaks" },
         ],
       },
     ],

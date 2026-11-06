@@ -37,23 +37,31 @@ export const divisions: Division[] = [
     capabilities: [],
     projects: [
       {
-        name: "PushBump",
-        tagline: "Eğ, doldur, bırak. Tek itiş her şeyi değiştirir.",
+        name: "Kor ve Kül",
+        tagline: "Ateşi harla ya da soğut — onda taşar.",
         description:
-          "Çevrimiçi çok oyunculu mobil arena oyunu. Telefonu eğerek hareket " +
-          "eder, atışını doldurup bırakırsın. Her biri farklı silah ve " +
-          "yeteneğe sahip karakterler, dört arena, bot modu ve savunma modu.",
+          "Türk-Altay mitolojisinden beslenen, dikey ekran mobil roguelike " +
+          "deste kurma oyunu. Genç ocak bekçisi Alaz, sönmüş Ulu Ocak'ı yeniden " +
+          "yakmak için yeraltına iner ve oradaki yaratıklarla kartlarla " +
+          "savaşır. Her savaşın kalbinde Isı var: turlar arasında kalır, " +
+          "yükseldikçe Alaz'ı güçlendirir, ama 10'a ulaşınca taşar ve patlar; " +
+          "soğutmak ise boşaltılan ısıyı blok ya da hasara çevirir. Dallanan " +
+          "harita, olaylar, tüccar, dinlenip kart dövülen ocak, tılsımlar ve " +
+          "boss'lar.",
         status: "building",
-        tags: ["Arena", "Aksiyon", "Çok oyunculu", "Mobil"],
-        image: "/apps/pushbump.webp",
+        tags: ["Roguelike", "Deste kurma", "Türk mitolojisi", "Tek oyunculu"],
+        image: "/apps/kor-ve-kul.webp",
         media: [
-          { src: "/media/pushbump/store-en-01.webp", alt: "Push. Bump. Win. — arcade şekil dövüşü" },
-          { src: "/media/pushbump/store-en-02.webp", alt: "17 eşsiz şekil kahraman" },
-          { src: "/media/pushbump/store-en-03.webp", alt: "Kahramanını seç" },
-          { src: "/media/pushbump/store-en-04.webp", alt: "Sonsuz dalgalara dayan" },
-          { src: "/media/pushbump/store-en-05.webp", alt: "Seviye atla, yapını güçlendir" },
-          { src: "/media/pushbump/store-en-06.webp", alt: "Efsanevi görünümleri aç" },
-          { src: "/media/pushbump/store-en-07.webp", alt: "Günlük ödüller, görevler ve seriler" },
+          { src: "/media/kor-ve-kul/01.webp", alt: "Ana menü" },
+          { src: "/media/kor-ve-kul/02.webp", alt: "Savaş: Isı göstergesi, enerji ve el" },
+          { src: "/media/kor-ve-kul/03.webp", alt: "Kart yakın görünümü" },
+          { src: "/media/kor-ve-kul/04.webp", alt: "Aşağıdan yukarı, boss'a tırmanılan harita" },
+          { src: "/media/kor-ve-kul/05.webp", alt: "Olay: Yaşlı Kam" },
+          { src: "/media/kor-ve-kul/06.webp", alt: "Ocak: dinlen ya da kart döv" },
+          { src: "/media/kor-ve-kul/07.webp", alt: "Gezgin Tüccar" },
+          { src: "/media/kor-ve-kul/08.webp", alt: "Hazine sandığı" },
+          { src: "/media/kor-ve-kul/09.webp", alt: "Boss tılsımı seçimi" },
+          { src: "/media/kor-ve-kul/10.webp", alt: "Zafer ve koşu özeti" },
         ],
       },
       {
@@ -185,31 +193,23 @@ export const divisions: Division[] = [
         ],
       },
       {
-        name: "Kor ve Kül",
-        tagline: "Ateşi harla ya da soğut — onda taşar.",
+        name: "PushBump",
+        tagline: "Eğ, doldur, bırak. Tek itiş her şeyi değiştirir.",
         description:
-          "Türk-Altay mitolojisinden beslenen, dikey ekran mobil roguelike " +
-          "deste kurma oyunu. Genç ocak bekçisi Alaz, sönmüş Ulu Ocak'ı yeniden " +
-          "yakmak için yeraltına iner ve oradaki yaratıklarla kartlarla " +
-          "savaşır. Her savaşın kalbinde Isı var: turlar arasında kalır, " +
-          "yükseldikçe Alaz'ı güçlendirir, ama 10'a ulaşınca taşar ve patlar; " +
-          "soğutmak ise boşaltılan ısıyı blok ya da hasara çevirir. Dallanan " +
-          "harita, olaylar, tüccar, dinlenip kart dövülen ocak, tılsımlar ve " +
-          "boss'lar.",
+          "Çevrimiçi çok oyunculu mobil arena oyunu. Telefonu eğerek hareket " +
+          "eder, atışını doldurup bırakırsın. Her biri farklı silah ve " +
+          "yeteneğe sahip karakterler, dört arena, bot modu ve savunma modu.",
         status: "building",
-        tags: ["Roguelike", "Deste kurma", "Türk mitolojisi", "Tek oyunculu"],
-        image: "/apps/kor-ve-kul.webp",
+        tags: ["Arena", "Aksiyon", "Çok oyunculu", "Mobil"],
+        image: "/apps/pushbump.webp",
         media: [
-          { src: "/media/kor-ve-kul/01.webp", alt: "Ana menü" },
-          { src: "/media/kor-ve-kul/02.webp", alt: "Savaş: Isı göstergesi, enerji ve el" },
-          { src: "/media/kor-ve-kul/03.webp", alt: "Kart yakın görünümü" },
-          { src: "/media/kor-ve-kul/04.webp", alt: "Aşağıdan yukarı, boss'a tırmanılan harita" },
-          { src: "/media/kor-ve-kul/05.webp", alt: "Olay: Yaşlı Kam" },
-          { src: "/media/kor-ve-kul/06.webp", alt: "Ocak: dinlen ya da kart döv" },
-          { src: "/media/kor-ve-kul/07.webp", alt: "Gezgin Tüccar" },
-          { src: "/media/kor-ve-kul/08.webp", alt: "Hazine sandığı" },
-          { src: "/media/kor-ve-kul/09.webp", alt: "Boss tılsımı seçimi" },
-          { src: "/media/kor-ve-kul/10.webp", alt: "Zafer ve koşu özeti" },
+          { src: "/media/pushbump/store-en-01.webp", alt: "Push. Bump. Win. — arcade şekil dövüşü" },
+          { src: "/media/pushbump/store-en-02.webp", alt: "17 eşsiz şekil kahraman" },
+          { src: "/media/pushbump/store-en-03.webp", alt: "Kahramanını seç" },
+          { src: "/media/pushbump/store-en-04.webp", alt: "Sonsuz dalgalara dayan" },
+          { src: "/media/pushbump/store-en-05.webp", alt: "Seviye atla, yapını güçlendir" },
+          { src: "/media/pushbump/store-en-06.webp", alt: "Efsanevi görünümleri aç" },
+          { src: "/media/pushbump/store-en-07.webp", alt: "Günlük ödüller, görevler ve seriler" },
         ],
       },
     ],
