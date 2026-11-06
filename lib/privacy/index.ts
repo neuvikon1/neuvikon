@@ -30,7 +30,7 @@ export const policies: ProductPolicy[] = [
 
 /** Products with their own, fuller legal pages. */
 export const externalPolicies: ExternalPolicy[] = [
-  { slug: "neu-source", name: "Neu-Source", project: "Neu-Source", href: "https://www.neuvikon.space/privacy" },
+  { slug: "neu-source", name: "Source", project: "Source", href: "https://www.neuvikon.space/privacy" },
 ];
 
 export function getPolicy(slug: string): ProductPolicy | undefined {
