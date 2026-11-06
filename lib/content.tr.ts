@@ -247,7 +247,7 @@ export const divisions: Division[] = [
         ],
       },
       {
-        name: "Neu-Source",
+        name: "Source",
         tagline: "Ajan hangi bilette, ne harcadı — tek ekranda.",
         description:
           "Next.js ve TypeScript ile yazılan iç platform. neuvikon CLI'ı " +

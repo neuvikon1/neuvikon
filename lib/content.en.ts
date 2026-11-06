@@ -246,7 +246,7 @@ export const divisions: Division[] = [
         ],
       },
       {
-        name: "Neu-Source",
+        name: "Source",
         tagline: "Which ticket the agent is on, and what it spent.",
         description:
           "An internal platform written in Next.js and TypeScript. The " +

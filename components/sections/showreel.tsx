@@ -26,7 +26,7 @@ const TOP: Frame[] = [
   { src: "/media/shardbound/01.webp", w: 1600, h: 900, name: "Shardbound" },
   { src: "/media/worddeck/01.webp", w: 591, h: 1280, name: "WordDeck" },
   { src: "/media/undercard/01.webp", w: 720, h: 1280, name: "UnderCard" },
-  { src: "/media/neu-source/01.webp", w: 1440, h: 900, name: "Neu-Source" },
+  { src: "/media/neu-source/01.webp", w: 1440, h: 900, name: "Source" },
   { src: "/media/eclosion/01.webp", w: 739, h: 1600, name: "Eclosion" },
   { src: "/media/kor-ve-kul/03.webp", w: 720, h: 1280, name: "Kor ve Kül" },
 ];
