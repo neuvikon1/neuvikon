@@ -1,16 +1,12 @@
 import type { Project } from "@/lib/content";
 import { privacyHref, ui, type Locale } from "@/lib/i18n";
-import { ciftligim } from "@/lib/privacy/products/ciftligim";
 import { eclosion } from "@/lib/privacy/products/eclosion";
 import { edgeout } from "@/lib/privacy/products/edgeout";
 import { guessfast } from "@/lib/privacy/products/guessfast";
-import { kaleMuhafizi } from "@/lib/privacy/products/kale-muhafizi";
 import { korVeKul } from "@/lib/privacy/products/kor-ve-kul";
 import { neuParty } from "@/lib/privacy/products/neu-party";
 import { pushbump } from "@/lib/privacy/products/pushbump";
-import { saksi } from "@/lib/privacy/products/saksi";
 import { shardbound } from "@/lib/privacy/products/shardbound";
-import { todaysWord } from "@/lib/privacy/products/todays-word";
 import { undercard } from "@/lib/privacy/products/undercard";
 import { vecta } from "@/lib/privacy/products/vecta";
 import { worddeck } from "@/lib/privacy/products/worddeck";
@@ -19,17 +15,13 @@ import type { ExternalPolicy, ProductPolicy } from "@/lib/privacy/types";
 
 /** Every product notice on this site; a new one reaches the hub, sitemap and project page from here. */
 export const policies: ProductPolicy[] = [
-  ciftligim,
   eclosion,
   edgeout,
   guessfast,
-  kaleMuhafizi,
   korVeKul,
   neuParty,
   pushbump,
-  saksi,
   shardbound,
-  todaysWord,
   undercard,
   vecta,
   worddeck,
