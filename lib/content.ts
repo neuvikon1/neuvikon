@@ -38,7 +38,7 @@ export type Project = {
   image?: string;
   /** Store pages, live sites, repositories — several per project is normal. */
   links?: ProjectLink[];
-  /** Pulled to the front of its division and given a wider card. */
+  /** Pulled to the front of its division, which is what puts it on the home page. */
   featured?: boolean;
   /**
    * In-app screenshots and clips for the project's own page. Empty for most
@@ -113,6 +113,19 @@ export function orderedProjects(division: Division): Project[] {
     ...division.projects.filter((project) => project.featured),
     ...division.projects.filter((project) => !project.featured),
   ];
+}
+
+/**
+ * The picture on a project's card: its first screenshot, or a clip's poster
+ * frame. A clip with no poster is skipped, since a card is no place to load a
+ * video. Nothing usable means the card falls back to the app icon.
+ */
+export function projectCover(project: Project): (ProjectMedia & { src: string }) | undefined {
+  for (const item of project.media ?? []) {
+    const src = item.kind === "video" ? item.poster : item.src;
+    if (src) return { ...item, src };
+  }
+  return undefined;
 }
 
 /** External accounts, the same in both languages. Company socials (LinkedIn, TikTok, Instagram) go here as they open. */

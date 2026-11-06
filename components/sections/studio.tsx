@@ -9,9 +9,8 @@ import { getContent } from "@/lib/content";
 import { ui, type Locale } from "@/lib/i18n";
 
 /**
- * How the studio works and who is in it. A section of the home page, and the
- * whole of the About page - where it opens with the studio's own lead and its
- * title is the page's `h1`.
+ * How the studio works and who is in it: the whole of the About page, where it
+ * opens with the studio's own lead and its title is the page's `h1`.
  */
 export function StudioSection({ locale, as = "h2" }: { locale: Locale; as?: "h1" | "h2" }) {
   const t = ui[locale];

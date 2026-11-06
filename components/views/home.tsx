@@ -1,51 +1,29 @@
-import { Section } from "@/components/layout/section";
-import { Stack } from "@/components/layout/stack";
-import { Reveal } from "@/components/motion/reveal";
-import { RisingWords } from "@/components/motion/rising-words";
-import { CareersSection } from "@/components/sections/careers";
-import { ContactSection } from "@/components/sections/contact";
-import { DivisionSection } from "@/components/sections/division";
+import { DivisionPreview } from "@/components/sections/division";
 import { Hero } from "@/components/sections/hero";
-import { Showreel } from "@/components/sections/showreel";
-import { StudioSection } from "@/components/sections/studio";
-import { Text, Title } from "@/components/ui/typography";
+import { StudioLinks } from "@/components/sections/studio-links";
 import { getContent } from "@/lib/content";
-import { ui, type Locale } from "@/lib/i18n";
+import { type Locale } from "@/lib/i18n";
 
 /**
- * The whole studio on one page: the statement, the work, the three divisions,
- * how we work, careers and contact. Each of those also has a page of its own;
- * this is the overview that hands off to them.
+ * The overview, and only that: the statement, each division's leading projects
+ * and the way on to everything else. Detail belongs to the page it is about;
+ * the home page is held to about four screens on a desktop.
  */
 export function HomeView({ locale }: { locale: Locale }) {
-  const t = ui[locale];
-  const { divisions, about } = getContent(locale);
+  const { divisions } = getContent(locale);
 
   return (
     <>
       <Hero locale={locale} />
 
-      <Section id="divisions" className="scroll-mt-20">
-        <Stack gap="md">
-          <Title>
-            <RisingWords>{t.divisionsTitle}</RisingWords>
-          </Title>
-          <Reveal delay={0.1}>
-            <Text level="lead">{about.lead}</Text>
-          </Reveal>
-          {/* Inside the grid: the reel is clipped at the rails, so the screens
-              slide in and out at the section's own edges. */}
-          <Showreel label={t.showreel} />
-        </Stack>
-      </Section>
+      {/* The hero's button lands here. */}
+      <div id="divisions" className="scroll-mt-20">
+        {divisions.map((division) => (
+          <DivisionPreview key={division.slug} division={division} locale={locale} />
+        ))}
+      </div>
 
-      {divisions.map((division) => (
-        <DivisionSection key={division.slug} division={division} locale={locale} />
-      ))}
-
-      <StudioSection locale={locale} />
-      <CareersSection locale={locale} />
-      <ContactSection locale={locale} />
+      <StudioLinks locale={locale} />
     </>
   );
 }

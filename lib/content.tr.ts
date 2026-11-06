@@ -38,6 +38,7 @@ export const divisions: Division[] = [
     projects: [
       {
         name: "GuessFast",
+        featured: true,
         tagline: "Sayıyı bul. Hızlı bul.",
         description:
           "Sayı tahmin oyunu. Her tahmin seni doğruya biraz daha yaklaştırır; " +
@@ -68,6 +69,7 @@ export const divisions: Division[] = [
       },
       {
         name: "Kor ve Kül",
+        featured: true,
         tagline: "Ateşi harla ya da soğut — onda taşar.",
         description:
           "Türk-Altay mitolojisinden beslenen, dikey ekran mobil roguelike " +
@@ -119,6 +121,7 @@ export const divisions: Division[] = [
       },
       {
         name: "Shardbound",
+        featured: true,
         tagline: "Her öldürülen bir ruh bırakır. Her ruh yeniden ayağa kalkabilir.",
         description:
           "PC ve Android için yukarıdan bakışlı bir roguelite zindan oyunu. " +
@@ -220,6 +223,7 @@ export const divisions: Division[] = [
     projects: [
       {
         name: "WordDeck",
+        featured: true,
         tagline: "Sınav kelimeleri, unutmadan hemen önce.",
         description:
           "İngilizce kelime kartları. Her kelime " +
@@ -248,6 +252,7 @@ export const divisions: Division[] = [
       },
       {
         name: "Source",
+        featured: true,
         tagline: "Ajan hangi bilette, ne harcadı — tek ekranda.",
         description:
           "Next.js ve TypeScript ile yazılan iç platform. neuvikon CLI'ı " +
@@ -267,6 +272,7 @@ export const divisions: Division[] = [
       },
       {
         name: "Eclosion",
+        featured: true,
         tagline: "Altı alanda kendini geliştir.",
         description:
           "Alışkanlık takibi uygulaması. İnsanın gelişmesi gereken altı alanı " +

@@ -38,6 +38,7 @@ export const divisions: Division[] = [
     projects: [
       {
         name: "GuessFast",
+        featured: true,
         tagline: "Find the number. Find it fast.",
         description:
           "A number-guessing game. Every guess narrows the range; what counts " +
@@ -68,6 +69,7 @@ export const divisions: Division[] = [
       },
       {
         name: "Kor ve Kül",
+        featured: true,
         tagline: "Stoke the fire or cool it down — at ten, it overflows.",
         description:
           "A roguelike deckbuilder for portrait mobile, drawn from Turkic-Altai " +
@@ -119,6 +121,7 @@ export const divisions: Division[] = [
       },
       {
         name: "Shardbound",
+        featured: true,
         tagline: "Every kill leaves a soul. Every soul can stand back up.",
         description:
           "A top-down roguelite dungeon crawler for PC and Android. Five " +
@@ -219,6 +222,7 @@ export const divisions: Division[] = [
     projects: [
       {
         name: "WordDeck",
+        featured: true,
         tagline: "Exam vocabulary, just before you forget it.",
         description:
           "English vocabulary flashcards. Every word " +
@@ -247,6 +251,7 @@ export const divisions: Division[] = [
       },
       {
         name: "Source",
+        featured: true,
         tagline: "Which ticket the agent is on, and what it spent.",
         description:
           "An internal platform written in Next.js and TypeScript. The " +
@@ -268,6 +273,7 @@ export const divisions: Division[] = [
       },
       {
         name: "Eclosion",
+        featured: true,
         tagline: "Grow in six areas at once.",
         description:
           "A habit tracker. It follows six areas of personal development " +
