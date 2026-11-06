@@ -10,8 +10,8 @@ import { getContent, type Division } from "@/lib/content";
 import { divisionHref, ui, type Locale } from "@/lib/i18n";
 
 /**
- * A division's own page: the same section the home page shows, as the page
- * itself, followed by the way to the other two. Ending on the division's last
+ * A division's own page: everything it has in flight, followed by the way to
+ * the other two. Ending on the division's last
  * project left the reader nowhere to go but back.
  */
 export function DivisionView({ locale, division }: { locale: Locale; division: Division }) {
@@ -20,7 +20,7 @@ export function DivisionView({ locale, division }: { locale: Locale; division: D
 
   return (
     <>
-      <DivisionSection division={division} locale={locale} as="h1" />
+      <DivisionSection division={division} locale={locale} />
 
       <Section>
         <Stack gap="sm" className="w-full">

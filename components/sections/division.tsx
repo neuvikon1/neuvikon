@@ -12,7 +12,6 @@ import {
   RevealRow,
 } from "@/components/motion/reveal";
 import { RisingWords } from "@/components/motion/rising-words";
-import { ProjectGrid } from "@/components/sections/project-grid";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,6 +20,7 @@ import {
   asset,
   getContent,
   orderedProjects,
+  projectCover,
   type Division,
   type Project,
 } from "@/lib/content";
@@ -30,13 +30,61 @@ import { RoboticsLogo } from "@/components/brand/robotics-logo";
 import { TechLogo } from "@/components/brand/tech-logo";
 import { cn } from "@/lib/utils";
 
+/** The widths a card renders at: one column on a phone, two, then three. */
+const CARD_SIZES = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
+
+/** How many projects a division shows on the home page, at every screen size. */
+const HOME_PROJECTS = 9;
+
 /**
- * One project. The icon is the app's own square icon, so it is sized as a
- * mark rather than stretched across the card.
+ * The cover for a project with nothing to show yet. Its icon, large, over a
+ * wash of its own colours, so the card keeps the same weight as its neighbours
+ * and nothing is borrowed from another project. A project with no icon either
+ * gets its initial.
+ */
+function CoverFallback({ project }: { project: Project }) {
+  if (!project.image) {
+    return (
+      <span
+        aria-hidden
+        lang="en"
+        className="absolute inset-0 grid place-items-center text-6xl tracking-tight text-muted-foreground"
+      >
+        {project.name.charAt(0)}
+      </span>
+    );
+  }
+  const icon = asset(project.image);
+  return (
+    <>
+      <Image
+        src={icon}
+        alt=""
+        fill
+        sizes={CARD_SIZES}
+        className="scale-125 object-cover opacity-50 blur-2xl"
+      />
+      <span className="absolute inset-0 grid place-items-center">
+        <Image
+          src={icon}
+          alt=""
+          width={192}
+          height={192}
+          className="size-20 rounded-[22%] object-cover ring-1 ring-foreground/10 transition-transform duration-700 ease-house group-hover/card:scale-[1.04]"
+        />
+      </span>
+    </>
+  );
+}
+
+/**
+ * One project, led by a picture: its cover, icon, name, one line and status.
+ * What it is in detail, its tags and its store links are on its own page, which
+ * the whole card opens: the name's link is stretched over the card, so there is
+ * one link to tab to and read out rather than a link for every part of it.
  *
- * The name links to the project's own page. Store and site links stay as
- * separate links beside it, so the card is not one giant link with smaller
- * links nested inside it.
+ * Most covers are phone screenshots in a landscape frame. They are held at
+ * the top, where a screen keeps its title; a wide capture is simply centred.
  */
 export function ProjectCard({
   project,
@@ -48,56 +96,54 @@ export function ProjectCard({
   divisionSlug: string;
 }) {
   const { statusLabel } = getContent(locale);
-  return (
-    <Card className="h-full transition-shadow duration-500 ease-house hover:ring-foreground/20">
-      <CardContent>
-        <Stack gap="sm">
-          <div className="flex w-full items-start justify-between gap-3">
-            {project.image ? (
-              <Image
-                src={asset(project.image)}
-                alt=""
-                width={96}
-                height={96}
-                /* The icon is the only thing on the card that reacts to the
-                   pointer: a mark lifting slightly out of its own ring. */
-                className="size-11 rounded-lg object-cover ring-1 ring-foreground/10 transition-transform duration-500 ease-house group-hover/card:scale-[1.06]"
-              />
-            ) : (
-              /* No icon yet - hold the row height so cards stay aligned. */
-              <span aria-hidden className="size-11 rounded-lg bg-muted" />
-            )}
-            <Badge variant="outline">{statusLabel[project.status]}</Badge>
-          </div>
+  const cover = projectCover(project);
 
-          <Stack gap="xs">
+  return (
+    <Card className="relative h-full pt-0 transition-shadow duration-500 ease-house hover:ring-foreground/20 has-focus-visible:ring-2 has-focus-visible:ring-ring">
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted">
+        {cover ? (
+          <Image
+            src={asset(cover.src)}
+            alt=""
+            fill
+            sizes={CARD_SIZES}
+            className={cn(
+              "object-cover transition-transform duration-700 ease-house group-hover/card:scale-[1.03]",
+              cover.wide ? "object-center" : "object-top",
+            )}
+          />
+        ) : (
+          <CoverFallback project={project} />
+        )}
+        <Badge variant="outline" className="absolute right-3 bottom-3 bg-background/85">
+          {statusLabel[project.status]}
+        </Badge>
+      </div>
+
+      <CardContent>
+        <div className="flex w-full items-start gap-3">
+          {/* The fallback cover is already the icon; once is enough. */}
+          {cover && project.image && (
+            <Image
+              src={asset(project.image)}
+              alt=""
+              width={96}
+              height={96}
+              className="size-11 shrink-0 rounded-lg object-cover ring-1 ring-foreground/10"
+            />
+          )}
+          <Stack gap="xs" className="min-w-0">
             <Title as="h3" level="sub" className="text-base leading-snug" lang="en">
               <Link
                 href={projectHref(locale, divisionSlug, project.name)}
-                className="underline-offset-4 hover:underline"
+                className="underline-offset-4 outline-none group-hover/card:underline after:absolute after:inset-0"
               >
                 {project.name}
               </Link>
             </Title>
-            <Text>{project.tagline}</Text>
+            <Text className="text-sm">{project.tagline}</Text>
           </Stack>
-
-          {project.description && (
-            <Text className="text-muted-foreground/80">
-              {project.description}
-            </Text>
-          )}
-
-          <div className="flex flex-wrap gap-1.5">
-            {project.tags.map((tag) => (
-              <Badge key={tag} variant="secondary">
-                {tag}
-              </Badge>
-            ))}
-          </div>
-
-          {project.links && <ProjectLinks links={project.links} className="text-xs" />}
-        </Stack>
+        </div>
       </CardContent>
     </Card>
   );
@@ -188,25 +234,71 @@ export function ProjectLinks({
 }
 
 /**
- * A division: what it does, what it can do, and everything it has in flight.
- * On the home page there is one of these per record in `divisions`; on the
- * division's own page it is the page, with the name as its `h1`.
+ * A division on the home page: its name, its line and up to HOME_PROJECTS of its
+ * projects. The way through to its own page only appears when that page has more
+ * to show, or when there is nothing to show here.
+ *
+ * Tighter than a full section, because three of these run back to back.
+ */
+export function DivisionPreview({ division, locale }: { division: Division; locale: Locale }) {
+  const t = ui[locale];
+  const all = orderedProjects(division);
+  const projects = all.slice(0, HOME_PROJECTS);
+  const hasMore = all.length > HOME_PROJECTS;
+
+  return (
+    <Section
+      id={division.slug}
+      inset={false}
+      className="scroll-mt-20"
+      containerClassName="py-14 md:py-16"
+    >
+      <Stack gap="lg" className="w-full">
+        <div className="flex w-full flex-wrap items-end justify-between gap-x-8 gap-y-4">
+          <Stack gap="sm">
+            <DivisionHeading division={division} as="h2" />
+            <Reveal delay={0.1}>
+              <Text>{division.tagline}</Text>
+            </Reveal>
+            {projects.length === 0 && (
+              <Reveal delay={0.14}>
+                <Text>{t.noPublicProjectsBody}</Text>
+              </Reveal>
+            )}
+          </Stack>
+          {(hasMore || projects.length === 0) && (
+            <Reveal delay={0.16}>
+              <ButtonLink href={divisionHref(locale, division.slug)} variant="outline">
+                {hasMore ? t.viewAll : t.explore}
+                <ArrowRight data-icon="inline-end" />
+              </ButtonLink>
+            </Reveal>
+          )}
+        </div>
+
+        {projects.length > 0 && (
+          <RevealGroup stagger={0.06} className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project) => (
+              <RevealCell key={project.name}>
+                <ProjectCard project={project} locale={locale} divisionSlug={division.slug} />
+              </RevealCell>
+            ))}
+          </RevealGroup>
+        )}
+      </Stack>
+    </Section>
+  );
+}
+
+/**
+ * A division's own page: what it does, what it can do, and everything it has
+ * in flight.
  *
  * Three groups, each arriving on its own cue as it is reached, which is also
  * the order of the argument: the name, then the evidence that the division can
  * do the thing, then the things it is doing.
- *
- * Featured projects lead and take two columns of the grid.
  */
-export function DivisionSection({
-  division,
-  locale,
-  as = "h2",
-}: {
-  division: Division;
-  locale: Locale;
-  as?: "h1" | "h2";
-}) {
+export function DivisionSection({ division, locale }: { division: Division; locale: Locale }) {
   const t = ui[locale];
   const projects = orderedProjects(division);
 
@@ -214,21 +306,13 @@ export function DivisionSection({
     <Section id={division.slug} className="scroll-mt-20">
       <Stack gap="xl" className="w-full">
         <Stack gap="md">
-          <DivisionHeading division={division} as={as} />
+          <DivisionHeading division={division} as="h1" />
           <Reveal delay={0.1}>
             <Text level="lead">{division.tagline}</Text>
           </Reveal>
           <Reveal delay={0.16}>
             <Text>{division.intro}</Text>
           </Reveal>
-          {as === "h2" && (
-            <Reveal delay={0.2}>
-              <ButtonLink href={divisionHref(locale, division.slug)} variant="outline">
-                {t.explore}
-                <ArrowRight data-icon="inline-end" />
-              </ButtonLink>
-            </Reveal>
-          )}
         </Stack>
 
         {division.capabilities.length > 0 && (
@@ -256,23 +340,13 @@ export function DivisionSection({
             <Reveal still>
               <Eyebrow>{t.projectCount(projects.length)}</Eyebrow>
             </Reveal>
-            {/* On the home page a long division shows six and keeps the rest
-                behind a button; its own page lists everything. */}
-            <ProjectGrid
-              limit={as === "h2" ? 6 : undefined}
-              moreLabel={t.viewMore(projects.length - 6)}
-              lessLabel={t.viewLess}
-              className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3"
-            >
+            <RevealGroup stagger={0.06} className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3">
               {projects.map((project) => (
-                <RevealCell
-                  key={project.name}
-                  className={cn(project.featured && "md:col-span-2")}
-                >
+                <RevealCell key={project.name}>
                   <ProjectCard project={project} locale={locale} divisionSlug={division.slug} />
                 </RevealCell>
               ))}
-            </ProjectGrid>
+            </RevealGroup>
           </Stack>
         ) : (
           /* Robotics has no public project yet; say so rather than hide the
