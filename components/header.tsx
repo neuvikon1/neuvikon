@@ -60,7 +60,7 @@ const Header = ({ locale }: { locale: Locale }) => {
             <Image
               src="/brand/neuvikon-wordmark.svg"
               alt=""
-              width={116}
+              width={119}
               height={20}
               priority
               unoptimized
@@ -69,7 +69,7 @@ const Header = ({ locale }: { locale: Locale }) => {
             <Image
               src="/brand/neuvikon-wordmark-dark.svg"
               alt=""
-              width={116}
+              width={119}
               height={20}
               priority
               unoptimized

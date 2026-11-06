@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
-import { ReactLenis } from "lenis/react";
+import { useEffect, useRef } from "react";
+import { ReactLenis, type LenisRef } from "lenis/react";
+import { cancelFrame, frame } from "motion/react";
 
 import { usePrefersReducedMotion } from "@/hooks/use-media-query";
 
@@ -89,15 +90,29 @@ function useAnchorHandoff(enabled: boolean) {
  * Under reduced motion the wheel is handed straight back to the browser and
  * anchors stop being intercepted. Note that scrolling still *works* in that
  * mode - it is the easing that goes away, not the scroll.
+ *
+ * Lenis runs on Motion's frame loop instead of a requestAnimationFrame of its
+ * own. With two loops, whatever reads the scroll can land a frame either side
+ * of the page moving, and anything tied to the scroll visibly slips against it.
  */
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const reducedMotion = usePrefersReducedMotion();
 
+  const lenis = useRef<LenisRef>(null);
+
   useAnchorHandoff(!reducedMotion);
+
+  useEffect(() => {
+    const update = ({ timestamp }: { timestamp: number }) => lenis.current?.lenis?.raf(timestamp);
+    frame.update(update, true);
+    return () => cancelFrame(update);
+  }, []);
 
   return (
     <ReactLenis
+      ref={lenis}
       root
+      autoRaf={false}
       options={{
         /* Light touch. Past about 0.08 the page starts to feel detached from
            the wheel, which reads as lag rather than as smoothness. */

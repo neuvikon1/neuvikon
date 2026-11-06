@@ -25,7 +25,9 @@ import {
   type Project,
 } from "@/lib/content";
 import { divisionHref, projectHref, ui, type Locale } from "@/lib/i18n";
-import { divisionLogos } from "@/lib/division-logos";
+import { GamesLogo } from "@/components/brand/games-logo";
+import { RoboticsLogo } from "@/components/brand/robotics-logo";
+import { TechLogo } from "@/components/brand/tech-logo";
 import { cn } from "@/lib/utils";
 
 /**
@@ -101,6 +103,13 @@ export function ProjectCard({
   );
 }
 
+/** Division lockups, each with its own entrance. A division without one keeps its text heading. */
+const LOCKUPS: Partial<Record<string, () => React.ReactNode>> = {
+  games: GamesLogo,
+  robotics: RoboticsLogo,
+  tech: TechLogo,
+};
+
 /**
  * The division's name at the top of its section.
  *
@@ -115,10 +124,10 @@ export function ProjectCard({
  * same weight down the page.
  */
 function DivisionHeading({ division, as }: { division: Division; as: "h1" | "h2" }) {
-  const logo = divisionLogos[division.slug];
+  const Lockup = LOCKUPS[division.slug];
   const Heading = as;
 
-  if (!logo) {
+  if (!Lockup) {
     return (
       <Title as={as} lang="en">
         <RisingWords>{division.name}</RisingWords>
@@ -126,36 +135,16 @@ function DivisionHeading({ division, as }: { division: Division; as: "h1" | "h2"
     );
   }
 
+  // h2, matching what Title renders for the text branch: the two headings have
+  // to sit at the same level in the outline. The width is a definite length,
+  // not a percentage: the Stack above is `items-start`, so a percentage would
+  // have nothing to resolve against and the heading would collapse to zero.
   return (
-    <Reveal>
-      {/* h2, matching what Title renders for the text branch - the two
-          headings have to sit at the same level in the outline.
-
-          The width is a definite length, not a percentage. The Stack above is
-          `items-start`, so this sits in a shrink-to-fit box: a percentage
-          would have nothing to resolve against, collapse to zero, and then
-          the lazy image inside could never intersect the viewport to load -
-          leaving the heading permanently blank. */}
-      <Heading className="w-[22rem] max-w-full">
-        {/* The name lives on the heading, not on either image. Only one ink
-            version is displayed at a time and the other is `display: none`,
-            so an alt on the images would leave the heading nameless in
-            whichever theme hid the one carrying it. */}
-        <span className="sr-only">{division.name}</span>
-        <Image
-          src={logo.light}
-          alt=""
-          aria-hidden
-          className="block h-auto w-full dark:hidden"
-        />
-        <Image
-          src={logo.dark}
-          alt=""
-          aria-hidden
-          className="hidden h-auto w-full dark:block"
-        />
-      </Heading>
-    </Reveal>
+    <Heading className="w-[22rem] max-w-full">
+      {/* The name lives on the heading: the lockup itself is decorative. */}
+      <span className="sr-only">{division.name}</span>
+      <Lockup />
+    </Heading>
   );
 }
 

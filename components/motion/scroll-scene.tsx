@@ -335,7 +335,9 @@ export function ScrollScene() {
         } else {
           // On a wide screen it takes the right third the copy leaves open,
           // sized so the scattered cloud stays clear of it.
-          group.position.set(visibleW * 0.3, 0, 0);
+          // 55px left of and 15px below where it was, at 1440x840: the hero frame
+          // in Figma places it there, clear of the copy.
+          group.position.set(visibleW * (0.3 - 55 / 1440), -visibleH * (15 / 840), 0);
           group.scale.setScalar(Math.min(1, visibleH / 6.6, visibleW / 13));
           material.uniforms.uOpacity.value = 0.95;
         }
@@ -375,8 +377,10 @@ export function ScrollScene() {
         if (reduced.matches) {
           morph = 1;
         } else {
-          // Damped, so a flick of the wheel glides rather than jumps.
-          morph += (target - morph) * (1 - Math.exp(-dt * 1.8));
+          // Damped just enough to take the edge off a flick. Any slower and a
+          // quick scroll carries the hero away with its N half made, the rest
+          // of the gathering still drifting in after the reader has moved on.
+          morph += (target - morph) * (1 - Math.exp(-dt * 6));
         }
         // How fully the N has formed: 0 until it is nearly whole, 1 once it is.
         const formed = Math.min(1, Math.max(0, (morph - 0.85) / 0.15));

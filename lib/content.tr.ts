@@ -37,6 +37,36 @@ export const divisions: Division[] = [
     capabilities: [],
     projects: [
       {
+        name: "GuessFast",
+        tagline: "Sayıyı bul. Hızlı bul.",
+        description:
+          "Sayı tahmin oyunu. Her tahmin seni doğruya biraz daha yaklaştırır; " +
+          "mesele kaç denemede değil, ne kadar sürede bulduğun.",
+        status: "released",
+        tags: ["Bulmaca", "Sayı tahmini", "Günlük challenge", "PvP"],
+        image: "/apps/guessfast.webp",
+        links: [
+          {
+            label: "Google Play",
+            href: "https://play.google.com/store/apps/details?id=com.scientist001.GuessFast",
+          },
+          {
+            label: "App Store",
+            href: "https://apps.apple.com/app/guessfast/id6758861605",
+          },
+        ],
+        media: [
+          { src: "/media/guessfast/store-tr-01.webp", alt: "5 zekâ oyunu tek uygulamada" },
+          { src: "/media/guessfast/store-tr-02.webp", alt: "Gizli sayıyı çöz" },
+          { src: "/media/guessfast/store-tr-03.webp", alt: "Ne kadar yakınsan o kadar puan" },
+          { src: "/media/guessfast/store-tr-04.webp", alt: "Her gün yeni bir film" },
+          { src: "/media/guessfast/store-tr-05.webp", alt: "Ünlüyü ipuçlarından bul" },
+          { src: "/media/guessfast/store-tr-06.webp", alt: "Hangisi daha çok?" },
+          { src: "/media/guessfast/store-tr-07.webp", alt: "Paylaş, sıralamada yüksel" },
+          { src: "/media/guessfast/store-tr-08.webp", alt: "Seviye atla, başarım topla" },
+        ],
+      },
+      {
         name: "Kor ve Kül",
         tagline: "Ateşi harla ya da soğut — onda taşar.",
         description:
@@ -153,43 +183,6 @@ export const divisions: Division[] = [
           { src: "/media/edgeout/03.webp", alt: "Duvar yerleştirme modu: uygun kenarlar vurgulu" },
           { src: "/media/edgeout/04.webp", alt: "Siyahın yerleştirdiği duvar beyazların önünü kesiyor" },
           { src: "/media/edgeout/05.webp", alt: "Giriş ekranı" },
-        ],
-      },
-      {
-        name: "GuessFast",
-        tagline: "Sayıyı bul. Hızlı bul.",
-        description:
-          "Sayı tahmin oyunu. Her tahmin seni doğruya biraz daha yaklaştırır; " +
-          "mesele kaç denemede değil, ne kadar sürede bulduğun.",
-        status: "released",
-        tags: ["Bulmaca", "Sayı tahmini", "Günlük challenge", "PvP"],
-        image: "/apps/guessfast.webp",
-        links: [
-          {
-            label: "Google Play",
-            href: "https://play.google.com/store/apps/details?id=com.scientist001.GuessFast",
-          },
-          {
-            label: "App Store",
-            href: "https://apps.apple.com/app/guessfast/id6758861605",
-          },
-        ],
-        media: [
-          { src: "/media/guessfast/store-tr-01.webp", alt: "5 zekâ oyunu tek uygulamada" },
-          { src: "/media/guessfast/store-tr-02.webp", alt: "Gizli sayıyı çöz" },
-          { src: "/media/guessfast/store-tr-03.webp", alt: "Ne kadar yakınsan o kadar puan" },
-          { src: "/media/guessfast/store-tr-04.webp", alt: "Her gün yeni bir film" },
-          { src: "/media/guessfast/store-tr-05.webp", alt: "Ünlüyü ipuçlarından bul" },
-          { src: "/media/guessfast/store-tr-06.webp", alt: "Hangisi daha çok?" },
-          { src: "/media/guessfast/store-tr-07.webp", alt: "Paylaş, sıralamada yüksel" },
-          { src: "/media/guessfast/store-tr-08.webp", alt: "Seviye atla, başarım topla" },
-          { src: "/media/guessfast/01.webp", alt: "Ana menü" },
-          { src: "/media/guessfast/02.webp", alt: "Pratik oyunu: her tahminden sonra doğru rakam sayısı" },
-          { src: "/media/guessfast/03.webp", alt: "Göstergeli mod: doğru yerdeki rakamlar yeşil, yanlış yerdekiler sarı" },
-          { src: "/media/guessfast/04.webp", alt: "PvP modu: özel oda kur ya da kodla katıl" },
-          { src: "/media/guessfast/05.webp", alt: "Ayarlar" },
-          { src: "/media/guessfast/06.webp", alt: "Günlük challenge sonucu" },
-          { src: "/media/guessfast/07.webp", alt: "Son 7 günün istatistikleri" },
         ],
       },
       {

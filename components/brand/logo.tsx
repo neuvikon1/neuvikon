@@ -35,7 +35,7 @@ type MarkProps = {
 };
 
 /** The design system wordmark's own width over its height. */
-const WORDMARK_RATIO = 115.938 / 20.0069;
+const WORDMARK_RATIO = 249.959 / 41.9237;
 
 /**
  * The full wordmark, as the header shows it: the design system's SVG, with a

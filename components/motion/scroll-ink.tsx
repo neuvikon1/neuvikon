@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useScroll, useSpring } from "motion/react";
+import { useLenis } from "lenis/react";
+import { motion, useMotionValue } from "motion/react";
 
 import { afterIntro } from "@/components/motion/after-intro";
 import { usePrefersReducedMotion } from "@/hooks/use-media-query";
@@ -40,9 +41,11 @@ export function ScrollInk() {
   const [geometry, setGeometry] = useState<Geometry | null>(null);
   const reducedMotion = usePrefersReducedMotion();
 
-  const { scrollY } = useScroll();
-  const drawn = useMotionValue(0);
-  const ink = useSpring(drawn, { stiffness: 220, damping: 40, mass: 0.6 });
+  // Read from Lenis, in the same frame it moves the page, and used as it comes.
+  // The scroll is already eased; a spring on top of it left the nib sliding up
+  // and down the screen behind the page on every flick.
+  const lenis = useLenis();
+  const ink = useMotionValue(0);
   const nibX = useMotionValue(0);
   const nibY = useMotionValue(0);
   const nibOpacity = useMotionValue(0);
@@ -89,7 +92,7 @@ export function ScrollInk() {
   // into a length along it - the flourishes make the two drift apart.
   useEffect(() => {
     const path = pathRef.current;
-    if (!path || !geometry) return;
+    if (!path || !geometry || !lenis) return;
 
     // The sampling walks the whole page-long path and holds the main thread
     // for a few hundred milliseconds, so it waits out the hero's entrance; the
@@ -116,22 +119,31 @@ export function ScrollInk() {
         const end = Math.min(1, Math.max(0, (scroll - (maxScroll - viewport)) / viewport));
         const nib = NIB_AT + (1 - NIB_AT) * end;
         const target = scroll + viewport * nib - mainTop.current;
-        const hit = samples.find((sample) => sample.y >= target);
-        return (hit ? hit.length : total) / total;
+        // Between two samples, not on one: snapping to the 4px grid they sit on
+        // would make the nib tick against the page as it scrolled.
+        let low = 0;
+        let high = samples.length - 1;
+        if (target >= samples[high].y) return 1;
+        if (target <= samples[0].y) return samples[0].length / total;
+        while (high - low > 1) {
+          const middle = (low + high) >> 1;
+          if (samples[middle].y < target) low = middle;
+          else high = middle;
+        }
+        const a = samples[low];
+        const b = samples[high];
+        return (a.length + ((target - a.y) / (b.y - a.y)) * (b.length - a.length)) / total;
       };
 
       if (reducedMotion) {
-        drawn.jump(1);
         ink.jump(1);
         nibOpacity.set(0);
         return;
       }
 
-      drawn.jump(progressFor(scrollY.get()));
-      ink.jump(drawn.get());
-      const stopScroll = scrollY.on("change", (scroll) => drawn.set(progressFor(scroll)));
+      ink.jump(progressFor(lenis.scroll));
+      const stopScroll = lenis.on("scroll", ({ scroll }) => ink.set(progressFor(scroll)));
 
-      // The nib rides the eased value, so it never runs ahead of its own ink.
       const placeNib = (progress: number) => {
         const point = path.getPointAtLength(progress * total);
         nibX.set(point.x);
@@ -156,7 +168,7 @@ export function ScrollInk() {
       cancelled = true;
       stop?.();
     };
-  }, [geometry, reducedMotion, scrollY, drawn, ink, nibX, nibY, nibOpacity]);
+  }, [geometry, lenis, reducedMotion, ink, nibX, nibY, nibOpacity]);
 
   return (
     <svg

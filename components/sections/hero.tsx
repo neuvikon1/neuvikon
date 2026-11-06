@@ -28,7 +28,8 @@ const CUE = {
  * its own: no top rule, because the header's edge already sits above it, and
  * no rails, so the grid starts below it.
  *
- * The copy keeps to the left seven columns. The right of the screen belongs
+ * The copy keeps to the left seven columns, held to the 510px of the design so
+ * the statement still breaks over two lines. The right of the screen belongs
  * to the point cloud behind it (`ScrollScene`), scattered as the page opens
  * and gathered into the signature's N as it is scrolled - so the first screen
  * has one large thing on each side: the statement and the mark. The cloud is
@@ -57,7 +58,7 @@ export function Hero({ locale }: { locale: Locale }) {
           containerClassName="flex flex-1 flex-col"
         >
           <div className="grid w-full flex-1 content-center gap-12 py-16 lg:grid-cols-12">
-            <Stack gap="lg" className="lg:col-span-7">
+            <Stack gap="lg" className="lg:col-span-7 lg:max-w-[calc(510rem/12)]">
               {/* The mark, large, its N writing itself as the page opens. The
                 size rides the viewport; the inline height SignedWordmark sets
                 is only its default. The mark is four times as wide as it is

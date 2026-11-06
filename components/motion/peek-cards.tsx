@@ -22,7 +22,7 @@ const CARD = { w: 56, h: 80, r: 7 };
 const FLIP = 0.45; // seconds for a card to turn over
 const HOLD = 1.3; // seconds a peeked card stays face up
 const SWAP = 1.4; // seconds for two cards to change places
-const CONTENT = 960; // the page's content width in px (--container-max)
+const CONTENT = 1190; // the page's content width in px (--container-max)
 
 type Card = {
   x: number;

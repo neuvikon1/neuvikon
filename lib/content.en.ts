@@ -37,6 +37,36 @@ export const divisions: Division[] = [
     capabilities: [],
     projects: [
       {
+        name: "GuessFast",
+        tagline: "Find the number. Find it fast.",
+        description:
+          "A number-guessing game. Every guess narrows the range; what counts " +
+          "is not how many tries you needed but how long you took.",
+        status: "released",
+        tags: ["Puzzle", "Number guessing", "Daily challenge", "PvP"],
+        image: "/apps/guessfast.webp",
+        links: [
+          {
+            label: "Google Play",
+            href: "https://play.google.com/store/apps/details?id=com.scientist001.GuessFast",
+          },
+          {
+            label: "App Store",
+            href: "https://apps.apple.com/app/guessfast/id6758861605",
+          },
+        ],
+        media: [
+          { src: "/media/guessfast/store-en-01.webp", alt: "5 brain games in one app" },
+          { src: "/media/guessfast/store-en-02.webp", alt: "Crack the secret number" },
+          { src: "/media/guessfast/store-en-03.webp", alt: "The closer you get, the more you score" },
+          { src: "/media/guessfast/store-en-04.webp", alt: "A new movie every day" },
+          { src: "/media/guessfast/store-en-05.webp", alt: "Guess the famous person" },
+          { src: "/media/guessfast/store-en-06.webp", alt: "Which one is more?" },
+          { src: "/media/guessfast/store-en-07.webp", alt: "Share and climb the leaderboard" },
+          { src: "/media/guessfast/store-en-08.webp", alt: "Level up, unlock achievements" },
+        ],
+      },
+      {
         name: "Kor ve Kül",
         tagline: "Stoke the fire or cool it down — at ten, it overflows.",
         description:
@@ -152,43 +182,6 @@ export const divisions: Division[] = [
           { src: "/media/edgeout/03.webp", alt: "Wall placement mode: available edges highlighted" },
           { src: "/media/edgeout/04.webp", alt: "A wall placed by Black blocks the white marbles" },
           { src: "/media/edgeout/05.webp", alt: "Sign-in screen" },
-        ],
-      },
-      {
-        name: "GuessFast",
-        tagline: "Find the number. Find it fast.",
-        description:
-          "A number-guessing game. Every guess narrows the range; what counts " +
-          "is not how many tries you needed but how long you took.",
-        status: "released",
-        tags: ["Puzzle", "Number guessing", "Daily challenge", "PvP"],
-        image: "/apps/guessfast.webp",
-        links: [
-          {
-            label: "Google Play",
-            href: "https://play.google.com/store/apps/details?id=com.scientist001.GuessFast",
-          },
-          {
-            label: "App Store",
-            href: "https://apps.apple.com/app/guessfast/id6758861605",
-          },
-        ],
-        media: [
-          { src: "/media/guessfast/store-en-01.webp", alt: "5 brain games in one app" },
-          { src: "/media/guessfast/store-en-02.webp", alt: "Crack the secret number" },
-          { src: "/media/guessfast/store-en-03.webp", alt: "The closer you get, the more you score" },
-          { src: "/media/guessfast/store-en-04.webp", alt: "A new movie every day" },
-          { src: "/media/guessfast/store-en-05.webp", alt: "Guess the famous person" },
-          { src: "/media/guessfast/store-en-06.webp", alt: "Which one is more?" },
-          { src: "/media/guessfast/store-en-07.webp", alt: "Share and climb the leaderboard" },
-          { src: "/media/guessfast/store-en-08.webp", alt: "Level up, unlock achievements" },
-          { src: "/media/guessfast/01.webp", alt: "Main menu" },
-          { src: "/media/guessfast/02.webp", alt: "Practice game: how many digits are right after each guess" },
-          { src: "/media/guessfast/03.webp", alt: "Indicator mode: right place in green, wrong place in yellow" },
-          { src: "/media/guessfast/04.webp", alt: "PvP mode: create a private room or join with a code" },
-          { src: "/media/guessfast/05.webp", alt: "Settings" },
-          { src: "/media/guessfast/06.webp", alt: "Daily challenge result" },
-          { src: "/media/guessfast/07.webp", alt: "The last seven days" },
         ],
       },
       {
