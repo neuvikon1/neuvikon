@@ -33,8 +33,8 @@ import { cn } from "@/lib/utils";
 /** The widths a card renders at: one column on a phone, two, then three. */
 const CARD_SIZES = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
 
-/** How many projects a division shows on the home page. */
-const HOME_PROJECTS = 3;
+/** How many projects a division shows on the home page, at every screen size. */
+const HOME_PROJECTS = 9;
 
 /**
  * The cover for a project with nothing to show yet. Its icon, large, over a
@@ -234,17 +234,17 @@ export function ProjectLinks({
 }
 
 /**
- * A division on the home page: its name, its line and its leading projects,
- * with the way through to the rest. The division's own page is where the intro
- * and the full list live.
+ * A division on the home page: its name, its line and up to HOME_PROJECTS of its
+ * projects. The way through to its own page only appears when that page has more
+ * to show, or when there is nothing to show here.
  *
- * Tighter than a full section, because three of these run back to back. Below
- * `lg` the grid has one or two columns, so the third project is dropped: on two
- * it would sit alone on a row, and on a phone it is another screen of scrolling.
+ * Tighter than a full section, because three of these run back to back.
  */
 export function DivisionPreview({ division, locale }: { division: Division; locale: Locale }) {
   const t = ui[locale];
-  const projects = orderedProjects(division).slice(0, HOME_PROJECTS);
+  const all = orderedProjects(division);
+  const projects = all.slice(0, HOME_PROJECTS);
+  const hasMore = all.length > HOME_PROJECTS;
 
   return (
     <Section
@@ -266,18 +266,20 @@ export function DivisionPreview({ division, locale }: { division: Division; loca
               </Reveal>
             )}
           </Stack>
-          <Reveal delay={0.16}>
-            <ButtonLink href={divisionHref(locale, division.slug)} variant="outline">
-              {projects.length > 0 ? t.viewAll : t.explore}
-              <ArrowRight data-icon="inline-end" />
-            </ButtonLink>
-          </Reveal>
+          {(hasMore || projects.length === 0) && (
+            <Reveal delay={0.16}>
+              <ButtonLink href={divisionHref(locale, division.slug)} variant="outline">
+                {hasMore ? t.viewAll : t.explore}
+                <ArrowRight data-icon="inline-end" />
+              </ButtonLink>
+            </Reveal>
+          )}
         </div>
 
         {projects.length > 0 && (
           <RevealGroup stagger={0.06} className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project, index) => (
-              <RevealCell key={project.name} className={cn(index >= 2 && "hidden lg:block")}>
+            {projects.map((project) => (
+              <RevealCell key={project.name}>
                 <ProjectCard project={project} locale={locale} divisionSlug={division.slug} />
               </RevealCell>
             ))}

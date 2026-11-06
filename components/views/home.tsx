@@ -5,9 +5,8 @@ import { getContent } from "@/lib/content";
 import { type Locale } from "@/lib/i18n";
 
 /**
- * The overview, and only that: the statement, each division's leading projects
- * and the way on to everything else. Detail belongs to the page it is about;
- * the home page is held to about four screens on a desktop.
+ * The overview, and only that: the statement, each division's projects and the
+ * way on to everything else. Detail belongs to the page it is about.
  */
 export function HomeView({ locale }: { locale: Locale }) {
   const { divisions } = getContent(locale);
