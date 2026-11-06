@@ -37,23 +37,63 @@ export const divisions: Division[] = [
     capabilities: [],
     projects: [
       {
-        name: "PushBump",
-        tagline: "Eğ, doldur, bırak. Tek itiş her şeyi değiştirir.",
+        name: "GuessFast",
+        featured: true,
+        tagline: "Sayıyı bul. Hızlı bul.",
         description:
-          "Çevrimiçi çok oyunculu mobil arena oyunu. Telefonu eğerek hareket " +
-          "eder, atışını doldurup bırakırsın. Her biri farklı silah ve " +
-          "yeteneğe sahip karakterler, dört arena, bot modu ve savunma modu.",
-        status: "building",
-        tags: ["Arena", "Aksiyon", "Çok oyunculu", "Mobil"],
-        image: "/apps/pushbump.webp",
+          "Sayı tahmin oyunu. Her tahmin seni doğruya biraz daha yaklaştırır; " +
+          "mesele kaç denemede değil, ne kadar sürede bulduğun.",
+        status: "released",
+        tags: ["Bulmaca", "Sayı tahmini", "Günlük challenge", "PvP"],
+        image: "/apps/guessfast.webp",
+        links: [
+          {
+            label: "Google Play",
+            href: "https://play.google.com/store/apps/details?id=com.scientist001.GuessFast",
+          },
+          {
+            label: "App Store",
+            href: "https://apps.apple.com/app/guessfast/id6758861605",
+          },
+        ],
         media: [
-          { src: "/media/pushbump/store-en-01.webp", alt: "Push. Bump. Win. — arcade şekil dövüşü" },
-          { src: "/media/pushbump/store-en-02.webp", alt: "17 eşsiz şekil kahraman" },
-          { src: "/media/pushbump/store-en-03.webp", alt: "Kahramanını seç" },
-          { src: "/media/pushbump/store-en-04.webp", alt: "Sonsuz dalgalara dayan" },
-          { src: "/media/pushbump/store-en-05.webp", alt: "Seviye atla, yapını güçlendir" },
-          { src: "/media/pushbump/store-en-06.webp", alt: "Efsanevi görünümleri aç" },
-          { src: "/media/pushbump/store-en-07.webp", alt: "Günlük ödüller, görevler ve seriler" },
+          { src: "/media/guessfast/store-tr-01.webp", alt: "5 zekâ oyunu tek uygulamada" },
+          { src: "/media/guessfast/store-tr-02.webp", alt: "Gizli sayıyı çöz" },
+          { src: "/media/guessfast/store-tr-03.webp", alt: "Ne kadar yakınsan o kadar puan" },
+          { src: "/media/guessfast/store-tr-04.webp", alt: "Her gün yeni bir film" },
+          { src: "/media/guessfast/store-tr-05.webp", alt: "Ünlüyü ipuçlarından bul" },
+          { src: "/media/guessfast/store-tr-06.webp", alt: "Hangisi daha çok?" },
+          { src: "/media/guessfast/store-tr-07.webp", alt: "Paylaş, sıralamada yüksel" },
+          { src: "/media/guessfast/store-tr-08.webp", alt: "Seviye atla, başarım topla" },
+        ],
+      },
+      {
+        name: "Kor ve Kül",
+        featured: true,
+        tagline: "Ateşi harla ya da soğut — onda taşar.",
+        description:
+          "Türk-Altay mitolojisinden beslenen, dikey ekran mobil roguelike " +
+          "deste kurma oyunu. Genç ocak bekçisi Alaz, sönmüş Ulu Ocak'ı yeniden " +
+          "yakmak için yeraltına iner ve oradaki yaratıklarla kartlarla " +
+          "savaşır. Her savaşın kalbinde Isı var: turlar arasında kalır, " +
+          "yükseldikçe Alaz'ı güçlendirir, ama 10'a ulaşınca taşar ve patlar; " +
+          "soğutmak ise boşaltılan ısıyı blok ya da hasara çevirir. Dallanan " +
+          "harita, olaylar, tüccar, dinlenip kart dövülen ocak, tılsımlar ve " +
+          "boss'lar.",
+        status: "building",
+        tags: ["Roguelike", "Deste kurma", "Türk mitolojisi", "Tek oyunculu"],
+        image: "/apps/kor-ve-kul.webp",
+        media: [
+          { src: "/media/kor-ve-kul/01.webp", alt: "Ana menü" },
+          { src: "/media/kor-ve-kul/02.webp", alt: "Savaş: Isı göstergesi, enerji ve el" },
+          { src: "/media/kor-ve-kul/03.webp", alt: "Kart yakın görünümü" },
+          { src: "/media/kor-ve-kul/04.webp", alt: "Aşağıdan yukarı, boss'a tırmanılan harita" },
+          { src: "/media/kor-ve-kul/05.webp", alt: "Olay: Yaşlı Kam" },
+          { src: "/media/kor-ve-kul/06.webp", alt: "Ocak: dinlen ya da kart döv" },
+          { src: "/media/kor-ve-kul/07.webp", alt: "Gezgin Tüccar" },
+          { src: "/media/kor-ve-kul/08.webp", alt: "Hazine sandığı" },
+          { src: "/media/kor-ve-kul/09.webp", alt: "Boss tılsımı seçimi" },
+          { src: "/media/kor-ve-kul/10.webp", alt: "Zafer ve koşu özeti" },
         ],
       },
       {
@@ -81,6 +121,7 @@ export const divisions: Division[] = [
       },
       {
         name: "Shardbound",
+        featured: true,
         tagline: "Her öldürülen bir ruh bırakır. Her ruh yeniden ayağa kalkabilir.",
         description:
           "PC ve Android için yukarıdan bakışlı bir roguelite zindan oyunu. " +
@@ -148,68 +189,23 @@ export const divisions: Division[] = [
         ],
       },
       {
-        name: "GuessFast",
-        tagline: "Sayıyı bul. Hızlı bul.",
+        name: "PushBump",
+        tagline: "Eğ, doldur, bırak. Tek itiş her şeyi değiştirir.",
         description:
-          "Sayı tahmin oyunu. Her tahmin seni doğruya biraz daha yaklaştırır; " +
-          "mesele kaç denemede değil, ne kadar sürede bulduğun.",
-        status: "released",
-        tags: ["Bulmaca", "Sayı tahmini", "Günlük challenge", "PvP"],
-        image: "/apps/guessfast.webp",
-        links: [
-          {
-            label: "Google Play",
-            href: "https://play.google.com/store/apps/details?id=com.scientist001.GuessFast",
-          },
-          {
-            label: "App Store",
-            href: "https://apps.apple.com/app/guessfast/id6758861605",
-          },
-        ],
-        media: [
-          { src: "/media/guessfast/store-tr-01.webp", alt: "5 zekâ oyunu tek uygulamada" },
-          { src: "/media/guessfast/store-tr-02.webp", alt: "Gizli sayıyı çöz" },
-          { src: "/media/guessfast/store-tr-03.webp", alt: "Ne kadar yakınsan o kadar puan" },
-          { src: "/media/guessfast/store-tr-04.webp", alt: "Her gün yeni bir film" },
-          { src: "/media/guessfast/store-tr-05.webp", alt: "Ünlüyü ipuçlarından bul" },
-          { src: "/media/guessfast/store-tr-06.webp", alt: "Hangisi daha çok?" },
-          { src: "/media/guessfast/store-tr-07.webp", alt: "Paylaş, sıralamada yüksel" },
-          { src: "/media/guessfast/store-tr-08.webp", alt: "Seviye atla, başarım topla" },
-          { src: "/media/guessfast/01.webp", alt: "Ana menü" },
-          { src: "/media/guessfast/02.webp", alt: "Pratik oyunu: her tahminden sonra doğru rakam sayısı" },
-          { src: "/media/guessfast/03.webp", alt: "Göstergeli mod: doğru yerdeki rakamlar yeşil, yanlış yerdekiler sarı" },
-          { src: "/media/guessfast/04.webp", alt: "PvP modu: özel oda kur ya da kodla katıl" },
-          { src: "/media/guessfast/05.webp", alt: "Ayarlar" },
-          { src: "/media/guessfast/06.webp", alt: "Günlük challenge sonucu" },
-          { src: "/media/guessfast/07.webp", alt: "Son 7 günün istatistikleri" },
-        ],
-      },
-      {
-        name: "Kor ve Kül",
-        tagline: "Ateşi harla ya da soğut — onda taşar.",
-        description:
-          "Türk-Altay mitolojisinden beslenen, dikey ekran mobil roguelike " +
-          "deste kurma oyunu. Genç ocak bekçisi Alaz, sönmüş Ulu Ocak'ı yeniden " +
-          "yakmak için yeraltına iner ve oradaki yaratıklarla kartlarla " +
-          "savaşır. Her savaşın kalbinde Isı var: turlar arasında kalır, " +
-          "yükseldikçe Alaz'ı güçlendirir, ama 10'a ulaşınca taşar ve patlar; " +
-          "soğutmak ise boşaltılan ısıyı blok ya da hasara çevirir. Dallanan " +
-          "harita, olaylar, tüccar, dinlenip kart dövülen ocak, tılsımlar ve " +
-          "boss'lar.",
+          "Çevrimiçi çok oyunculu mobil arena oyunu. Telefonu eğerek hareket " +
+          "eder, atışını doldurup bırakırsın. Her biri farklı silah ve " +
+          "yeteneğe sahip karakterler, dört arena, bot modu ve savunma modu.",
         status: "building",
-        tags: ["Roguelike", "Deste kurma", "Türk mitolojisi", "Tek oyunculu"],
-        image: "/apps/kor-ve-kul.webp",
+        tags: ["Arena", "Aksiyon", "Çok oyunculu", "Mobil"],
+        image: "/apps/pushbump.webp",
         media: [
-          { src: "/media/kor-ve-kul/01.webp", alt: "Ana menü" },
-          { src: "/media/kor-ve-kul/02.webp", alt: "Savaş: Isı göstergesi, enerji ve el" },
-          { src: "/media/kor-ve-kul/03.webp", alt: "Kart yakın görünümü" },
-          { src: "/media/kor-ve-kul/04.webp", alt: "Aşağıdan yukarı, boss'a tırmanılan harita" },
-          { src: "/media/kor-ve-kul/05.webp", alt: "Olay: Yaşlı Kam" },
-          { src: "/media/kor-ve-kul/06.webp", alt: "Ocak: dinlen ya da kart döv" },
-          { src: "/media/kor-ve-kul/07.webp", alt: "Gezgin Tüccar" },
-          { src: "/media/kor-ve-kul/08.webp", alt: "Hazine sandığı" },
-          { src: "/media/kor-ve-kul/09.webp", alt: "Boss tılsımı seçimi" },
-          { src: "/media/kor-ve-kul/10.webp", alt: "Zafer ve koşu özeti" },
+          { src: "/media/pushbump/store-en-01.webp", alt: "Push. Bump. Win. — arcade şekil dövüşü" },
+          { src: "/media/pushbump/store-en-02.webp", alt: "17 eşsiz şekil kahraman" },
+          { src: "/media/pushbump/store-en-03.webp", alt: "Kahramanını seç" },
+          { src: "/media/pushbump/store-en-04.webp", alt: "Sonsuz dalgalara dayan" },
+          { src: "/media/pushbump/store-en-05.webp", alt: "Seviye atla, yapını güçlendir" },
+          { src: "/media/pushbump/store-en-06.webp", alt: "Efsanevi görünümleri aç" },
+          { src: "/media/pushbump/store-en-07.webp", alt: "Günlük ödüller, görevler ve seriler" },
         ],
       },
     ],
@@ -227,6 +223,7 @@ export const divisions: Division[] = [
     projects: [
       {
         name: "WordDeck",
+        featured: true,
         tagline: "Sınav kelimeleri, unutmadan hemen önce.",
         description:
           "İngilizce kelime kartları. Her kelime " +
@@ -253,7 +250,8 @@ export const divisions: Division[] = [
         ],
       },
       {
-        name: "Neu-Source",
+        name: "Source",
+        featured: true,
         tagline: "Ajan hangi bilette, ne harcadı — tek ekranda.",
         description:
           "Next.js ve TypeScript ile yazılan iç platform. neuvikon CLI'ı " +
@@ -273,6 +271,7 @@ export const divisions: Division[] = [
       },
       {
         name: "Eclosion",
+        featured: true,
         tagline: "Altı alanda kendini geliştir.",
         description:
           "Alışkanlık takibi uygulaması. İnsanın gelişmesi gereken altı alanı " +

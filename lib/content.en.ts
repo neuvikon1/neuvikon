@@ -37,23 +37,63 @@ export const divisions: Division[] = [
     capabilities: [],
     projects: [
       {
-        name: "PushBump",
-        tagline: "Tilt, charge, release. One shove changes everything.",
+        name: "GuessFast",
+        featured: true,
+        tagline: "Find the number. Find it fast.",
         description:
-          "An online multiplayer mobile arena game. You move by tilting the " +
-          "phone, then charge a shot and let it go. Characters with their own " +
-          "weapons and abilities, four arenas, a bot mode and a defence mode.",
-        status: "building",
-        tags: ["Arena", "Action", "Multiplayer", "Mobile"],
-        image: "/apps/pushbump.webp",
+          "A number-guessing game. Every guess narrows the range; what counts " +
+          "is not how many tries you needed but how long you took.",
+        status: "released",
+        tags: ["Puzzle", "Number guessing", "Daily challenge", "PvP"],
+        image: "/apps/guessfast.webp",
+        links: [
+          {
+            label: "Google Play",
+            href: "https://play.google.com/store/apps/details?id=com.scientist001.GuessFast",
+          },
+          {
+            label: "App Store",
+            href: "https://apps.apple.com/app/guessfast/id6758861605",
+          },
+        ],
         media: [
-          { src: "/media/pushbump/store-en-01.webp", alt: "Push. Bump. Win. — an arcade shape brawler" },
-          { src: "/media/pushbump/store-en-02.webp", alt: "17 unique shape heroes" },
-          { src: "/media/pushbump/store-en-03.webp", alt: "Pick your hero" },
-          { src: "/media/pushbump/store-en-04.webp", alt: "Survive endless waves" },
-          { src: "/media/pushbump/store-en-05.webp", alt: "Level up your build" },
-          { src: "/media/pushbump/store-en-06.webp", alt: "Unlock legendary skins" },
-          { src: "/media/pushbump/store-en-07.webp", alt: "Daily rewards, quests and streaks" },
+          { src: "/media/guessfast/store-en-01.webp", alt: "5 brain games in one app" },
+          { src: "/media/guessfast/store-en-02.webp", alt: "Crack the secret number" },
+          { src: "/media/guessfast/store-en-03.webp", alt: "The closer you get, the more you score" },
+          { src: "/media/guessfast/store-en-04.webp", alt: "A new movie every day" },
+          { src: "/media/guessfast/store-en-05.webp", alt: "Guess the famous person" },
+          { src: "/media/guessfast/store-en-06.webp", alt: "Which one is more?" },
+          { src: "/media/guessfast/store-en-07.webp", alt: "Share and climb the leaderboard" },
+          { src: "/media/guessfast/store-en-08.webp", alt: "Level up, unlock achievements" },
+        ],
+      },
+      {
+        name: "Kor ve Kül",
+        featured: true,
+        tagline: "Stoke the fire or cool it down — at ten, it overflows.",
+        description:
+          "A roguelike deckbuilder for portrait mobile, drawn from Turkic-Altai " +
+          "mythology. Alaz, a young hearth keeper, descends underground to " +
+          "relight the extinguished Great Hearth and fights its creatures with " +
+          "cards. At the heart of every fight is Heat: it carries over between " +
+          "turns and makes Alaz stronger as it climbs, but at ten it overflows " +
+          "and explodes, and cooling it down turns the spent heat into block " +
+          "or damage. A branching map, events, a merchant, a hearth to rest " +
+          "or forge at, relics and bosses.",
+        status: "building",
+        tags: ["Roguelike", "Deckbuilder", "Turkish mythology", "Single player"],
+        image: "/apps/kor-ve-kul.webp",
+        media: [
+          { src: "/media/kor-ve-kul/01.webp", alt: "Main menu" },
+          { src: "/media/kor-ve-kul/02.webp", alt: "Combat: Heat gauge, energy and the hand" },
+          { src: "/media/kor-ve-kul/03.webp", alt: "Card close-up" },
+          { src: "/media/kor-ve-kul/04.webp", alt: "The map, climbed bottom to top toward the boss" },
+          { src: "/media/kor-ve-kul/05.webp", alt: "Event: the Old Shaman" },
+          { src: "/media/kor-ve-kul/06.webp", alt: "The hearth: rest or forge a card" },
+          { src: "/media/kor-ve-kul/07.webp", alt: "The wandering merchant" },
+          { src: "/media/kor-ve-kul/08.webp", alt: "Treasure chest" },
+          { src: "/media/kor-ve-kul/09.webp", alt: "Boss relic choice" },
+          { src: "/media/kor-ve-kul/10.webp", alt: "Victory and run summary" },
         ],
       },
       {
@@ -81,6 +121,7 @@ export const divisions: Division[] = [
       },
       {
         name: "Shardbound",
+        featured: true,
         tagline: "Every kill leaves a soul. Every soul can stand back up.",
         description:
           "A top-down roguelite dungeon crawler for PC and Android. Five " +
@@ -147,68 +188,23 @@ export const divisions: Division[] = [
         ],
       },
       {
-        name: "GuessFast",
-        tagline: "Find the number. Find it fast.",
+        name: "PushBump",
+        tagline: "Tilt, charge, release. One shove changes everything.",
         description:
-          "A number-guessing game. Every guess narrows the range; what counts " +
-          "is not how many tries you needed but how long you took.",
-        status: "released",
-        tags: ["Puzzle", "Number guessing", "Daily challenge", "PvP"],
-        image: "/apps/guessfast.webp",
-        links: [
-          {
-            label: "Google Play",
-            href: "https://play.google.com/store/apps/details?id=com.scientist001.GuessFast",
-          },
-          {
-            label: "App Store",
-            href: "https://apps.apple.com/app/guessfast/id6758861605",
-          },
-        ],
-        media: [
-          { src: "/media/guessfast/store-en-01.webp", alt: "5 brain games in one app" },
-          { src: "/media/guessfast/store-en-02.webp", alt: "Crack the secret number" },
-          { src: "/media/guessfast/store-en-03.webp", alt: "The closer you get, the more you score" },
-          { src: "/media/guessfast/store-en-04.webp", alt: "A new movie every day" },
-          { src: "/media/guessfast/store-en-05.webp", alt: "Guess the famous person" },
-          { src: "/media/guessfast/store-en-06.webp", alt: "Which one is more?" },
-          { src: "/media/guessfast/store-en-07.webp", alt: "Share and climb the leaderboard" },
-          { src: "/media/guessfast/store-en-08.webp", alt: "Level up, unlock achievements" },
-          { src: "/media/guessfast/01.webp", alt: "Main menu" },
-          { src: "/media/guessfast/02.webp", alt: "Practice game: how many digits are right after each guess" },
-          { src: "/media/guessfast/03.webp", alt: "Indicator mode: right place in green, wrong place in yellow" },
-          { src: "/media/guessfast/04.webp", alt: "PvP mode: create a private room or join with a code" },
-          { src: "/media/guessfast/05.webp", alt: "Settings" },
-          { src: "/media/guessfast/06.webp", alt: "Daily challenge result" },
-          { src: "/media/guessfast/07.webp", alt: "The last seven days" },
-        ],
-      },
-      {
-        name: "Kor ve Kül",
-        tagline: "Stoke the fire or cool it down — at ten, it overflows.",
-        description:
-          "A roguelike deckbuilder for portrait mobile, drawn from Turkic-Altai " +
-          "mythology. Alaz, a young hearth keeper, descends underground to " +
-          "relight the extinguished Great Hearth and fights its creatures with " +
-          "cards. At the heart of every fight is Heat: it carries over between " +
-          "turns and makes Alaz stronger as it climbs, but at ten it overflows " +
-          "and explodes, and cooling it down turns the spent heat into block " +
-          "or damage. A branching map, events, a merchant, a hearth to rest " +
-          "or forge at, relics and bosses.",
+          "An online multiplayer mobile arena game. You move by tilting the " +
+          "phone, then charge a shot and let it go. Characters with their own " +
+          "weapons and abilities, four arenas, a bot mode and a defence mode.",
         status: "building",
-        tags: ["Roguelike", "Deckbuilder", "Turkish mythology", "Single player"],
-        image: "/apps/kor-ve-kul.webp",
+        tags: ["Arena", "Action", "Multiplayer", "Mobile"],
+        image: "/apps/pushbump.webp",
         media: [
-          { src: "/media/kor-ve-kul/01.webp", alt: "Main menu" },
-          { src: "/media/kor-ve-kul/02.webp", alt: "Combat: Heat gauge, energy and the hand" },
-          { src: "/media/kor-ve-kul/03.webp", alt: "Card close-up" },
-          { src: "/media/kor-ve-kul/04.webp", alt: "The map, climbed bottom to top toward the boss" },
-          { src: "/media/kor-ve-kul/05.webp", alt: "Event: the Old Shaman" },
-          { src: "/media/kor-ve-kul/06.webp", alt: "The hearth: rest or forge a card" },
-          { src: "/media/kor-ve-kul/07.webp", alt: "The wandering merchant" },
-          { src: "/media/kor-ve-kul/08.webp", alt: "Treasure chest" },
-          { src: "/media/kor-ve-kul/09.webp", alt: "Boss relic choice" },
-          { src: "/media/kor-ve-kul/10.webp", alt: "Victory and run summary" },
+          { src: "/media/pushbump/store-en-01.webp", alt: "Push. Bump. Win. — an arcade shape brawler" },
+          { src: "/media/pushbump/store-en-02.webp", alt: "17 unique shape heroes" },
+          { src: "/media/pushbump/store-en-03.webp", alt: "Pick your hero" },
+          { src: "/media/pushbump/store-en-04.webp", alt: "Survive endless waves" },
+          { src: "/media/pushbump/store-en-05.webp", alt: "Level up your build" },
+          { src: "/media/pushbump/store-en-06.webp", alt: "Unlock legendary skins" },
+          { src: "/media/pushbump/store-en-07.webp", alt: "Daily rewards, quests and streaks" },
         ],
       },
     ],
@@ -226,6 +222,7 @@ export const divisions: Division[] = [
     projects: [
       {
         name: "WordDeck",
+        featured: true,
         tagline: "Exam vocabulary, just before you forget it.",
         description:
           "English vocabulary flashcards. Every word " +
@@ -252,7 +249,8 @@ export const divisions: Division[] = [
         ],
       },
       {
-        name: "Neu-Source",
+        name: "Source",
+        featured: true,
         tagline: "Which ticket the agent is on, and what it spent.",
         description:
           "An internal platform written in Next.js and TypeScript. The " +
@@ -274,6 +272,7 @@ export const divisions: Division[] = [
       },
       {
         name: "Eclosion",
+        featured: true,
         tagline: "Grow in six areas at once.",
         description:
           "A habit tracker. It follows six areas of personal development " +

@@ -120,7 +120,9 @@
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
-  --container-max: 80rem;
+  /* 1190px: at 1440 the rails sit at 125 and the content at 155, as the hero
+     frame in Figma has them. Written over the 12px root. */
+  --container-max: calc(1190rem / 12);
   --grid-gap: 10px;
   /* The header's own height. The hero subtracts it to fill exactly one screen. */
   --header-h: 5rem;

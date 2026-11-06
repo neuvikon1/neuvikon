@@ -13,7 +13,7 @@ import { useEffect, useRef } from "react";
  * (`faint`), a scene should shrink to something small and quiet instead.
  */
 
-const CONTENT = 960; // the page's content width in px (--container-max)
+const CONTENT = 1190; // the page's content width in px (--container-max)
 
 export type Env = {
   ctx: CanvasRenderingContext2D;

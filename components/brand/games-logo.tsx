@@ -1,0 +1,271 @@
+"use client";
+
+import { motion, useInView } from "motion/react";
+import Image from "next/image";
+import { useMemo, useRef } from "react";
+
+import { VIEWPORT } from "@/components/motion/tokens";
+import { usePrefersReducedMotion } from "@/hooks/use-media-query";
+import { divisionLogos } from "@/lib/division-logos";
+
+/**
+ * The Games lockup, arriving: a green ball is thrown up from below and drops
+ * onto the card's spot, the cards burst out of it, and the letters fan out
+ * and bounce into place from left to right, the last landing with a spark.
+ * It plays once and then simply is the logo; it never leaves again.
+ *
+ * This is the one deliberate exception to "things arrive, they do not bounce"
+ * (see `motion/tokens`): the bounce is the Games division's character.
+ *
+ * Every piece runs on one clock of `T` seconds, sampled into keyframes here so
+ * each letter's whole flight can be read as one function. Under reduced motion
+ * the static lockups are shown instead. They are also the source of the paths
+ * below, in `public/divisions/`.
+ */
+
+const T = 3.3;
+const VIEW = { w: 656, h: 161 };
+/** Where the ball lands and the letters leave from: the card's middle. */
+const BURST = { x: 70, y: 80 };
+const GREEN = "#4AB166";
+const BACK_CARD = {"d": "M33.0189 9.70363C34.0539 2.32682 38.2567 -0.844409 45.6261 0.19121L129.666 12.0517C137.036 13.0876 140.203 17.2982 139.169 24.6829L123.267 137.583C122.983 139.61 122.457 141.319 121.695 142.71C121.69 142.641 121.687 142.571 121.682 142.502L112.392 26.6173C111.565 16.2219 105.955 11.4375 95.5631 12.2646L31.9382 17.3756L33.0189 9.70363Z"};
+const FRONT_CARD = {"d": "M94.8937 17.9309C102.315 17.3349 106.323 20.7527 106.919 28.1818L116.021 141.831C116.616 149.26 113.203 153.274 105.781 153.87L21.1935 160.655C13.7716 161.252 9.76189 157.835 9.16619 150.405L0.066581 36.7561C-0.528837 29.3265 2.88393 25.3132 10.3058 24.717L94.8937 17.9309ZM97.8273 68.7014C93.2288 59.1099 80.69 55.1353 71.674 60.9816C67.1146 63.9294 65.0514 68.7876 62.2883 73.259C56.7228 82.2383 51.8509 91.6384 46.1291 100.522C44.7319 92.0665 44.631 83.2147 43.9875 74.6447C43.7026 70.8506 44.1937 66.0268 41.4738 63.0129C38.4382 59.6661 32.9078 60.0823 29.7258 62.9514C27.18 65.2416 25.3843 68.4787 23.3156 71.1643C18.3224 77.612 12.771 84.0196 8.58807 90.9953C11.6357 93.951 16.6211 96.2226 20.6418 93.1584C22.8286 91.4925 29.2846 81.8981 31.8947 78.9143C32.7904 85.3252 33.0273 91.9027 33.5129 98.3693C33.7947 102.122 34.0601 105.885 34.3508 109.646C34.5286 111.905 34.4086 114.378 35.5392 116.416C38.3096 121.416 45.8493 121.298 49.1711 116.976C51.6095 113.806 53.4487 110.042 55.5295 106.634C60.9681 97.7305 66.0952 88.6503 71.6047 79.8078C74.1499 75.7425 77.0698 68.1658 83.2394 70.5461C87.9833 72.3709 88.6292 78.967 88.9533 83.173C89.8287 94.72 90.6568 105.857 91.5109 117.232L103.046 116.363C102.378 107.463 101.107 75.5231 97.8273 68.7014Z"};
+
+type Shape = { d: string; evenodd?: boolean };
+type Letter = { cx: number; cy: number; row: "word" | "sub"; paths: Shape[] };
+
+const LETTERS: Letter[] = [
+  { cx: 205.9, cy: 49.5, row: "word", paths: [{"d": "M195.509 60.4891C202.359 51.4259 208.343 41.7423 215.04 32.5698C218.367 28.0033 220.963 22.9648 226.095 20.1681C236.242 14.6314 249.369 19.9059 253.535 30.551C256.499 38.1283 255.908 72.5413 255.288 82.1332L242.318 82.0501C241.605 69.6702 242.16 57.1024 242.152 44.6963C242.147 40.1647 242.681 33.6885 237.737 31.3506C231.306 28.3048 227.564 36.1881 224.509 40.3395C217.882 49.3765 211.648 58.6887 205.1 67.7912C202.59 71.2784 200.317 75.1588 197.445 78.3663C193.537 82.7275 185.437 82.2468 182.867 76.6664C181.818 74.3897 182.141 71.7459 182.137 69.3119C182.128 65.261 182.141 61.2058 182.145 57.1592C182.15 50.1893 182.421 43.1188 181.979 36.1837C178.937 39.164 171.234 48.9264 168.76 50.5345C164.201 53.4973 159.034 50.6656 156 47.2483C161.053 40.1123 167.523 33.6929 173.394 27.1818C175.837 24.4681 178.023 21.1469 180.934 18.9008C184.58 16.0822 190.547 16.0779 193.533 19.9146C196.208 23.3581 195.295 28.4927 195.295 32.5786C195.29 41.8122 194.691 51.3123 195.509 60.4891Z"}] },
+  { cx: 294.35, cy: 50.95, row: "word", paths: [{"d": "M273.632 24.0566C288.267 12.787 309.731 15.0378 321.521 29.3053C324.926 33.426 327.951 38.0095 328.617 43.3345L328.786 50.6587V51.9817C328.786 55.1806 326.181 57.7686 322.982 57.7475L283.533 57.4864L283.523 45.7554L316.551 45.7016C315.541 40.5933 312.649 36.0258 308.356 32.9188C291.22 20.522 266.663 36.8475 273.509 57.4557C274.615 60.7895 276.556 63.7601 279.021 66.2463C281.867 69.1172 285.639 71.1551 289.529 72.204C294.805 73.6284 300.667 73.3875 306.048 72.7977C313.431 71.9893 319.408 68.9789 325.776 65.4658C322.952 87.0739 294.159 88.5238 278.601 80.5621C269.33 75.8207 262.777 67.2005 260.713 58.1467C259.568 53.0874 259.568 47.7283 260.713 42.6691C262.311 35.6128 267.106 29.0816 273.632 24.0566Z"}] },
+  { cx: 392.1, cy: 51.45, row: "word", paths: [{"d": "M387.369 17.8148C391.531 17.1903 396.01 18.6154 398.829 21.8224C402.693 26.2187 409.589 50.6463 411.87 57.7167C412.784 60.5399 414.471 68.5728 416.989 69.9289C422.287 72.7737 424.062 62.8891 425.142 59.6335C428.066 50.8154 431.052 42.023 434.05 33.231C435.729 28.3152 437.182 23.2509 439.289 18.5186L451.079 18.4751C450.349 22.9016 448.459 27.2762 446.982 31.5804C444.101 39.9573 441.177 48.317 438.314 56.6982C436.277 62.65 433.87 72.9755 430.613 77.9441C425.827 85.2457 415.263 86.4643 408.968 80.4034C404.514 76.1157 397.496 51.1745 395.193 43.8898C394.406 41.403 392.301 33.1791 390.819 31.6009C390.369 31.129 389.791 31.2027 389.332 30.8664C388.956 31.2902 388.366 31.3052 388.03 31.8772C386.793 33.9664 387.553 40.5305 387.549 43.1348C387.531 51.8787 388.605 61.2438 384.772 69.3889C372.997 94.3958 336.594 88.7428 333.054 59.1268V18.4367L344.266 18.4905C344.266 26.8823 344.6 35.1377 344.591 43.2526C344.267 48.8526 344.315 53.78 344.647 58.9886C345.627 74.3039 365.573 78.0098 373.599 65.7319C381.668 53.3783 366.732 20.9134 387.369 17.8148Z"}] },
+  { cx: 463.9, cy: 42.05, row: "word", paths: [{"d": "M469.814 82.7143L457.994 82.7322L457.976 17.1597H469.814V82.7143Z"}, {"d": "M463.9 1.31616C467.172 1.31616 469.824 3.96854 469.824 7.24054C469.824 10.5128 467.172 13.1649 463.9 13.1649C460.628 13.1646 457.976 10.5126 457.976 7.24054C457.976 3.96873 460.628 1.31647 463.9 1.31616Z"}] },
+  { cx: 507.65, cy: 43.4, row: "word", paths: [{"d": "M489.448 4.02116L489.519 42.7766C491.434 40.5834 493.274 38.1855 495.62 36.3506C505.5 28.6336 511.703 28.7512 519.244 17.0625L532.764 17.2442C527.304 33.9678 513.791 36.8529 501.215 46.1521C505.704 47.1396 509.866 48.189 513.621 51.0118C519.702 55.5869 524.302 64.4386 528.695 70.6787C531.536 74.7164 534.675 78.5242 537.621 82.4788C535.295 82.6362 524.446 83.242 522.929 82.3202C521.977 81.7392 521.308 80.613 520.569 79.7918C516.447 75.1905 509.383 63.3233 506.113 60.6956C501.768 57.1997 493.037 55.5083 490.257 61.8881C489.099 64.54 489.436 67.69 489.44 70.5124C489.444 74.4495 489.492 78.3842 489.374 82.3125L477.686 82.7066L477.681 3.97765L489.448 4.02116Z"}] },
+  { cx: 562.25, cy: 49.75, row: "word", paths: [{"d": "M562.229 15.4297C581.2 15.4304 596.58 30.8098 596.581 49.7809C596.581 68.7523 581.201 84.1314 562.229 84.132C543.258 84.1319 527.876 68.7526 527.876 49.7809C527.876 30.8095 543.258 15.4299 562.229 15.4297ZM562.229 27.4141C549.876 27.4143 539.86 37.4276 539.86 49.7809C539.86 62.1345 549.876 72.1501 562.229 72.1502C574.582 72.1495 584.596 62.1342 584.596 49.7809C584.596 37.4279 574.582 27.4148 562.229 27.4141Z", "evenodd": true}] },
+  { cx: 628.35, cy: 49.15, row: "word", paths: [{"d": "M609.581 22.5492C622.363 11.3652 642.656 13.8151 651.722 28.4583C656.867 36.7738 655.906 46.2609 655.906 55.6208C655.906 64.5002 655.906 73.4962 655.604 82.5966L644.301 82.5096C644.301 72.8306 644.107 62.1192 644.086 52.0073C644.077 46.7417 644.851 40.9817 642.381 36.1356C636.274 24.1541 618.344 24.8838 613.312 37.4152C610.331 44.8439 611.861 72.1642 611.861 82.6094L600.706 82.681V55.6234C600.706 38.3149 601.992 29.2064 609.581 22.5492Z"}] },
+  { cx: 199.65, cy: 128.9, row: "sub", paths: [{"d": "M199.625 98.2492C204.262 98.2492 208.728 99.9005 212.25 102.878V99.8838H219.25V140.622C219.25 146.907 216.792 151.815 212.804 155.083C208.91 158.272 203.832 159.684 198.8 159.684C192.008 159.684 185.844 157.433 181.442 152.269L186.758 147.686C189.557 150.97 193.592 152.643 198.8 152.643C202.618 152.643 206.015 151.564 208.384 149.623C210.657 147.761 212.25 144.899 212.25 140.622V133.101C208.728 136.078 204.262 137.73 199.625 137.73C194.42 137.73 189.428 135.65 185.748 131.948C182.068 128.246 180 123.225 180 117.99C180 112.754 182.068 107.733 185.748 104.031C189.428 100.329 194.42 98.2492 199.625 98.2492ZM199.625 105.29C196.277 105.29 193.066 106.629 190.698 109.01C188.331 111.392 187 114.622 187 117.99C187 121.358 188.331 124.588 190.698 126.969C193.066 129.351 196.277 130.689 199.625 130.689C202.973 130.689 206.184 129.351 208.552 126.969C210.919 124.588 212.25 121.358 212.25 117.99C212.25 114.622 210.919 111.392 208.552 109.01C206.184 106.629 202.973 105.29 199.625 105.29Z", "evenodd": true}] },
+  { cx: 249.4, cy: 117.95, row: "sub", paths: [{"d": "M249.425 98.2492C254.061 98.2492 258.528 99.9005 262.05 102.878V99.8838H269.05V137.605H262.05V133.101C258.528 136.078 254.061 137.73 249.425 137.73C244.22 137.73 239.228 135.65 235.548 131.948C231.868 128.246 229.8 123.225 229.8 117.99C229.8 112.754 231.868 107.733 235.548 104.031C239.228 100.329 244.22 98.2492 249.425 98.2492ZM249.425 105.29C246.076 105.29 242.866 106.629 240.498 109.01C238.13 111.392 236.8 114.622 236.8 117.99C236.8 121.358 238.13 124.588 240.498 126.969C242.866 129.351 246.077 130.689 249.425 130.689C252.773 130.689 255.984 129.351 258.352 126.969C260.719 124.588 262.05 121.358 262.05 117.99C262.05 114.622 260.719 111.392 258.352 109.01C255.984 106.629 252.773 105.29 249.425 105.29Z", "evenodd": true}] },
+  { cx: 308.6, cy: 118.05, row: "sub", paths: [{"d": "M321.501 98.4752C325.85 98.4752 330.022 100.214 333.098 103.307C336.173 106.401 337.9 110.597 337.9 114.972V137.605H330.9V114.972C330.9 112.464 329.91 110.059 328.147 108.286C326.385 106.513 323.994 105.516 321.501 105.516C319.008 105.516 316.616 106.512 314.854 108.286C313.091 110.059 312.101 112.465 312.101 114.972V137.605H305.101V114.972L305.089 114.503C304.974 112.166 304 109.948 302.348 108.286C300.585 106.513 298.194 105.516 295.701 105.516C293.208 105.516 290.816 106.512 289.054 108.286C287.291 110.059 286.301 112.464 286.301 114.972V137.605H279.301V114.972C279.301 110.597 281.029 106.401 284.104 103.307C287.18 100.214 291.352 98.4752 295.701 98.4752C300.05 98.4753 304.221 100.214 307.297 103.307C307.763 103.776 308.198 104.27 308.601 104.787C309.003 104.27 309.438 103.776 309.904 103.307C312.98 100.214 317.152 98.4752 321.501 98.4752Z"}] },
+  { cx: 368.05, cy: 118.0, row: "sub", paths: [{"d": "M368.001 98.1736C378.17 98.1738 387.138 106.181 387.845 118.081C387.902 119.049 387.56 120 386.898 120.706C386.237 121.412 385.316 121.812 384.352 121.812H355.691C357.27 127.156 362.179 130.765 368.602 130.765C373.936 130.765 377.929 129.446 381.559 127.099L385.344 133.022C380.574 136.106 375.266 137.806 368.602 137.806C357.26 137.806 348.151 129.627 348.151 117.99C348.151 106.95 357.11 98.1738 368.001 98.1736ZM368.001 105.215C362.011 105.215 356.992 109.268 355.561 114.771H380.215C378.424 108.72 373.318 105.215 368.001 105.215Z", "evenodd": true}] },
+  { cx: 412.65, cy: 118.0, row: "sub", paths: [{"d": "M412.102 98.1736C417.65 98.1737 422.942 99.5464 427.366 103.625L422.636 108.816C419.86 106.257 416.452 105.215 412.102 105.215C408.839 105.215 406.34 105.977 404.774 107.022C403.287 108.015 402.701 109.183 402.701 110.446C402.701 111.223 402.904 111.669 403.152 111.996C403.442 112.377 403.963 112.807 404.869 113.228C406.779 114.116 409.475 114.564 412.535 114.949C412.552 114.951 412.57 114.953 412.587 114.955C416.295 115.478 420.381 116.168 423.57 117.636C425.206 118.389 426.824 119.442 428.043 120.98C429.313 122.582 430.001 124.53 430.001 126.741C430.001 131.057 427.291 133.958 424.054 135.586C420.911 137.166 416.896 137.806 412.852 137.806C406.369 137.806 400.079 136.339 395.275 131.693L400.127 126.617C403.124 129.516 407.334 130.765 412.852 130.765C416.307 130.765 419.117 130.196 420.924 129.287C422.636 128.426 423.001 127.555 423.001 126.741C423.001 126.086 422.827 125.694 422.569 125.368C422.26 124.978 421.684 124.512 420.657 124.039C418.525 123.057 415.417 122.464 411.634 121.931C408.699 121.561 404.962 121.028 401.933 119.62C400.364 118.891 398.785 117.841 397.594 116.275C396.361 114.654 395.701 112.685 395.701 110.446C395.701 106.428 397.815 103.219 400.902 101.157C403.911 99.1474 407.865 98.1736 412.102 98.1736Z"}] },
+];
+
+const STEPS = 60;
+const round = (n: number) => Math.round(n * 100) / 100;
+
+type Track = Record<"x" | "y" | "rotate" | "scaleX" | "scaleY" | "opacity", number[]>;
+
+/** Keyframes for one piece: `at(t)` gives its state at each moment of the clock. */
+function sample(at: (t: number) => Partial<Record<keyof Track, number>>) {
+  const track: Track = { x: [], y: [], rotate: [], scaleX: [], scaleY: [], opacity: [] };
+  for (let i = 0; i <= STEPS; i++) {
+    const s = at((i / STEPS) * T);
+    track.x.push(round(s.x ?? 0));
+    track.y.push(round(s.y ?? 0));
+    track.rotate.push(round(s.rotate ?? 0));
+    track.scaleX.push(round(s.scaleX ?? 1));
+    track.scaleY.push(round(s.scaleY ?? 1));
+    track.opacity.push(s.opacity ?? 1);
+  }
+  return track;
+}
+
+const TIMES = Array.from({ length: STEPS + 1 }, (_, i) => i / STEPS);
+const SPRING_OUT = (u: number) => 1 + 2.7 * Math.pow(u - 1, 3) + 1.7 * Math.pow(u - 1, 2);
+
+/** Up from below the logo, then down onto the burst point, squashing as it lands. */
+const LAND = 0.92;
+const POP = 1.04;
+const ballTrack = sample((t) => {
+  if (t >= POP) return { opacity: 0, scaleX: 0, scaleY: 0 };
+  if (t >= LAND) {
+    const u = (t - LAND) / (POP - LAND);
+    return { scaleX: 1 + 0.5 * u, scaleY: 1 - 0.45 * u };
+  }
+  const apex = 0.4;
+  const rising = t < apex;
+  const u = rising ? t / apex : (t - apex) / (LAND - apex);
+  const y = rising ? 460 + (-230 - 460) * (1 - (1 - u) * (1 - u)) : -230 + 230 * u * u;
+  return { x: 150 * (1 - t / LAND), y };
+});
+
+/** A thin line chasing the ball on the way up, as the reference draws it. */
+const trailTrack = sample((t) => {
+  const u = Math.min(1, t / 0.4);
+  const shown = t > 0.1 && t < 0.42;
+  return { x: 150 * (1 - t / LAND) + 6, y: 560 - 640 * (1 - (1 - u) * (1 - u)), opacity: shown ? 0.75 : 0 };
+});
+
+function cardTrack(delay: number, spin: number) {
+  return sample((t) => {
+    const u = (t - POP - delay) / 0.42;
+    if (u <= 0) return { opacity: 0, scaleX: 0, scaleY: 0 };
+    const k = u >= 1 ? 1 : SPRING_OUT(u);
+    return { scaleX: k, scaleY: k, rotate: u >= 1 ? 0 : spin * (1 - u) };
+  });
+}
+
+/** A letter's flight: out of the burst, hopping lower each time, then a squash. */
+function letterTrack(letter: Letter, order: number) {
+  const word = letter.row === "word";
+  const hops = word ? Math.min(3, 1 + Math.floor(order / 2)) : 1 + (order % 2);
+  const start = POP + order * (word ? 0.05 : 0.07) + (word ? 0 : 0.42);
+  const land = word ? 1.62 + order * 0.25 : 1.9 + order * 0.22;
+  // Kept low enough to stay clear of the sticky header above the logo.
+  const height = word ? 130 + order * 8 : 90;
+  const weights = Array.from({ length: hops }, (_, i) => Math.pow(0.62, i));
+  const total = weights.reduce((a, b) => a + b, 0);
+  const x0 = BURST.x - letter.cx;
+  const y0 = BURST.y - letter.cy;
+  const spin = (order % 2 ? -1 : 1) * (200 + order * 30);
+
+  return sample((t) => {
+    // Waits at the burst point, so it never travels there while fading in.
+    if (t < start) return { x: x0, y: y0, rotate: spin, opacity: 0 };
+    if (t >= land) {
+      const u = Math.min(1, (t - land) / 0.2);
+      const squash = Math.sin(u * Math.PI) * (1 - u * 0.4);
+      return { scaleX: 1 + 0.14 * squash, scaleY: 1 - 0.2 * squash };
+    }
+    const u = (t - start) / (land - start);
+    // Which hop this moment falls in, and how far through it.
+    let at = u * total;
+    let hop = 0;
+    while (hop < hops - 1 && at > weights[hop]) at -= weights[hop++];
+    const s = Math.min(1, at / weights[hop]);
+    const arc = 4 * s * (1 - s) * height * Math.pow(0.5, hop);
+    const rise = hop === 0 ? y0 * (1 - s) : 0;
+    return { x: x0 * (1 - u), y: rise - arc, rotate: spin * Math.pow(1 - u, 2) };
+  });
+}
+
+const SPARKS = [
+  { x1: 666, y1: -2, x2: 684, y2: -22 },
+  { x1: 676, y1: 18, x2: 702, y2: 10 },
+  { x1: 644, y1: -8, x2: 648, y2: -32 },
+];
+
+const sparkTrack = sample((t) => {
+  const start = 1.62 + 6 * 0.25;
+  const u = (t - start) / 0.16;
+  const scale = 0.4 + 0.6 * Math.min(1, Math.max(0, u));
+  return { opacity: u > 0 && u < 1 ? 1 : 0, scaleX: scale, scaleY: scale };
+});
+
+
+const backTrack = cardTrack(0.12, 24);
+const frontTrack = cardTrack(0, -18);
+
+/** Scale and turn about the piece itself, not the corner of the drawing. */
+const CENTRE = { transformBox: "fill-box", transformOrigin: "50% 50%" } as const;
+/** Letters squash on the ground they land on. */
+const BASE = { transformBox: "fill-box", transformOrigin: "50% 100%" } as const;
+
+const HIDDEN = { opacity: 0 };
+const CLOCK = { duration: T, times: TIMES, ease: "linear" as const };
+
+export function GamesLogo() {
+  const ref = useRef<SVGSVGElement>(null);
+  const inView = useInView(ref, VIEWPORT);
+  const reduced = usePrefersReducedMotion();
+
+  const letters = useMemo(() => {
+    let word = 0;
+    let sub = 0;
+    return LETTERS.map((letter) => ({
+      letter,
+      track: letterTrack(letter, letter.row === "word" ? word++ : sub++),
+    }));
+  }, []);
+
+  if (reduced) {
+    const logo = divisionLogos.games!;
+    return (
+      <>
+        <Image src={logo.light} alt="" aria-hidden className="block h-auto w-full dark:hidden" />
+        <Image src={logo.dark} alt="" aria-hidden className="hidden h-auto w-full dark:block" />
+      </>
+    );
+  }
+
+  const go = (track: Track) => (inView ? track : HIDDEN);
+
+  return (
+    <svg
+      ref={ref}
+      viewBox={`0 0 ${VIEW.w} ${VIEW.h}`}
+      aria-hidden
+      className="block h-auto w-full overflow-visible text-foreground"
+    >
+      <motion.path
+        d={BACK_CARD.d}
+        fill={GREEN}
+        initial={HIDDEN}
+        animate={go(backTrack)}
+        transition={CLOCK}
+        style={CENTRE}
+      />
+      <motion.path
+        d={FRONT_CARD.d}
+        fill={GREEN}
+        initial={HIDDEN}
+        animate={go(frontTrack)}
+        transition={CLOCK}
+        style={CENTRE}
+      />
+      {letters.map(({ letter, track }) => (
+        <motion.g
+          key={`${letter.cx}-${letter.cy}`}
+          fill="currentColor"
+          initial={HIDDEN}
+          animate={go(track)}
+          transition={CLOCK}
+          style={BASE}
+        >
+          {letter.paths.map((shape) => (
+            <path
+              key={shape.d.slice(0, 24)}
+              d={shape.d}
+              fillRule={shape.evenodd ? "evenodd" : undefined}
+              clipRule={shape.evenodd ? "evenodd" : undefined}
+            />
+          ))}
+        </motion.g>
+      ))}
+      <motion.circle
+        cx={BURST.x}
+        cy={BURST.y}
+        r={34}
+        fill={GREEN}
+        initial={HIDDEN}
+        animate={go(ballTrack)}
+        transition={CLOCK}
+        style={CENTRE}
+      />
+      <motion.line
+        x1={BURST.x}
+        x2={BURST.x}
+        y1={BURST.y - 80}
+        y2={BURST.y + 40}
+        stroke="currentColor"
+        strokeWidth={3}
+        strokeLinecap="round"
+        initial={HIDDEN}
+        animate={go(trailTrack)}
+        transition={CLOCK}
+      />
+      {SPARKS.map((spark) => (
+        <motion.line
+          key={spark.x2}
+          {...spark}
+          stroke="currentColor"
+          strokeWidth={4}
+          strokeLinecap="round"
+          initial={HIDDEN}
+          animate={go(sparkTrack)}
+          transition={CLOCK}
+          style={CENTRE}
+        />
+      ))}
+    </svg>
+  );
+}

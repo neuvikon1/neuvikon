@@ -51,7 +51,7 @@ const BACKDROPS: Record<string, React.ComponentType> = {
   // Flashcards: Turkish on the front, English on the back.
   worddeck: WordFlips,
   // A ticket tracker: work moving across three lanes.
-  "neu-source": TicketLanes,
+  source: TicketLanes,
   eclosion: VioletSparks,
 };
 

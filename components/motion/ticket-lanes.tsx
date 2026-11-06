@@ -3,7 +3,7 @@
 import { CanvasBackdrop, type Env, type Scene } from "@/components/motion/canvas-backdrop";
 
 /**
- * Neu-Source's page with its board running in the margins: three lanes in
+ * Source's page with its board running in the margins: three lanes in
  * each - to do, doing, done - and ticket chips travelling down them. A ticket
  * enters at the top of "to do", slides across into "doing" partway down, then
  * into "done", turning green, and leaves at the bottom. Work moving across a

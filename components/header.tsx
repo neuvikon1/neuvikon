@@ -24,7 +24,7 @@ function navItems(locale: Locale): NavItem[] {
       section: division.slug,
       lang: "en",
     })),
-    { href: href(locale, "about"), label: t.studio, section: "studio" },
+    { href: href(locale, "about"), label: t.about, section: "studio" },
     { href: href(locale, "careers"), label: t.careers, section: "careers" },
   ];
 }
@@ -60,7 +60,7 @@ const Header = ({ locale }: { locale: Locale }) => {
             <Image
               src="/brand/neuvikon-wordmark.svg"
               alt=""
-              width={116}
+              width={119}
               height={20}
               priority
               unoptimized
@@ -69,7 +69,7 @@ const Header = ({ locale }: { locale: Locale }) => {
             <Image
               src="/brand/neuvikon-wordmark-dark.svg"
               alt=""
-              width={116}
+              width={119}
               height={20}
               priority
               unoptimized

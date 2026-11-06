@@ -11,7 +11,7 @@ import { ui, type Locale } from "@/lib/i18n";
 /**
  * How the studio works and who is in it. A section of the home page, and the
  * whole of the About page - where it opens with the studio's own lead and its
- * title is the page's `h1`.
+ * `h1` is the page's name, the same word the nav and the footer use for it.
  */
 export function StudioSection({ locale, as = "h2" }: { locale: Locale; as?: "h1" | "h2" }) {
   const t = ui[locale];
@@ -22,7 +22,7 @@ export function StudioSection({ locale, as = "h2" }: { locale: Locale; as?: "h1"
       <Stack gap="xl" className="w-full">
         <Stack gap="md">
           <Title as={as}>
-            <RisingWords>{t.howWeWork}</RisingWords>
+            <RisingWords>{as === "h1" ? t.about : t.howWeWork}</RisingWords>
           </Title>
           {as === "h1" && (
             <Reveal delay={0.1}>
