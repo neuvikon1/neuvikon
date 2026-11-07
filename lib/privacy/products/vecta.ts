@@ -3,6 +3,7 @@ import type { ProductPolicy } from "@/lib/privacy/types";
 export const vecta: ProductPolicy = {
   slug: "vecta",
   name: "Vecta",
+  project: "Vecta",
   updated: { tr: "7 Kasım 2026", en: "7 November 2026" },
   tr: {
     summary:
