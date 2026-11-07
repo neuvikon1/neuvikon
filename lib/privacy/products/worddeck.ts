@@ -60,7 +60,7 @@ export const worddeck: ProductPolicy = {
         retention: "Barındırma sağlayıcısının kendi kurallarına göre. Bu kayıtları ilerlemenizle birleştirmeyiz",
       },
       {
-        data: "Reklam isteğinin taşıdığı veriler: Android'de reklam kimliği, cihaz türü, IP adresinden çıkarılan yaklaşık konum",
+        data: "Google'ın reklam SDK'sının işlediği veriler: cihaz türü ve cihaz kimliği, Android'de reklam kimliği, IP adresinden çıkarılan yaklaşık konum, reklam verileri, ürün etkileşimi, hata ve performans verileri, diğer tanılama verileri",
         purpose: "Ücretsiz uygulamayı finanse eden reklamları göstermek",
         legalBasis: "KVKK m.5/2-(f): uygulamayı reklamla finanse etmedeki meşru menfaatimiz",
         retention: "Bu veriler bize gelmez; Google kendi politikasına göre saklar",
@@ -81,8 +81,8 @@ export const worddeck: ProductPolicy = {
       "Rehber, fotoğraf, takvim, mikrofon, kamera ya da konum izni. Uygulama bunları istemez.",
       "Yazarak verdiğiniz cevaplar. Cihazınızda kontrol edilir, sunucuya gönderilmez.",
       "Kart alıştırma testlerindeki cevaplar. Yanlışlarınızı çalışmaya eklemeyi seçerseniz yalnızca o kartlar takviminize yazılır.",
-      "Analitik, kullanıcı takibi ya da hata raporlama SDK'sı.",
-      "Hangi reklamı gördüğünüz ya da reklama dokunup dokunmadığınız.",
+      "Kendi eklediğimiz bir analitik, kullanıcı takibi ya da hata raporlama SDK'sı. Google'ın reklam SDK'sı bunun dışındadır; yukarıdaki reklam verilerini Google işler.",
+      "Hangi reklamı gördüğünüz ya da reklama dokunup dokunmadığınız. Bu bilgi bize gelmez, Google'da kalır.",
     ],
     recipients: [
       {
@@ -93,7 +93,7 @@ export const worddeck: ProductPolicy = {
       },
       {
         name: "Google AdMob",
-        role: "Reklamları cihazınıza sunar, reklam isteğinin taşıdığı verileri alır. Sunucumuzda sakladığınız hiçbir şeyi almaz.",
+        role: "Reklamları cihazınıza sunar. Reklam SDK'sı, uygulamanın içinde çalışarak yukarıdaki reklam verilerini doğrudan Google'a gönderir. Sunucumuzda sakladığınız hiçbir şeyi almaz.",
         location: "Küresel",
         url: "https://policies.google.com/privacy",
       },
@@ -195,7 +195,7 @@ export const worddeck: ProductPolicy = {
         retention: "Under the hosting provider's own rules. We do not join these logs to your progress",
       },
       {
-        data: "What an ad request carries: advertising ID on Android, device type, approximate location derived from your IP address",
+        data: "What Google's ads SDK processes: device type and device ID, advertising ID on Android, approximate location derived from your IP address, advertising data, product interaction, crash and performance data, other diagnostic data",
         purpose: "Showing the ads that fund the free app",
         legalBasis: "GDPR Art. 6(1)(f): legitimate interest in funding the app through ads",
         retention: "This data does not reach us; Google keeps it under its own policy",
@@ -216,8 +216,8 @@ export const worddeck: ProductPolicy = {
       "Contacts, photos, calendar, microphone, camera or location permission. The app does not ask for them.",
       "Typed answers. They are checked on your device and never sent to the server.",
       "Answers in card practice quizzes. If you choose to study your misses, only those cards are added to your schedule.",
-      "Analytics, user tracking or crash reporting SDKs.",
-      "Which ad you saw or whether you tapped it.",
+      "Any analytics, user tracking or crash reporting SDK of our own. Google's ads SDK is separate; Google processes the advertising data listed above.",
+      "Which ad you saw or whether you tapped it. That information stays with Google and does not reach us.",
     ],
     recipients: [
       {
@@ -228,7 +228,7 @@ export const worddeck: ProductPolicy = {
       },
       {
         name: "Google AdMob",
-        role: "Serves ads to your device and receives what the ad request carries. Receives nothing you have stored on our server.",
+        role: "Serves ads to your device. Its ads SDK runs inside the app and sends the advertising data listed above straight to Google. Receives nothing you have stored on our server.",
         location: "Global",
         url: "https://policies.google.com/privacy",
       },
