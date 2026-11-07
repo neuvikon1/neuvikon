@@ -311,7 +311,30 @@ export const divisions: Division[] = [
       "okuyan, karar veren ve fiziksel dünyada bir şey yapan sistemler. " +
       "Prototipten çalışan cihaza kadar olan yolu kısaltmaya odaklanıyoruz.",
     capabilities: [],
-    projects: [],
+    projects: [
+      {
+        name: "Vecta",
+        tagline: "Telefonuna bağlanan küçük yuvarlak ekran: saat, bildirim, müzik, yol tarifi ve fazlası.",
+        description: "Vecta, 1,32 inç yuvarlak AMOLED ekranlı modüler bir cihaz. Telefondaki uygulamadan istediğin modülleri kablosuz yüklersin: saat, bildirimler, müzik kontrolü, hava durumu, odak sayacı, nefes rehberi, mini oyunlar ve daha fazlası. Gidona takınca navigasyon, arabada OBD-II ile araç göstergesi olur.",
+        status: "building",
+        tags: ["ESP32-S3", "AMOLED", "Modüler"],
+        image: "/apps/vecta.png",
+        featured: true,
+        media: [
+          { src: "/media/vecta/01.webp", alt: "Vecta üç ekranda: yol tarifi, saat ve hava durumu", wide: true },
+          { src: "/media/vecta/02.webp", alt: "Gidonda navigasyon: sağa dönüş ve kalan mesafe", wide: true },
+          { src: "/media/vecta/03.webp", alt: "Modül menüsü", wide: true },
+          { src: "/media/vecta/04.webp", alt: "Telefondan gelen mesaj bildirimi", wide: true },
+          { src: "/media/vecta/05.webp", alt: "Telefondaki müziği kontrol etme", wide: true },
+          { src: "/media/vecta/06.webp", alt: "Hava durumu", wide: true },
+          { src: "/media/vecta/07.webp", alt: "OBD-II ile araç göstergesi", wide: true },
+          { src: "/media/vecta/08.webp", alt: "Odak sayacı", wide: true },
+          { src: "/media/vecta/09.webp", alt: "Nefes rehberi", wide: true },
+          { src: "/media/vecta/10.webp", alt: "Durum rozeti", wide: true },
+          { src: "/media/vecta/11.webp", alt: "Sanal evcil hayvan", wide: true },
+        ],
+      },
+    ],
   },
 ];
 

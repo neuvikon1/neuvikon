@@ -312,7 +312,30 @@ export const divisions: Division[] = [
       "sensors, decide, and then do something in the physical world. The " +
       "focus is on shortening the road from prototype to working device.",
     capabilities: [],
-    projects: [],
+    projects: [
+      {
+        name: "Vecta",
+        tagline: "A small round screen tied to your phone: clock, notifications, music, directions and more.",
+        description: "Vecta is a modular device with a 1.32-inch round AMOLED screen. Install the modules you want wirelessly from the phone app: clock, notifications, music control, weather, a focus timer, a breathing guide, mini games and more. Mount it on the handlebars for navigation, or use it in the car as an OBD-II gauge.",
+        status: "building",
+        tags: ["ESP32-S3", "AMOLED", "Modular"],
+        image: "/apps/vecta.png",
+        featured: true,
+        media: [
+          { src: "/media/vecta/01.webp", alt: "Vecta on three screens: directions, clock and weather", wide: true },
+          { src: "/media/vecta/02.webp", alt: "On the handlebars: right turn and distance to go", wide: true },
+          { src: "/media/vecta/03.webp", alt: "Module menu", wide: true },
+          { src: "/media/vecta/04.webp", alt: "Message notification from the phone", wide: true },
+          { src: "/media/vecta/05.webp", alt: "Controlling music on the phone", wide: true },
+          { src: "/media/vecta/06.webp", alt: "Weather", wide: true },
+          { src: "/media/vecta/07.webp", alt: "Car gauge over OBD-II", wide: true },
+          { src: "/media/vecta/08.webp", alt: "Focus timer", wide: true },
+          { src: "/media/vecta/09.webp", alt: "Breathing guide", wide: true },
+          { src: "/media/vecta/10.webp", alt: "Status badge", wide: true },
+          { src: "/media/vecta/11.webp", alt: "Virtual pet", wide: true },
+        ],
+      },
+    ],
   },
 ];
 
