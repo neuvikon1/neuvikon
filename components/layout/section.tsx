@@ -5,7 +5,7 @@ import { GridRail, GridRule, GridTick } from "./grid-lines";
 type SectionProps = React.ComponentProps<"section"> & {
   /** Vertical rails at the container edges. */
   rails?: boolean;
-  /** Full-bleed hairline along the top edge. */
+  /** Hairline along the top edge, between the rails. */
   rule?: boolean;
   /** Padding applied to the inner container. */
   inset?: boolean;

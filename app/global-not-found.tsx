@@ -22,7 +22,7 @@ export const metadata: Metadata = { title: `404 — ${ui.tr.notFoundTitle}` };
 export default function GlobalNotFound() {
   return (
     <SiteShell locale="tr">
-      <Section className="flex flex-1 flex-col justify-center">
+      <Section className="flex flex-1 flex-col" containerClassName="flex flex-col justify-center">
         <Stack gap="lg">
           <Stack gap="sm">
             <Eyebrow>404</Eyebrow>

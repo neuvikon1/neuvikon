@@ -194,20 +194,15 @@
    * the gap stays transparent on any section background.
    */
 
-  /* Full-bleed horizontal rule, gapped where it crosses each container rail. */
+  /* Horizontal rule between the container rails, stopping short of each crossing. */
   .grid-rule {
     --edge: max(0px, (100% - var(--container-max)) / 2);
     mask-image: linear-gradient(
       to right,
-      #000 0,
-      #000 calc(var(--edge) - var(--grid-gap)),
-      transparent calc(var(--edge) - var(--grid-gap)),
-      transparent calc(var(--edge) + var(--grid-gap)),
-      #000 calc(var(--edge) + var(--grid-gap)),
+      transparent calc(var(--edge) + var(--rule-start, var(--grid-gap))),
+      #000 calc(var(--edge) + var(--rule-start, var(--grid-gap))),
       #000 calc(100% - var(--edge) - var(--grid-gap)),
-      transparent calc(100% - var(--edge) - var(--grid-gap)),
-      transparent calc(100% - var(--edge) + var(--grid-gap)),
-      #000 calc(100% - var(--edge) + var(--grid-gap))
+      transparent calc(100% - var(--edge) - var(--grid-gap))
     );
   }
 
@@ -216,11 +211,36 @@
     mask-image: linear-gradient(
       to bottom,
       transparent 0,
-      transparent var(--grid-gap),
-      #000 var(--grid-gap),
-      #000 calc(100% - var(--grid-gap)),
-      transparent calc(100% - var(--grid-gap))
+      transparent var(--rail-top, var(--grid-gap)),
+      #000 var(--rail-top, var(--grid-gap)),
+      #000 calc(100% - var(--rail-bottom, var(--grid-gap))),
+      transparent calc(100% - var(--rail-bottom, var(--grid-gap)))
     );
+  }
+
+  /*
+   * ScrollInk swings off the left rail around each crossing. Once it has gone
+   * by, the grey it left behind clears out of the curve: the rail for the whole
+   * swing (REACH, 30px) and the rule past the top of the curve (SWING + gap).
+   */
+  /* A short page's last section runs on to the footer, and its rails with it. */
+  main > section:last-of-type {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+  }
+  main > section:last-of-type > div {
+    flex: 1 0 auto;
+  }
+
+  section[data-ink-top] > .grid-rule {
+    --rule-start: 24px;
+  }
+  section[data-ink-top] .grid-rail[data-side="left"] {
+    --rail-top: 30px;
+  }
+  section[data-ink-bottom] .grid-rail[data-side="left"] {
+    --rail-bottom: 30px;
   }
 }
 

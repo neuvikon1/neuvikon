@@ -39,12 +39,12 @@ export const divisions: Division[] = [
       {
         name: "GuessFast",
         featured: true,
-        tagline: "Find the number. Find it fast.",
+        tagline: "A daily brain game with 5 puzzles.",
         description:
-          "A number-guessing game. Every guess narrows the range; what counts " +
-          "is not how many tries you needed but how long you took.",
+          "Number, Estimate, Movie, Person and More or Less: five puzzles in one app. " +
+          "New questions arrive every day; keep your streak, climb the leaderboard and take on your friends.",
         status: "released",
-        tags: ["Puzzle", "Number guessing", "Daily challenge", "PvP"],
+        tags: ["Puzzle", "Brain game", "Daily challenge", "PvP"],
         image: "/apps/guessfast.webp",
         links: [
           {

@@ -39,12 +39,12 @@ export const divisions: Division[] = [
       {
         name: "GuessFast",
         featured: true,
-        tagline: "Sayıyı bul. Hızlı bul.",
+        tagline: "5 bulmacalı günlük zekâ oyunu.",
         description:
-          "Sayı tahmin oyunu. Her tahmin seni doğruya biraz daha yaklaştırır; " +
-          "mesele kaç denemede değil, ne kadar sürede bulduğun.",
+          "Sayı, Tahmin, Film, Kişi ve Az Çok: beş bulmaca, tek uygulamada. Her gün " +
+          "yeni sorular gelir; serini sürdür, sıralamada yüksel, arkadaşlarınla yarış.",
         status: "released",
-        tags: ["Bulmaca", "Sayı tahmini", "Günlük challenge", "PvP"],
+        tags: ["Bulmaca", "Zekâ oyunu", "Günlük challenge", "PvP"],
         image: "/apps/guessfast.webp",
         links: [
           {

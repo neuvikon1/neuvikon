@@ -19,6 +19,9 @@ const NIB_AT = 0.6;
 
 type Geometry = { d: string; width: number; height: number };
 
+/** Where the ink meets a section, and the two sections sharing that crossing. */
+type Crossing = { y: number; section: HTMLElement; previous: HTMLElement };
+
 /**
  * The left rail, written in green as you read.
  *
@@ -28,6 +31,10 @@ type Geometry = { d: string; width: number; height: number };
  * below the middle of the screen, and at each new section it swings out in a
  * small hooked stroke - the same hand as the N - before carrying on. Scrolling
  * back up takes the ink back with it.
+ *
+ * Behind the swing the grey has nothing left to do, so the crossings the nib has
+ * passed are marked on their sections and the CSS masks clear the rail and rule
+ * out of the curve. Ahead of the nib the grid stays whole.
  *
  * The path is measured off the sections as laid out (anything rendering a
  * `Section` with rails marks itself `data-rails`), so it follows whatever page
@@ -51,6 +58,7 @@ export function ScrollInk() {
   const nibOpacity = useMotionValue(0);
 
   const mainTop = useRef(0);
+  const crossings = useRef<Crossing[]>([]);
 
   useEffect(() => {
     const main = svgRef.current?.parentElement;
@@ -62,6 +70,7 @@ export function ScrollInk() {
       const sections = Array.from(main.querySelectorAll<HTMLElement>("section[data-rails]"));
       const rail = sections[0]?.querySelector<HTMLElement>(".grid-rail");
       if (!rail) {
+        crossings.current = [];
         setGeometry(null);
         return;
       }
@@ -69,6 +78,12 @@ export function ScrollInk() {
       const x = rail.getBoundingClientRect().left - box.left + 0.5;
       const tops = sections.map((section) => section.getBoundingClientRect().top - box.top);
       const last = sections[sections.length - 1].getBoundingClientRect().bottom - box.top;
+
+      crossings.current = sections.slice(1).map((section, i) => ({
+        y: tops[i + 1],
+        section,
+        previous: sections[i],
+      }));
 
       let d = `M ${x} ${tops[0]}`;
       for (const y of tops.slice(1)) {
@@ -135,9 +150,19 @@ export function ScrollInk() {
         return (a.length + ((target - a.y) / (b.y - a.y)) * (b.length - a.length)) / total;
       };
 
+      // The bottom of a rail leaves when the ink does, a swing ahead of the
+      // crossing; the rest waits until the nib is at the crossing itself.
+      const clearBehind = (y: number) => {
+        for (const crossing of crossings.current) {
+          crossing.previous.toggleAttribute("data-ink-bottom", y >= crossing.y - REACH);
+          crossing.section.toggleAttribute("data-ink-top", y >= crossing.y);
+        }
+      };
+
       if (reducedMotion) {
         ink.jump(1);
         nibOpacity.set(0);
+        clearBehind(Infinity);
         return;
       }
 
@@ -149,6 +174,7 @@ export function ScrollInk() {
         nibX.set(point.x);
         nibY.set(point.y);
         nibOpacity.set(progress > 0.001 && progress < 0.999 ? 1 : 0);
+        clearBehind(point.y);
       };
       placeNib(ink.get());
       const stopInk = ink.on("change", placeNib);

@@ -6,7 +6,7 @@ import { Wordmark } from "./brand/logo";
 import { LanguageSwitch } from "./language-switch";
 import { Reveal } from "./motion/reveal";
 import { Container } from "./layout/container";
-import { GridRule } from "./layout/grid-lines";
+import { GridRail, GridRule, GridTick } from "./layout/grid-lines";
 
 const LINK = "transition-colors hover:text-foreground";
 
@@ -26,8 +26,12 @@ export function Footer({ locale }: { locale: Locale }) {
 
   return (
     <footer className="relative w-full">
-      <GridRule />
-      <Container className="py-10">
+      <GridRule still />
+      <Container className="relative py-10">
+        <GridRail side="left" still />
+        <GridRail side="right" still />
+        <GridTick side="left" still />
+        <GridTick side="right" still />
         {/* No bottom margin on the in-view test, unlike every other Reveal:
             the footer is the last thing on the page, so it can never rise
             into the band the shared margin leaves out - it stayed invisible. */}
