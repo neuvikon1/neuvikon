@@ -236,9 +236,15 @@ export const divisions: Division[] = [
           "anlamlılarıyla geliyor; aralıklı tekrar her kartı tam unutmak " +
           "üzereyken geri getiriyor. Hesap yok, ilerleme cihazda üretilen " +
           "rastgele bir kimliğe bağlı.",
-        status: "building",
+        status: "released",
         tags: ["Eğitim", "Kelime kartları", "Aralıklı tekrar", "İngilizce"],
         image: "/apps/worddeck.webp",
+        links: [
+          {
+            label: "App Store",
+            href: "https://apps.apple.com/app/worddeck-learning-cards/id6821262342",
+          },
+        ],
         media: [
           { src: "/media/worddeck/store-tr-01.webp", alt: "Sınav kelimelerini kalıcı öğren" },
           { src: "/media/worddeck/store-tr-02.webp", alt: "Kartı çevir, anlamını gör" },

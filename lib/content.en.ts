@@ -235,9 +235,15 @@ export const divisions: Division[] = [
           "example sentence, synonyms and antonyms; spaced repetition brings " +
           "each card back just before it would slip. No accounts: progress " +
           "is tied to a random id the device makes.",
-        status: "building",
+        status: "released",
         tags: ["Education", "Flashcards", "Spaced repetition", "English"],
         image: "/apps/worddeck.webp",
+        links: [
+          {
+            label: "App Store",
+            href: "https://apps.apple.com/app/worddeck-learning-cards/id6821262342",
+          },
+        ],
         media: [
           { src: "/media/worddeck/store-tr-01.webp", alt: "Learn exam words for good" },
           { src: "/media/worddeck/store-tr-02.webp", alt: "Flip the card, see the meaning" },
