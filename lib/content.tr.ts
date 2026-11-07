@@ -254,8 +254,9 @@ export const divisions: Division[] = [
         featured: true,
         tagline: "Ajan hangi bilette, ne harcadı — tek ekranda.",
         description:
-          "Next.js ve TypeScript ile yazılan iç platform. neuvikon CLI'ı " +
-          "buraya bağlanıyor: kodlama ajanının hangi bilet üzerinde " +
+          "Ekiplerin wiki'sini, projelerini ve kodlama ajanlarını bir araya " +
+          "getiren, Next.js ve TypeScript ile yazılan herkese açık platform. " +
+          "neuvikon CLI'ı buraya bağlanıyor: kodlama ajanının hangi bilet üzerinde " +
           "çalıştığını ve ne kadar token harcadığını bildiriyor.",
         status: "released",
         tags: ["Geliştirici aracı", "Proje yönetimi", "Yapay zekâ ajanları"],

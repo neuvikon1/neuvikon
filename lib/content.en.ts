@@ -253,8 +253,9 @@ export const divisions: Division[] = [
         featured: true,
         tagline: "Which ticket the agent is on, and what it spent.",
         description:
-          "An internal platform written in Next.js and TypeScript. The " +
-          "neuvikon CLI connects to it and reports which ticket a coding " +
+          "A public platform for a team's wiki, projects and coding agents, " +
+          "written in Next.js and TypeScript. The neuvikon CLI connects to it " +
+          "and reports which ticket a coding " +
           "agent is working on and how many tokens it spent.",
         status: "released",
         tags: ["Developer tool", "Project management", "AI agents"],
