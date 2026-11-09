@@ -46,6 +46,7 @@ export const divisions: Division[] = [
         status: "released",
         tags: ["Bulmaca", "Zekâ oyunu", "Günlük challenge", "PvP"],
         image: "/apps/guessfast.webp",
+        cover: "/media/guessfast/cover.webp",
         links: [
           {
             label: "Google Play",
@@ -83,6 +84,7 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Roguelike", "Deste kurma", "Türk mitolojisi", "Tek oyunculu"],
         image: "/apps/kor-ve-kul.webp",
+        cover: "/media/kor-ve-kul/cover.webp",
         media: [
           { src: "/media/kor-ve-kul/01.webp", alt: "Ana menü" },
           { src: "/media/kor-ve-kul/02.webp", alt: "Savaş: Isı göstergesi, enerji ve el" },
@@ -110,6 +112,7 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Parti oyunu", "Mini oyunlar", "Yerel çok oyunculu", "2-8 oyuncu"],
         image: "/apps/neuparty.webp",
+        cover: "/media/neu-pummel-party/cover.webp",
         media: [
           { src: "/media/neu-pummel-party/store-tr-01.webp", alt: "40 mini oyun, tek parti" },
           { src: "/media/neu-pummel-party/store-tr-02.webp", alt: "Aynı Wi-Fi, anında oda" },
@@ -134,6 +137,7 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Roguelite", "Zindan", "Aksiyon", "PC", "Android"],
         image: "/apps/shardbound.webp",
+        cover: "/media/shardbound/cover.webp",
         media: [
           { src: "/media/shardbound/01.webp", alt: "Kamp: ateşin başında kahramanını seç", wide: true },
           { src: "/media/shardbound/02.webp", alt: "Kahraman paneli: Nekromansör ve Arise yeteneği", wide: true },
@@ -158,6 +162,7 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Kart oyunu", "Strateji", "Çok oyunculu", "2-8 oyuncu"],
         image: "/apps/undercard.webp",
+        cover: "/media/undercard/cover.webp",
         media: [
           { src: "/media/undercard/01.webp", alt: "Ana menü ve günlük meydan okuma" },
           { src: "/media/undercard/02.webp", alt: "Botlarla oyun lobisi" },
@@ -180,6 +185,7 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Strateji", "Masa oyunu", "Çevrimiçi", "Sıralamalı"],
         image: "/apps/edgeout.webp",
+        cover: "/media/edgeout/cover.webp",
         media: [
           { src: "/media/edgeout/concept-01.webp", alt: "İsim seçimi: 3B tahta sahnesi ve oyuncu adı" },
           { src: "/media/edgeout/concept-02.webp", alt: "Ana sayfa: profil özeti, oyun modları ve arkadaşla oynama" },
@@ -239,6 +245,7 @@ export const divisions: Division[] = [
         status: "released",
         tags: ["Eğitim", "Kelime kartları", "Aralıklı tekrar", "İngilizce"],
         image: "/apps/worddeck.webp",
+        cover: "/media/worddeck/cover.webp",
         links: [
           {
             label: "App Store",
@@ -271,6 +278,7 @@ export const divisions: Division[] = [
         status: "released",
         tags: ["Geliştirici aracı", "Proje yönetimi", "Yapay zekâ ajanları"],
         image: "/apps/neu-source.webp",
+        cover: "/media/neu-source/cover.webp",
         links: [{ label: "neuvikon.space", href: "https://www.neuvikon.space/" }],
         media: [
           { src: "/media/neu-source/01.webp", alt: "Ana sayfa ve canlı ajan panosu", wide: true },
@@ -290,6 +298,7 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Alışkanlık takibi", "Kişisel gelişim", "Oyunlaştırma"],
         image: "/apps/eclosion.webp",
+        cover: "/media/eclosion/cover.webp",
         media: [
           { src: "/media/eclosion/store-tr-01.webp", alt: "Hayatını seviye atla" },
           { src: "/media/eclosion/store-tr-02.webp", alt: "Her görev XP kazandırır" },

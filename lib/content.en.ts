@@ -46,6 +46,7 @@ export const divisions: Division[] = [
         status: "released",
         tags: ["Puzzle", "Brain game", "Daily challenge", "PvP"],
         image: "/apps/guessfast.webp",
+        cover: "/media/guessfast/cover.webp",
         links: [
           {
             label: "Google Play",
@@ -83,6 +84,7 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Roguelike", "Deckbuilder", "Turkish mythology", "Single player"],
         image: "/apps/kor-ve-kul.webp",
+        cover: "/media/kor-ve-kul/cover.webp",
         media: [
           { src: "/media/kor-ve-kul/01.webp", alt: "Main menu" },
           { src: "/media/kor-ve-kul/02.webp", alt: "Combat: Heat gauge, energy and the hand" },
@@ -110,6 +112,7 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Party game", "Minigames", "Local multiplayer", "2-8 players"],
         image: "/apps/neuparty.webp",
+        cover: "/media/neu-pummel-party/cover.webp",
         media: [
           { src: "/media/neu-pummel-party/store-en-01.webp", alt: "40 minigames, one party" },
           { src: "/media/neu-pummel-party/store-en-02.webp", alt: "Same Wi-Fi, instant room" },
@@ -133,6 +136,7 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Roguelite", "Dungeon crawler", "Action", "PC", "Android"],
         image: "/apps/shardbound.webp",
+        cover: "/media/shardbound/cover.webp",
         media: [
           { src: "/media/shardbound/01.webp", alt: "Camp: choose your hero around the fire", wide: true },
           { src: "/media/shardbound/02.webp", alt: "Hero panel: the Necromancer and the Arise skill", wide: true },
@@ -157,6 +161,7 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Card game", "Strategy", "Multiplayer", "2-8 players"],
         image: "/apps/undercard.webp",
+        cover: "/media/undercard/cover.webp",
         media: [
           { src: "/media/undercard/01.webp", alt: "Home menu and daily challenge" },
           { src: "/media/undercard/02.webp", alt: "Game lobby with bots" },
@@ -179,6 +184,7 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Strategy", "Board game", "Online", "Ranked"],
         image: "/apps/edgeout.webp",
+        cover: "/media/edgeout/cover.webp",
         media: [
           { src: "/media/edgeout/concept-01.webp", alt: "Choosing a name, with the 3D board scene" },
           { src: "/media/edgeout/concept-02.webp", alt: "Home: profile summary, game modes and playing with a friend" },
@@ -238,6 +244,7 @@ export const divisions: Division[] = [
         status: "released",
         tags: ["Education", "Flashcards", "Spaced repetition", "English"],
         image: "/apps/worddeck.webp",
+        cover: "/media/worddeck/cover.webp",
         links: [
           {
             label: "App Store",
@@ -270,6 +277,7 @@ export const divisions: Division[] = [
         status: "released",
         tags: ["Developer tool", "Project management", "AI agents"],
         image: "/apps/neu-source.webp",
+        cover: "/media/neu-source/cover.webp",
         links: [
           { label: "neuvikon.space", href: "https://www.neuvikon.space/" },
         ],
@@ -291,6 +299,7 @@ export const divisions: Division[] = [
         status: "building",
         tags: ["Habit tracker", "Self-improvement", "Gamified"],
         image: "/apps/eclosion.webp",
+        cover: "/media/eclosion/cover.webp",
         media: [
           { src: "/media/eclosion/store-tr-01.webp", alt: "Level up your life" },
           { src: "/media/eclosion/store-tr-02.webp", alt: "Every quest earns XP" },

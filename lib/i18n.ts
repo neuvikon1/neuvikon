@@ -160,6 +160,8 @@ export const ui = {
     inPrototype: "Prototip aşamasında",
     explore: "Bölümü incele",
     viewAll: "Tümünü gör",
+    showMore: "Daha fazla göster",
+    showLess: "Daha az göster",
     capabilities: "Yetkinlikler",
     noPublicProjects: "Yayında proje yok",
     noPublicProjectsBody:
@@ -224,6 +226,8 @@ export const ui = {
     inPrototype: "In prototype",
     explore: "Explore the division",
     viewAll: "View all",
+    showMore: "View more",
+    showLess: "View less",
     capabilities: "Capabilities",
     noPublicProjects: "No public projects",
     noPublicProjectsBody:

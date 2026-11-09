@@ -36,6 +36,11 @@ export type Project = {
   tags: string[];
   /** Square app icon under public/apps. */
   image?: string;
+  /**
+   * A 16:10 picture made for the project card, under public/media. Without one
+   * the card falls back to the first of `media`.
+   */
+  cover?: string;
   /** Store pages, live sites, repositories — several per project is normal. */
   links?: ProjectLink[];
   /** Pulled to the front of its division, which is what puts it on the home page. */
@@ -121,6 +126,7 @@ export function orderedProjects(division: Division): Project[] {
  * video. Nothing usable means the card falls back to the app icon.
  */
 export function projectCover(project: Project): (ProjectMedia & { src: string }) | undefined {
+  if (project.cover) return { src: project.cover, wide: true };
   for (const item of project.media ?? []) {
     const src = item.kind === "video" ? item.poster : item.src;
     if (src) return { ...item, src };

@@ -12,6 +12,7 @@ import {
   RevealRow,
 } from "@/components/motion/reveal";
 import { RisingWords } from "@/components/motion/rising-words";
+import { ExpandableGrid } from "@/components/sections/expandable-grid";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Card, CardContent } from "@/components/ui/card";
@@ -35,6 +36,12 @@ const CARD_SIZES = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
 
 /** How many projects a division shows on the home page, at every screen size. */
 const HOME_PROJECTS = 9;
+
+/**
+ * How many projects a division's own page shows before "show more": two full
+ * rows of three on a wide screen.
+ */
+const PAGE_PROJECTS = 6;
 
 /**
  * The cover for a project with nothing to show yet. Its icon, large, over a
@@ -340,13 +347,18 @@ export function DivisionSection({ division, locale }: { division: Division; loca
             <Reveal still>
               <Eyebrow>{t.projectCount(projects.length)}</Eyebrow>
             </Reveal>
-            <RevealGroup stagger={0.06} className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <ExpandableGrid
+              initial={PAGE_PROJECTS}
+              moreLabel={t.showMore}
+              lessLabel={t.showLess}
+              className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+            >
               {projects.map((project) => (
                 <RevealCell key={project.name}>
                   <ProjectCard project={project} locale={locale} divisionSlug={division.slug} />
                 </RevealCell>
               ))}
-            </RevealGroup>
+            </ExpandableGrid>
           </Stack>
         ) : (
           /* Robotics has no public project yet; say so rather than hide the
