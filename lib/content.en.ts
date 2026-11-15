@@ -39,9 +39,9 @@ export const divisions: Division[] = [
       {
         name: "GuessFast",
         featured: true,
-        tagline: "A daily brain game with 5 puzzles.",
+        tagline: "A daily brain game with 6 puzzles.",
         description:
-          "Number, Estimate, Movie, Person and More or Less: five puzzles in one app. " +
+          "Number, Estimate, Movie, Person, More or Less and Color: six puzzles in one app. " +
           "New questions arrive every day; keep your streak, climb the leaderboard and take on your friends.",
         status: "released",
         tags: ["Puzzle", "Brain game", "Daily challenge", "PvP"],

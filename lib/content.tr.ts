@@ -39,9 +39,9 @@ export const divisions: Division[] = [
       {
         name: "GuessFast",
         featured: true,
-        tagline: "5 bulmacalı günlük zekâ oyunu.",
+        tagline: "6 bulmacalı günlük zekâ oyunu.",
         description:
-          "Sayı, Tahmin, Film, Kişi ve Az Çok: beş bulmaca, tek uygulamada. Her gün " +
+          "Sayı, Tahmin, Film, Kişi, Az Çok ve Renk: altı bulmaca, tek uygulamada. Her gün " +
           "yeni sorular gelir; serini sürdür, sıralamada yüksel, arkadaşlarınla yarış.",
         status: "released",
         tags: ["Bulmaca", "Zekâ oyunu", "Günlük challenge", "PvP"],
