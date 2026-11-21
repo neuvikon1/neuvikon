@@ -19,9 +19,16 @@ import { useEffect, useRef } from "react";
  */
 
 const CARD = { w: 56, h: 80, r: 7 };
-const FLIP = 0.45; // seconds for a card to turn over
-const HOLD = 1.3; // seconds a peeked card stays face up
-const SWAP = 1.4; // seconds for two cards to change places
+// Slow on purpose: these sit beside the copy, and anything quicker pulls the
+// eye away from it.
+const FLIP = 0.8; // seconds for a card to turn over
+const HOLD = 2.4; // seconds a peeked card stays face up
+const SWAP = 2.6; // seconds for two cards to change places
+const RISE = 8; // px/s every card drifts up at; one speed keeps the gaps even
+const BOW = 18; // px two swapping cards bend apart by as they pass
+const PER_SIDE = 6; // cards in each margin
+/** Clear space kept from the screen edge and the content, past the card's own reach. */
+const PAD = 16;
 const CONTENT = 1190; // the page's content width in px (--container-max)
 
 type Card = {
@@ -29,7 +36,6 @@ type Card = {
   y: number;
   rot: number;
   spin: number;
-  rise: number;
   side: -1 | 1 | 0;
   value: number;
   /** Seconds into the current peek, or -1. */
@@ -62,28 +68,34 @@ export function PeekCards() {
       canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       margin = (w - CONTENT) / 2;
-      spread = margin < CARD.w * 2.2;
+      // A turned card reaches ~0.7 of its width from its centre; it needs that,
+      // the padding and a swap's bow on both sides to stay off the copy.
+      spread = margin < (CARD.w * 0.7 + PAD + BOW) * 2;
     };
     measure();
 
     /** A random x inside a card's zone: its margin, or anywhere when spread. */
     const zoneX = (side: Card["side"]) => {
       if (spread || side === 0) return CARD.w + Math.random() * (w - CARD.w * 2);
-      const lo = CARD.w * 0.7;
-      const hi = margin - CARD.w * 0.7;
+      const lo = CARD.w * 0.7 + PAD + BOW;
+      const hi = margin - lo;
       const x = lo + Math.random() * Math.max(0, hi - lo);
       return side < 0 ? x : w - x;
     };
 
-    const count = spread ? 5 : 8;
+    // Each margin's cards are dealt evenly down it, with a little jitter, and
+    // all rise at one speed, so they keep their spacing instead of bunching.
+    const count = spread ? 5 : PER_SIDE * 2;
+    const perColumn = spread ? count : PER_SIDE;
     const cards: Card[] = Array.from({ length: count }, (_, i) => {
       const side: Card["side"] = spread ? 0 : i % 2 === 0 ? -1 : 1;
+      const slot = spread ? i : Math.floor(i / 2);
+      const gap = (h + CARD.h * 2) / perColumn;
       return {
         x: zoneX(side),
-        y: (i / count) * h + Math.random() * (h / count),
+        y: -CARD.h + (slot + 0.5 + (Math.random() - 0.5) * 0.4) * gap + (side > 0 ? gap / 2 : 0),
         rot: (Math.random() - 0.5) * 0.6,
-        spin: (Math.random() - 0.5) * 0.12,
-        rise: 10 + Math.random() * 10,
+        spin: (Math.random() - 0.5) * 0.06,
         side,
         value: Math.floor(Math.random() * 14),
         peek: -1,
@@ -93,8 +105,8 @@ export function PeekCards() {
 
     /* ---------- What happens: drifting, peeks, swaps. ---------- */
 
-    let nextPeek = 1.5;
-    let nextSwap = 4.5;
+    let nextPeek = 2.5;
+    let nextSwap = 8;
 
     const startPeek = () => {
       const free = cards.filter((c) => c.peek < 0 && !c.swap && c.y > CARD.h && c.y < h - CARD.h);
@@ -125,12 +137,12 @@ export function PeekCards() {
       nextPeek -= dt;
       if (nextPeek <= 0) {
         startPeek();
-        nextPeek = 2.2 + Math.random() * 1.8;
+        nextPeek = 4 + Math.random() * 3;
       }
       nextSwap -= dt;
       if (nextSwap <= 0) {
         startSwap();
-        nextSwap = 6 + Math.random() * 3;
+        nextSwap = 12 + Math.random() * 5;
       }
 
       for (const c of cards) {
@@ -145,20 +157,22 @@ export function PeekCards() {
           const nx = -(c.swap.ty - c.swap.fy);
           const ny = c.swap.tx - c.swap.fx;
           const len = Math.hypot(nx, ny) || 1;
-          const bow = Math.sin(Math.PI * e) * 40 * c.swap.lift;
+          const bow = Math.sin(Math.PI * e) * BOW * c.swap.lift;
           c.x = c.swap.fx + (c.swap.tx - c.swap.fx) * e + (nx / len) * bow;
           c.y = c.swap.fy + (c.swap.ty - c.swap.fy) * e + (ny / len) * bow;
           if (c.swap.t >= 1) c.swap = null;
           continue;
         }
         // Drift up slowly; scrolling carries the cards along with the page.
-        c.y -= c.rise * dt + drag * 0.35;
+        c.y -= RISE * dt + drag * 0.35;
         c.rot += c.spin * dt;
+        // Wrap by exactly one column's length, so the even spacing survives.
+        const span = h + CARD.h * 2;
         if (c.y < -CARD.h) {
-          c.y = h + CARD.h;
+          c.y += span;
           c.x = zoneX(c.side);
-        } else if (c.y > h + CARD.h * 1.5) {
-          c.y = -CARD.h;
+        } else if (c.y > h + CARD.h) {
+          c.y -= span;
           c.x = zoneX(c.side);
         }
       }

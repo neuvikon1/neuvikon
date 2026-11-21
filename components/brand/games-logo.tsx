@@ -4,6 +4,7 @@ import { motion, useInView } from "motion/react";
 import Image from "next/image";
 import { useMemo, useRef } from "react";
 
+import { useInkGate } from "@/components/motion/ink-gate";
 import { VIEWPORT } from "@/components/motion/tokens";
 import { usePrefersReducedMotion } from "@/hooks/use-media-query";
 import { divisionLogos } from "@/lib/division-logos";
@@ -166,6 +167,7 @@ const CLOCK = { duration: T, times: TIMES, ease: "linear" as const };
 export function GamesLogo() {
   const ref = useRef<SVGSVGElement>(null);
   const inView = useInView(ref, VIEWPORT);
+  useInkGate(ref, inView, T);
   const reduced = usePrefersReducedMotion();
 
   const letters = useMemo(() => {
@@ -192,6 +194,7 @@ export function GamesLogo() {
   return (
     <svg
       ref={ref}
+      data-ink-gate="waiting"
       viewBox={`0 0 ${VIEW.w} ${VIEW.h}`}
       aria-hidden
       className="block h-auto w-full overflow-visible text-foreground"

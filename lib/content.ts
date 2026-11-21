@@ -32,6 +32,11 @@ export type Project = {
   /** One line, shown under the name. */
   tagline: string;
   description?: string;
+  /**
+   * One or two short sentences for the project card. The description is
+   * written for the project's own page and runs too long to sit on a card.
+   */
+  pitch?: string;
   status: ProjectStatus;
   tags: string[];
   /** Square app icon under public/apps. */

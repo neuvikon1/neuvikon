@@ -1,23 +1,51 @@
 "use client";
 
-import { CanvasBackdrop, type Env, type Scene } from "@/components/motion/canvas-backdrop";
+import {
+  bandSpot,
+  bandsPerSide,
+  CanvasBackdrop,
+  PAD,
+  type Env,
+  type Scene,
+} from "@/components/motion/canvas-backdrop";
 
 /**
- * GuessFast's page with a game being solved in each margin: a guess is typed
+ * GuessFast's page with games being solved in both margins: a guess is typed
  * into a row of four tiles, the tiles turn over one by one - green for a digit
  * in the right place, yellow for one in the wrong place, grey for a miss - and
  * the next row tries again, closer, until a row comes up all green. Then the
- * board clears and a new number is hidden.
+ * board clears, a new number is hidden and the board moves somewhere else.
+ *
+ * Boards are placed at random but only inside the margins, one to each band
+ * of the edge, so they spread out rather than cluster and the copy in the
+ * middle column always stays on a clean ground.
  *
  * Without margins there is one board, low in the corner and faint. Under
  * reduced motion each board is drawn mid-game, two rows revealed.
  */
 
 const ROWS = 4;
-const ROW_TIME = 1.6; // seconds per guess: typing, then the reveal
-const LOOP = 0.5 + ROWS * ROW_TIME + 2.4;
+// Slow on purpose: these sit beside the copy, and anything quicker pulls
+// the eye away from it.
+const ROW_TIME = 3.6; // seconds per guess: typing, then the reveal
+const START = 1.2; // the empty board fading in before the first guess
+const HOLD = 5; // the solved board left on show before it clears
+const LOOP = START + ROWS * ROW_TIME + HOLD;
 
-type Board = { cx: number; cy: number; phase: number; round: number; rows: { digits: number[]; marks: number[] }[] };
+type Board = {
+  cx: number;
+  cy: number;
+  tile: number;
+  side: 0 | 1;
+  /** Which of its margin's bands, top to bottom, the board keeps to. */
+  slot: number;
+  phase: number;
+  round: number;
+  rows: { digits: number[]; marks: number[] }[];
+};
+
+/** Most boards a margin holds; fewer when the window is too short for them. */
+const PER_SIDE = 3;
 
 const COLORS = {
   light: { hit: "#4fbf6b", near: "#e8b931", miss: "#a3abb5", empty: "rgba(0,0,0,0.12)", ink: "#1d2530" },
@@ -51,21 +79,47 @@ function deal(b: Board) {
 
 const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
 
+const boardSize = (tile: number) => ({ w: 4 * tile + 3 * tile * 0.16, h: ROWS * tile * 1.16 });
+
 function create(env: Env): Scene {
   const { ctx } = env;
-  let tile = 34;
   let boards: Board[] = [];
 
+  let perSide = 1;
+
+  /** A new size and a random spot in the board's own band (see `bandSpot`). */
+  const place = (b: Board) => {
+    const maxTile = Math.min(32, (env.margin - PAD * 2) / 4.48);
+    const tile = maxTile * (0.7 + Math.random() * 0.3);
+    const { w, h } = boardSize(tile);
+    const spot = bandSpot(env, b.side, b.slot, perSide, { left: w / 2, right: w / 2, up: h / 2, down: h / 2 });
+    Object.assign(b, spot, { tile });
+  };
+
   const layout = () => {
-    tile = env.faint ? 24 : Math.min(36, (env.margin - 40) / 4.6);
-    const make = (cx: number, cy: number, phase: number): Board => {
-      const b: Board = { cx, cy, phase, round: -1, rows: [] };
+    if (env.faint) {
+      const tile = 24;
+      const b: Board = { cx: env.w - tile * 3, cy: env.h - tile * 3.4, tile, side: 1, slot: 0, phase: 0, round: -1, rows: [] };
       deal(b);
+      boards = [b];
+      return;
+    }
+    perSide = bandsPerSide(env, 260, PER_SIDE);
+    boards = Array.from({ length: perSide * 2 }, (_, i) => {
+      const b: Board = {
+        cx: 0,
+        cy: 0,
+        tile: 0,
+        side: (i % 2) as 0 | 1,
+        slot: Math.floor(i / 2),
+        phase: (LOOP * i) / (perSide * 2),
+        round: -1,
+        rows: [],
+      };
+      deal(b);
+      place(b);
       return b;
-    };
-    boards = env.faint
-      ? [make(env.w - tile * 3, env.h - tile * 3.4, 0)]
-      : [make(env.margin / 2, env.h * 0.36, 0), make(env.w - env.margin / 2, env.h * 0.7, LOOP / 2)];
+    });
   };
   layout();
 
@@ -74,11 +128,15 @@ function create(env: Env): Scene {
     const t = (time + b.phase) % LOOP;
     const round = Math.floor((time + b.phase) / LOOP);
     if (round !== b.round) {
-      if (b.round !== -1) deal(b);
+      if (b.round !== -1) {
+        deal(b);
+        if (!env.faint) place(b);
+      }
       b.round = round;
     }
-    const fade = clamp01(t / 0.4) * (1 - clamp01((t - (LOOP - 0.6)) / 0.6));
+    const fade = clamp01(t / START) * (1 - clamp01((t - (LOOP - 1.5)) / 1.5));
     const alpha = (env.faint ? 0.3 : 0.9) * fade;
+    const { tile } = b;
     const gap = tile * 0.16;
     const width = 4 * tile + 3 * gap;
     const top = b.cy - (ROWS * (tile + gap)) / 2;
@@ -87,13 +145,13 @@ function create(env: Env): Scene {
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     b.rows.forEach((row, r) => {
-      const start = 0.5 + r * ROW_TIME;
+      const start = START + r * ROW_TIME;
       row.digits.forEach((digit, i) => {
         const x = b.cx - width / 2 + i * (tile + gap) + tile / 2;
         const y = top + r * (tile + gap) + tile / 2;
-        const typed = t > start + i * 0.12;
+        const typed = t > start + i * 0.3;
         // The reveal: each tile squashes shut and opens in its colour.
-        const flipT = clamp01((t - (start + 0.6 + i * 0.18)) / 0.3);
+        const flipT = clamp01((t - (start + 1.6 + i * 0.35)) / 0.6);
         const squash = Math.abs(Math.cos(Math.PI * flipT));
         const shown = flipT > 0.5;
         ctx.save();
@@ -123,7 +181,7 @@ function create(env: Env): Scene {
   return {
     draw: (t) => boards.forEach((b) => drawBoard(b, t)),
     resize: layout,
-    still: 0.5 + ROW_TIME * 2 - 0.1,
+    still: START + ROW_TIME * 2 - 0.1,
   };
 }
 

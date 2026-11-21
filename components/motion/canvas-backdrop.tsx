@@ -33,6 +33,44 @@ export type Scene = {
   still?: number;
 };
 
+/** Clear space between a shape and the screen edge, the content and its neighbours. */
+export const PAD = 24;
+/** The fixed site header, which no shape should sit under. */
+export const HEADER = 64;
+
+/** How many shapes each margin holds: one per band of at least `band` px. */
+export function bandsPerSide(env: Env, band: number, most: number) {
+  return Math.max(1, Math.min(most, Math.floor((env.h - HEADER) / band)));
+}
+
+/**
+ * A random spot for a shape inside one band of one margin. Each margin is cut
+ * into `perSide` horizontal bands with one shape to a band, so shapes spread
+ * down the whole edge instead of bunching up; inside its band a shape sits
+ * near the middle and drifts at most a third of the slack either way, so
+ * neighbours never close the gap between them.
+ *
+ * `extent` is how far the shape reaches from its centre in each direction,
+ * including anything it throws (a marble falling off a board), so the whole
+ * of it stays clear of the copy.
+ */
+export function bandSpot(
+  env: Env,
+  side: 0 | 1,
+  slot: number,
+  perSide: number,
+  extent: { left: number; right: number; up: number; down: number },
+) {
+  const zoneLeft = side === 0 ? PAD : env.w - env.margin + PAD;
+  const room = Math.max(0, env.margin - PAD * 2 - extent.left - extent.right);
+  const cx = zoneLeft + extent.left + Math.random() * room;
+  const top = HEADER + PAD;
+  const band = (env.h - top - PAD) / perSide;
+  const slack = Math.max(0, band - PAD - extent.up - extent.down);
+  const middle = top + slot * band + PAD / 2 + extent.up + slack / 2;
+  return { cx, cy: middle + (Math.random() - 0.5) * slack * 0.66 };
+}
+
 export function CanvasBackdrop({ create, minMargin = 170 }: { create: (env: Env) => Scene; minMargin?: number }) {
   const ref = useRef<HTMLCanvasElement>(null);
 

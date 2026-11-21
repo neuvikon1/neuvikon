@@ -1,6 +1,13 @@
 "use client";
 
-import { CanvasBackdrop, type Env, type Scene } from "@/components/motion/canvas-backdrop";
+import {
+  bandSpot,
+  bandsPerSide,
+  CanvasBackdrop,
+  PAD,
+  type Env,
+  type Scene,
+} from "@/components/motion/canvas-backdrop";
 
 /**
  * EdgeOut's page with its one move played out in the margins: on a small
@@ -10,12 +17,21 @@ import { CanvasBackdrop, type Env, type Scene } from "@/components/motion/canvas
  * and sets up again along a different line.
  *
  * That is Abalone's sumito, the move the whole game is about. Each patch runs
- * the same loop on its own clock, so the two never push together. Without
- * margins there is one patch, low in the corner and faint. Under reduced
- * motion each patch is drawn set up, just before the push.
+ * the same loop on its own clock, so they never push together, and moves to a
+ * new random spot in its own band of the margin each time it sets up again.
+ * Patches - and the marble falling off them - stay inside the margins, so the
+ * copy stays on a clean ground. Without margins there is one patch, low in
+ * the corner and faint. Under reduced motion each patch is drawn set up, just
+ * before the push.
  */
 
-const LOOP = 6.5; // seconds per push, setup to clear
+// Slow on purpose: these sit beside the copy, and anything quicker pulls the
+// eye away from it.
+const LOOP = 12; // seconds per push, setup to clear
+/** Most patches a margin holds; fewer when the window is too short for them. */
+const PER_SIDE = 3;
+/** How far the dropped marble travels along the push, in holes. */
+const FALL_REACH = 3.6;
 const RADIUS = 2; // board patch radius, in holes
 
 /** Axial hex directions; a push runs along one of these. */
@@ -29,6 +45,9 @@ for (let q = -RADIUS; q <= RADIUS; q++) {
 type Patch = {
   cx: number;
   cy: number;
+  side: 0 | 1;
+  /** Which of its margin's bands, top to bottom, the patch keeps to. */
+  slot: number;
   phase: number;
   dir: [number, number];
   strays: { q: number; r: number; white: boolean }[];
@@ -53,16 +72,50 @@ function create(env: Env): Scene {
   let spacing = 30;
   let patches: Patch[] = [];
 
+  let perSide = 1;
+
+  /**
+   * A random spot in the patch's band (see `bandSpot`). The extent counts the
+   * board and the marble dropping off it, which depends on the push's line.
+   */
+  const place = (p: Patch) => {
+    const [dq, dr] = p.dir;
+    const half = spacing * (RADIUS + 0.75);
+    const fallX = spacing * FALL_REACH * (dq + dr / 2);
+    const fallY = spacing * FALL_REACH * (Math.sqrt(3) / 2) * dr + spacing * 2.2;
+    const marble = spacing * 0.4;
+    Object.assign(
+      p,
+      bandSpot(env, p.side, p.slot, perSide, {
+        left: Math.max(half, -fallX + marble),
+        right: Math.max(half, fallX + marble),
+        up: Math.max(half, -fallY + marble),
+        down: Math.max(half, fallY + marble),
+      }),
+    );
+  };
+
   const layout = () => {
-    spacing = env.faint ? 24 : Math.min(32, (env.margin - 30) / 5.2);
-    const make = (cx: number, cy: number, phase: number): Patch => {
-      const p: Patch = { cx, cy, phase, dir: [1, 0], strays: [], round: -1 };
+    const make = (side: 0 | 1, slot: number, phase: number): Patch => {
+      const p: Patch = { cx: 0, cy: 0, side, slot, phase, dir: [1, 0], strays: [], round: -1 };
       setup(p);
       return p;
     };
-    patches = env.faint
-      ? [make(env.w - spacing * 3.4, env.h - spacing * 3.6, 0)]
-      : [make(env.margin / 2, env.h * 0.34, 0), make(env.w - env.margin / 2, env.h * 0.68, LOOP / 2)];
+    if (env.faint) {
+      spacing = 24;
+      const p = make(1, 0, 0);
+      Object.assign(p, { cx: env.w - spacing * 3.4, cy: env.h - spacing * 3.6 });
+      patches = [p];
+      return;
+    }
+    // Room for the board and a marble dropping off either side of it.
+    spacing = Math.min(28, (env.margin - PAD * 2) / 7);
+    perSide = bandsPerSide(env, 270, PER_SIDE);
+    patches = Array.from({ length: perSide * 2 }, (_, i) => {
+      const p = make((i % 2) as 0 | 1, Math.floor(i / 2), (LOOP * i) / (perSide * 2));
+      place(p);
+      return p;
+    });
   };
   layout();
 
@@ -95,14 +148,17 @@ function create(env: Env): Scene {
     const t = (time + p.phase) % LOOP;
     const round = Math.floor((time + p.phase) / LOOP);
     if (round !== p.round) {
-      if (p.round !== -1) setup(p);
+      if (p.round !== -1) {
+        setup(p);
+        if (!env.faint) place(p);
+      }
       p.round = round;
     }
-    // Fade in 0-0.6, lean back 1.4-1.8, push 1.8-2.5, fall 2.5-3.6, hold, fade out 5.8-6.5.
-    const show = clamp01(t / 0.6) * (1 - clamp01((t - 5.8) / 0.7));
-    const lean = Math.sin(Math.PI * clamp01((t - 1.4) / 0.4)) * -0.18;
-    const push = ease(clamp01((t - 1.8) / 0.7));
-    const fall = clamp01((t - 2.5) / 1.1);
+    // Fade in 0-1.2, lean back 2.8-3.6, push 3.6-5, fall 5-7, hold, fade out 10.5-12.
+    const show = clamp01(t / 1.2) * (1 - clamp01((t - 10.5) / 1.5));
+    const lean = Math.sin(Math.PI * clamp01((t - 2.8) / 0.8)) * -0.18;
+    const push = ease(clamp01((t - 3.6) / 1.4));
+    const fall = clamp01((t - 5) / 2);
     const base = (env.faint ? 0.3 : 0.85) * show;
 
     // The board: a hexagon with a hole at every point.
@@ -134,7 +190,7 @@ function create(env: Env): Scene {
     for (let k = -2; k <= 2; k++) {
       if (k === 2 && push > 0.99) {
         // Over the edge: carried on, dropping, shrinking and gone.
-        const off = at(p, dq * (3 + fall * 0.6), dr * (3 + fall * 0.6));
+        const off = at(p, dq * (3 + fall * (FALL_REACH - 3)), dr * (3 + fall * (FALL_REACH - 3)));
         marble(off.x, off.y + fall * fall * spacing * 2.2, false, base * (1 - fall), 1 - fall * 0.5);
       } else {
         const step = k + lean + push;
@@ -148,7 +204,7 @@ function create(env: Env): Scene {
   return {
     draw: (t) => patches.forEach((p) => drawPatch(p, t)),
     resize: layout,
-    still: 1.2,
+    still: 2.6,
   };
 }
 

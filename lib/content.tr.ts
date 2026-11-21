@@ -43,6 +43,7 @@ export const divisions: Division[] = [
         description:
           "Sayı, Tahmin, Film, Kişi, Az Çok ve Renk: altı bulmaca, tek uygulamada. Her gün " +
           "yeni sorular gelir; serini sürdür, sıralamada yüksel, arkadaşlarınla yarış.",
+        pitch: "Her gün beş yeni bulmaca. Serini bozma, zirveye oyna.",
         status: "released",
         tags: ["Bulmaca", "Zekâ oyunu", "Günlük challenge", "PvP"],
         image: "/apps/guessfast.webp",
@@ -81,6 +82,7 @@ export const divisions: Division[] = [
           "soğutmak ise boşaltılan ısıyı blok ya da hasara çevirir. Dallanan " +
           "harita, olaylar, tüccar, dinlenip kart dövülen ocak, tılsımlar ve " +
           "boss'lar.",
+        pitch: "Kartlarını seç, ateşi yönet, Ulu Ocak'ı yeniden yak.",
         status: "building",
         tags: ["Roguelike", "Deste kurma", "Türk mitolojisi", "Tek oyunculu"],
         image: "/apps/kor-ve-kul.webp",
@@ -109,6 +111,7 @@ export const divisions: Division[] = [
           "ve bot yapay zekâsı vardır. Depoda tek bir ikili sanat varlığı " +
           "yok: tüm görseller ve sesler çalışma anında kodla üretiliyor. " +
           "Reklam ve uygulama içi satın alma yok.",
+        pitch: "Telefonunu kap, odaya katıl, kırk mini oyunda kapış.",
         status: "building",
         tags: ["Parti oyunu", "Mini oyunlar", "Yerel çok oyunculu", "2-8 oyuncu"],
         image: "/apps/neuparty.webp",
@@ -134,20 +137,20 @@ export const divisions: Division[] = [
           "emirleri alıyor. Koşular arasında kamptaki kalıcı geliştirmeler " +
           "kristallerle alınıyor; Heat ayarları her yeni koşuyu daha zor ve " +
           "daha ödüllü yapıyor.",
+        pitch: "Zindana in, düşenleri kendi ordun olarak geri kaldır.",
         status: "building",
         tags: ["Roguelite", "Zindan", "Aksiyon", "PC", "Android"],
         image: "/apps/shardbound.webp",
         cover: "/media/shardbound/cover.webp",
         media: [
-          { src: "/media/shardbound/01.webp", alt: "Kamp: ateşin başında kahramanını seç", wide: true },
-          { src: "/media/shardbound/02.webp", alt: "Kahraman paneli: Nekromansör ve Ruh Uyandırma yeteneği", wide: true },
-          { src: "/media/shardbound/03.webp", alt: "1. bölüm haritası: Yosunlu Katakomplar, yolunu seç", wide: true },
-          { src: "/media/shardbound/04.webp", alt: "Nekromansör dört iskeletle odaya giriyor", wide: true },
-          { src: "/media/shardbound/05.webp", alt: "Çatışma: gölge ordusu düşmanların üstüne çullanıyor", wide: true },
-          { src: "/media/shardbound/06.webp", alt: "Kutsama seçimi: yol için bir lütuf", wide: true },
-          { src: "/media/shardbound/07.webp", alt: "Gölge Ordusu: seviye, ekipman ve diziliş emirleri", wide: true },
-          { src: "/media/shardbound/08.webp", alt: "Demirhane: kalıcı geliştirmeler ve silah planları", wide: true },
-          { src: "/media/shardbound/09.webp", alt: "Üç bölümün boss'ları ve mini boss'ları", wide: true },
+          { src: "/media/shardbound/store-tr-01.webp", alt: "Kahramanını seç: beş kahraman, beş farklı oyun tarzı", wide: true },
+          { src: "/media/shardbound/store-tr-02.webp", alt: "Ölüleri orduna kat: Nekromansör ruhları yeniden kaldırır", wide: true },
+          { src: "/media/shardbound/store-tr-03.webp", alt: "Oda oda savaş: gerçek zamanlı aksiyon", wide: true },
+          { src: "/media/shardbound/store-tr-04.webp", alt: "Yolunu sen çiz: her seferde yeni harita", wide: true },
+          { src: "/media/shardbound/store-tr-05.webp", alt: "Her sefer bambaşka: kutsamalar ve kalıntılar", wide: true },
+          { src: "/media/shardbound/store-tr-06.webp", alt: "Ordunu yönet: seviye, ekipman ve diziliş emirleri", wide: true },
+          { src: "/media/shardbound/store-tr-07.webp", alt: "Kampta güçlen: kalıcı geliştirmeler ve silah planları", wide: true },
+          { src: "/media/shardbound/store-tr-08.webp", alt: "Üç perde, 12 boss", wide: true },
         ],
       },
       {
@@ -159,6 +162,7 @@ export const divisions: Division[] = [
           "durumu Firestore üzerinden eşitlenir. Üç zorlukta bot rakip ve " +
           "tamamen cihazda çalışan çevrimdışı mod, yeniden bağlanma, yetenek " +
           "ve olay kartları, üç tema ve iki dil.",
+        pitch: "Kartını sakla, masayı oku, en düşük elle kazan.",
         status: "building",
         tags: ["Kart oyunu", "Strateji", "Çok oyunculu", "2-8 oyuncu"],
         image: "/apps/undercard.webp",
@@ -182,6 +186,7 @@ export const divisions: Division[] = [
           "yayınlıyor — hile sunucu duvarını aşamıyor. MMR penceresiyle " +
           "genişleyen eşleştirme kuyruğu, rütbe merdiveni, tur sayacı ve " +
           "pratik için bot rakip.",
+        pitch: "Altıgen tahtada it, sıkıştır, rakibini kenardan düşür.",
         status: "building",
         tags: ["Strateji", "Masa oyunu", "Çevrimiçi", "Sıralamalı"],
         image: "/apps/edgeout.webp",
@@ -206,6 +211,7 @@ export const divisions: Division[] = [
           "Çevrimiçi çok oyunculu mobil arena oyunu. Telefonu eğerek hareket " +
           "eder, atışını doldurup bırakırsın. Her biri farklı silah ve " +
           "yeteneğe sahip karakterler, dört arena, bot modu ve savunma modu.",
+        pitch: "Telefonu eğ, gücünü topla, rakibini arenadan uçur.",
         status: "building",
         tags: ["Arena", "Aksiyon", "Çok oyunculu", "Mobil"],
         image: "/apps/pushbump.webp",
@@ -242,6 +248,7 @@ export const divisions: Division[] = [
           "anlamlılarıyla geliyor; aralıklı tekrar her kartı tam unutmak " +
           "üzereyken geri getiriyor. Hesap yok, ilerleme cihazda üretilen " +
           "rastgele bir kimliğe bağlı.",
+        pitch: "Her kelime, tam unutacakken karşına çıksın.",
         status: "released",
         tags: ["Eğitim", "Kelime kartları", "Aralıklı tekrar", "İngilizce"],
         image: "/apps/worddeck.webp",
@@ -275,6 +282,7 @@ export const divisions: Division[] = [
           "Next.js ve TypeScript ile yazılan iç platform. neuvikon CLI'ı " +
           "buraya bağlanıyor: kodlama ajanının hangi bilet üzerinde " +
           "çalıştığını ve ne kadar token harcadığını bildiriyor.",
+        pitch: "Ajanın ne yaptığını ve ne harcadığını anında gör.",
         status: "released",
         tags: ["Geliştirici aracı", "Proje yönetimi", "Yapay zekâ ajanları"],
         image: "/apps/neu-source.webp",
@@ -295,6 +303,7 @@ export const divisions: Division[] = [
         description:
           "Alışkanlık takibi uygulaması. İnsanın gelişmesi gereken altı alanı " +
           "ayrı ayrı takip ediyor; günlük tekrar sürdükçe ilerleme birikiyor.",
+        pitch: "Her gün biraz daha güçlen, hayatında seviye atla.",
         status: "building",
         tags: ["Alışkanlık takibi", "Kişisel gelişim", "Oyunlaştırma"],
         image: "/apps/eclosion.webp",

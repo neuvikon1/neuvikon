@@ -131,7 +131,7 @@ export function ProjectView({
                   </Badge>
                 ))}
               </div>
-              {links.length > 0 && <ProjectLinks links={links} className="text-sm" />}
+              {links.length > 0 && <ProjectLinks links={links} />}
             </Stack>
           </Reveal>
         </Stack>

@@ -4,6 +4,7 @@ import { useInView } from "motion/react";
 import Image from "next/image";
 import { useEffect, useId, useRef } from "react";
 
+import { useInkGate } from "@/components/motion/ink-gate";
 import { VIEWPORT } from "@/components/motion/tokens";
 import { usePrefersReducedMotion } from "@/hooks/use-media-query";
 import { divisionLogos } from "@/lib/division-logos";
@@ -121,6 +122,7 @@ const rotate = (deg: number, [x, y]: readonly [number, number]) =>
 export function RoboticsLogo() {
   const svg = useRef<SVGSVGElement>(null);
   const inView = useInView(svg, VIEWPORT);
+  useInkGate(svg, inView, T);
   const reduced = usePrefersReducedMotion();
   const id = useId();
 
@@ -180,6 +182,7 @@ export function RoboticsLogo() {
   return (
     <svg
       ref={svg}
+      data-ink-gate="waiting"
       viewBox={VIEW}
       aria-hidden
       className="block h-auto w-full overflow-visible text-foreground"

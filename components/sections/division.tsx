@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Globe } from "lucide-react";
 
 import { Section } from "@/components/layout/section";
 import { Stack } from "@/components/layout/stack";
@@ -14,6 +14,7 @@ import {
 import { RisingWords } from "@/components/motion/rising-words";
 import { ExpandableGrid } from "@/components/sections/expandable-grid";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eyebrow, Text, Title } from "@/components/ui/typography";
@@ -21,7 +22,6 @@ import {
   asset,
   getContent,
   orderedProjects,
-  projectCover,
   type Division,
   type Project,
 } from "@/lib/content";
@@ -30,9 +30,6 @@ import { GamesLogo } from "@/components/brand/games-logo";
 import { RoboticsLogo } from "@/components/brand/robotics-logo";
 import { TechLogo } from "@/components/brand/tech-logo";
 import { cn } from "@/lib/utils";
-
-/** The widths a card renders at: one column on a phone, two, then three. */
-const CARD_SIZES = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
 
 /** How many projects a division shows on the home page, at every screen size. */
 const HOME_PROJECTS = 9;
@@ -44,54 +41,12 @@ const HOME_PROJECTS = 9;
 const PAGE_PROJECTS = 6;
 
 /**
- * The cover for a project with nothing to show yet. Its icon, large, over a
- * wash of its own colours, so the card keeps the same weight as its neighbours
- * and nothing is borrowed from another project. A project with no icon either
- * gets its initial.
- */
-function CoverFallback({ project }: { project: Project }) {
-  if (!project.image) {
-    return (
-      <span
-        aria-hidden
-        lang="en"
-        className="absolute inset-0 grid place-items-center text-6xl tracking-tight text-muted-foreground"
-      >
-        {project.name.charAt(0)}
-      </span>
-    );
-  }
-  const icon = asset(project.image);
-  return (
-    <>
-      <Image
-        src={icon}
-        alt=""
-        fill
-        sizes={CARD_SIZES}
-        className="scale-125 object-cover opacity-50 blur-2xl"
-      />
-      <span className="absolute inset-0 grid place-items-center">
-        <Image
-          src={icon}
-          alt=""
-          width={192}
-          height={192}
-          className="size-20 rounded-[22%] object-cover ring-1 ring-foreground/10 transition-transform duration-700 ease-house group-hover/card:scale-[1.04]"
-        />
-      </span>
-    </>
-  );
-}
-
-/**
- * One project, led by a picture: its cover, icon, name, one line and status.
- * What it is in detail, its tags and its store links are on its own page, which
- * the whole card opens: the name's link is stretched over the card, so there is
- * one link to tab to and read out rather than a link for every part of it.
+ * One project. The icon is the app's own square icon, so it is sized as a
+ * mark rather than stretched across the card.
  *
- * Most covers are phone screenshots in a landscape frame. They are held at
- * the top, where a screen keeps its title; a wide capture is simply centred.
+ * The name links to the project's own page. Store and site links stay as
+ * separate links beside it, so the card is not one giant link with smaller
+ * links nested inside it.
  */
 export function ProjectCard({
   project,
@@ -103,54 +58,62 @@ export function ProjectCard({
   divisionSlug: string;
 }) {
   const { statusLabel } = getContent(locale);
-  const cover = projectCover(project);
-
   return (
-    <Card className="relative h-full pt-0 transition-shadow duration-500 ease-house hover:ring-foreground/20 has-focus-visible:ring-2 has-focus-visible:ring-ring">
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted">
-        {cover ? (
-          <Image
-            src={asset(cover.src)}
-            alt=""
-            fill
-            sizes={CARD_SIZES}
-            className={cn(
-              "object-cover transition-transform duration-700 ease-house group-hover/card:scale-[1.03]",
-              cover.wide ? "object-center" : "object-top",
-            )}
-          />
-        ) : (
-          <CoverFallback project={project} />
-        )}
-        <Badge variant="outline" className="absolute right-3 bottom-3 bg-background/85">
-          {statusLabel[project.status]}
-        </Badge>
-      </div>
-
+    <Card className="h-full py-6 transition-shadow [--card-spacing:--spacing(5)] duration-500 ease-house hover:ring-foreground/20">
       <CardContent>
-        <div className="flex w-full items-start gap-3">
-          {/* The fallback cover is already the icon; once is enough. */}
-          {cover && project.image && (
-            <Image
-              src={asset(project.image)}
-              alt=""
-              width={96}
-              height={96}
-              className="size-11 shrink-0 rounded-lg object-cover ring-1 ring-foreground/10"
-            />
-          )}
-          <Stack gap="xs" className="min-w-0">
+        <Stack gap="sm">
+          <div className="flex w-full items-start justify-between gap-3">
+            {project.image ? (
+              <Image
+                src={asset(project.image)}
+                alt=""
+                width={96}
+                height={96}
+                /* The icon is the only thing on the card that reacts to the
+                   pointer: a mark lifting slightly out of its own ring. */
+                className="size-11 rounded-lg object-cover ring-1 ring-foreground/10 transition-transform duration-500 ease-house group-hover/card:scale-[1.06]"
+              />
+            ) : (
+              /* No icon yet - hold the row height so cards stay aligned. */
+              <span aria-hidden className="size-11 rounded-lg bg-muted" />
+            )}
+            <Badge variant="outline" className="h-auto px-3 py-1">{statusLabel[project.status]}</Badge>
+          </div>
+
+          <Stack gap="xs">
             <Title as="h3" level="sub" className="text-base leading-snug" lang="en">
               <Link
                 href={projectHref(locale, divisionSlug, project.name)}
-                className="underline-offset-4 outline-none group-hover/card:underline after:absolute after:inset-0"
+                className="underline-offset-4 hover:underline"
               >
                 {project.name}
               </Link>
             </Title>
-            <Text className="text-sm">{project.tagline}</Text>
+            <Text>{project.tagline}</Text>
           </Stack>
-        </div>
+
+          {project.pitch ? (
+            <Text className="text-muted-foreground/80">{project.pitch}</Text>
+          ) : (
+            project.description && (
+              /* Without a pitch, the page's description is cut short rather
+                 than letting one card run far past its neighbours. */
+              <Text className="line-clamp-2 text-muted-foreground/80">
+                {project.description}
+              </Text>
+            )
+          )}
+
+          <div className="flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <Badge key={tag} variant="secondary" className="h-auto px-3 py-1.5">
+                {tag}
+              </Badge>
+            ))}
+          </div>
+
+          {project.links && <ProjectLinks links={project.links} />}
+        </Stack>
       </CardContent>
     </Card>
   );
@@ -213,31 +176,55 @@ export function ProjectLinks({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-wrap gap-x-4 gap-y-1", className)}>
-      {links.map((link) =>
-        link.href.startsWith("/") ? (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="underline underline-offset-4 hover:no-underline"
-          >
+    <div className={cn("flex flex-wrap gap-2", className)}>
+      {links.map((link) => {
+        const content = (
+          <>
+            <LinkIcon label={link.label} />
             {link.label}
-          </Link>
+          </>
+        );
+        return link.href.startsWith("/") ? (
+          <ButtonLink key={link.href} href={link.href} variant="outline" size="sm">
+            {content}
+          </ButtonLink>
         ) : (
-          <a
+          <Button
             key={link.href}
-            href={link.href}
-            target="_blank"
-            rel="noreferrer"
-            lang="en"
-            className="underline underline-offset-4 hover:no-underline"
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            render={<a href={link.href} target="_blank" rel="noreferrer" lang="en" />}
           >
-            {link.label}
-          </a>
-        ),
-      )}
+            {content}
+          </Button>
+        );
+      })}
     </div>
   );
+}
+
+/**
+ * The store's own mark, so the button is recognised before it is read. Store
+ * labels are brand names and the same in both languages, which is what makes
+ * them safe to match on. Anything else is a site.
+ */
+function LinkIcon({ label }: { label: string }) {
+  if (label === "App Store") {
+    return (
+      <svg data-icon="inline-start" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+        <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701" />
+      </svg>
+    );
+  }
+  if (label === "Google Play") {
+    return (
+      <svg data-icon="inline-start" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+        <path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z" />
+      </svg>
+    );
+  }
+  return <Globe data-icon="inline-start" aria-hidden />;
 }
 
 /**

@@ -43,6 +43,7 @@ export const divisions: Division[] = [
         description:
           "Number, Estimate, Movie, Person, More or Less and Color: six puzzles in one app. " +
           "New questions arrive every day; keep your streak, climb the leaderboard and take on your friends.",
+        pitch: "Five fresh puzzles every day. Keep your streak, climb the ranks.",
         status: "released",
         tags: ["Puzzle", "Brain game", "Daily challenge", "PvP"],
         image: "/apps/guessfast.webp",
@@ -81,6 +82,7 @@ export const divisions: Division[] = [
           "and explodes, and cooling it down turns the spent heat into block " +
           "or damage. A branching map, events, a merchant, a hearth to rest " +
           "or forge at, relics and bosses.",
+        pitch: "Pick your cards, tame the fire, relight the Great Hearth.",
         status: "building",
         tags: ["Roguelike", "Deckbuilder", "Turkish mythology", "Single player"],
         image: "/apps/kor-ve-kul.webp",
@@ -109,6 +111,7 @@ export const divisions: Division[] = [
           "variants and its own bot AI. There is not a single binary art " +
           "asset in the repository: all visuals and sound are generated in " +
           "code at runtime. No ads, no in-app purchases.",
+        pitch: "Grab your phone, join the room, brawl through forty minigames.",
         status: "building",
         tags: ["Party game", "Minigames", "Local multiplayer", "2-8 players"],
         image: "/apps/neuparty.webp",
@@ -133,20 +136,20 @@ export const divisions: Division[] = [
           "levels up, wears gear and takes formation orders. Between runs, " +
           "shards buy permanent upgrades at the camp; Heat modifiers make " +
           "each new run harder and better paid.",
+        pitch: "Dive into the dungeon and raise the fallen as your own army.",
         status: "building",
         tags: ["Roguelite", "Dungeon crawler", "Action", "PC", "Android"],
         image: "/apps/shardbound.webp",
         cover: "/media/shardbound/cover.webp",
         media: [
-          { src: "/media/shardbound/01.webp", alt: "Camp: choose your hero around the fire", wide: true },
-          { src: "/media/shardbound/02.webp", alt: "Hero panel: the Necromancer and the Soul Awakening skill", wide: true },
-          { src: "/media/shardbound/03.webp", alt: "Act 1 map: Mossy Catacombs, choose your path", wide: true },
-          { src: "/media/shardbound/04.webp", alt: "The Necromancer enters a room with four skeletons", wide: true },
-          { src: "/media/shardbound/05.webp", alt: "Fight: the shadow army swarms the enemy", wide: true },
-          { src: "/media/shardbound/06.webp", alt: "Choose a blessing: one boon for the road ahead", wide: true },
-          { src: "/media/shardbound/07.webp", alt: "Shadow Army: levels, gear and formation orders", wide: true },
-          { src: "/media/shardbound/08.webp", alt: "The Forge: permanent upgrades and weapon blueprints", wide: true },
-          { src: "/media/shardbound/09.webp", alt: "Bosses and mini-bosses across the three acts", wide: true },
+          { src: "/media/shardbound/store-en-01.webp", alt: "Choose your hero: five heroes, five ways to play", wide: true },
+          { src: "/media/shardbound/store-en-02.webp", alt: "Raise the fallen: the Necromancer turns souls into soldiers", wide: true },
+          { src: "/media/shardbound/store-en-03.webp", alt: "Fight room by room: real-time action", wide: true },
+          { src: "/media/shardbound/store-en-04.webp", alt: "Chart your path: a new map every run", wide: true },
+          { src: "/media/shardbound/store-en-05.webp", alt: "Every run is different: blessings and relics", wide: true },
+          { src: "/media/shardbound/store-en-06.webp", alt: "Command your army: levels, gear and formation orders", wide: true },
+          { src: "/media/shardbound/store-en-07.webp", alt: "Grow stronger at camp: permanent upgrades and blueprints", wide: true },
+          { src: "/media/shardbound/store-en-08.webp", alt: "Three acts, 12 bosses", wide: true },
         ],
       },
       {
@@ -158,6 +161,7 @@ export const divisions: Division[] = [
           "link, and room state syncs through Firestore. Bots at three " +
           "difficulties, a fully offline single-player mode, reconnection, " +
           "ability and event cards, three themes and two languages.",
+        pitch: "Hide your hand, read the table, win with the lowest cards.",
         status: "building",
         tags: ["Card game", "Strategy", "Multiplayer", "2-8 players"],
         image: "/apps/undercard.webp",
@@ -181,6 +185,7 @@ export const divisions: Division[] = [
           "broadcasts the result — so previews feel immediate while cheating " +
           "still hits the server wall. An MMR-windowed matchmaking queue, a " +
           "rank ladder, turn timers and a practice bot.",
+        pitch: "Push, squeeze and knock your rival off the hex board.",
         status: "building",
         tags: ["Strategy", "Board game", "Online", "Ranked"],
         image: "/apps/edgeout.webp",
@@ -205,6 +210,7 @@ export const divisions: Division[] = [
           "An online multiplayer mobile arena game. You move by tilting the " +
           "phone, then charge a shot and let it go. Characters with their own " +
           "weapons and abilities, four arenas, a bot mode and a defence mode.",
+        pitch: "Tilt, charge and blast your rivals out of the arena.",
         status: "building",
         tags: ["Arena", "Action", "Multiplayer", "Mobile"],
         image: "/apps/pushbump.webp",
@@ -241,6 +247,7 @@ export const divisions: Division[] = [
           "example sentence, synonyms and antonyms; spaced repetition brings " +
           "each card back just before it would slip. No accounts: progress " +
           "is tied to a random id the device makes.",
+        pitch: "Meet every word right before you would forget it.",
         status: "released",
         tags: ["Education", "Flashcards", "Spaced repetition", "English"],
         image: "/apps/worddeck.webp",
@@ -274,6 +281,7 @@ export const divisions: Division[] = [
           "An internal platform written in Next.js and TypeScript. The " +
           "neuvikon CLI connects to it and reports which ticket a coding " +
           "agent is working on and how many tokens it spent.",
+        pitch: "See what your agent is doing and what it costs, live.",
         status: "released",
         tags: ["Developer tool", "Project management", "AI agents"],
         image: "/apps/neu-source.webp",
@@ -296,6 +304,7 @@ export const divisions: Division[] = [
         description:
           "A habit tracker. It follows six areas of personal development " +
           "separately; progress accumulates as long as the daily streak holds.",
+        pitch: "Grow a little every day and level up your life.",
         status: "building",
         tags: ["Habit tracker", "Self-improvement", "Gamified"],
         image: "/apps/eclosion.webp",

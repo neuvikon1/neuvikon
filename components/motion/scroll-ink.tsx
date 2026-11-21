@@ -2,9 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
-import { motion, useMotionValue } from "motion/react";
+import { usePathname } from "next/navigation";
+import { cancelFrame, frame, motion, useMotionValue } from "motion/react";
 
 import { afterIntro } from "@/components/motion/after-intro";
+import { INK_GATE, INK_GATE_OPEN } from "@/components/motion/ink-gate";
 import { usePrefersReducedMotion } from "@/hooks/use-media-query";
 
 /** The green of the N in the logo, sampled from the artwork itself. */
@@ -17,7 +19,11 @@ const REACH = 30;
 /** Where on the screen the pen sits while you scroll: a little below the middle. */
 const NIB_AT = 0.6;
 
+/** How quickly the ink closes the gap once a lockup releases it, per second. */
+const CATCH_UP = 7;
+
 type Geometry = { d: string; width: number; height: number };
+type Gate = { element: Element; y: number };
 
 /** Where the ink meets a section, and the two sections sharing that crossing. */
 type Crossing = { y: number; section: HTMLElement; previous: HTMLElement };
@@ -36,13 +42,18 @@ type Crossing = { y: number; section: HTMLElement; previous: HTMLElement };
  * passed are marked on their sections and the CSS masks clear the rail and rule
  * out of the curve. Ahead of the nib the grid stays whole.
  *
+ * It also waits for the division lockups. The ink stops level with a lockup
+ * until that lockup's entrance has finished, however far the page has gone on
+ * without it, and then runs on to catch up. A lockup scrolled past before it
+ * ever started does not hold it: nothing would ever let it go.
+ *
  * The path is measured off the sections as laid out (anything rendering a
  * `Section` with rails marks itself `data-rails`), so it follows whatever page
  * it is on and re-measures whenever that page changes size.
  *
  * Under reduced motion the line is simply there, written out in full.
  */
-export function ScrollInk() {
+function Ink() {
   const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const [geometry, setGeometry] = useState<Geometry | null>(null);
@@ -59,6 +70,7 @@ export function ScrollInk() {
 
   const mainTop = useRef(0);
   const crossings = useRef<Crossing[]>([]);
+  const gates = useRef<Gate[]>([]);
 
   useEffect(() => {
     const main = svgRef.current?.parentElement;
@@ -84,6 +96,11 @@ export function ScrollInk() {
         section,
         previous: sections[i],
       }));
+
+      gates.current = Array.from(main.querySelectorAll(`[${INK_GATE}]`)).map((element) => {
+        const logo = element.getBoundingClientRect();
+        return { element, y: logo.top + logo.height / 2 - box.top };
+      });
 
       let d = `M ${x} ${tops[0]}`;
       for (const y of tops.slice(1)) {
@@ -125,6 +142,21 @@ export function ScrollInk() {
       }
       samples.push({ y: path.getPointAtLength(total).y, length: total });
 
+      // The first lockup ahead of the ink that is still owed its entrance. One
+      // the ink is already past is ignored, or a lockup played on the way back
+      // up would snap the line back to it.
+      const holdAt = (scroll: number) => {
+        const top = scroll - mainTop.current;
+        for (const { element, y } of gates.current) {
+          if (y < nibY.get() - 2) continue;
+          const state = element.getAttribute(INK_GATE);
+          if (state === "done" || !element.isConnected) continue;
+          if (state === "waiting" && y < top) continue;
+          return y;
+        }
+        return Infinity;
+      };
+
       // Over the last screen of scrolling the nib slides from its usual height
       // to the bottom of the window, so the line finishes as the page does
       // instead of stopping wherever NIB_AT left it.
@@ -133,7 +165,7 @@ export function ScrollInk() {
         const maxScroll = document.documentElement.scrollHeight - viewport;
         const end = Math.min(1, Math.max(0, (scroll - (maxScroll - viewport)) / viewport));
         const nib = NIB_AT + (1 - NIB_AT) * end;
-        const target = scroll + viewport * nib - mainTop.current;
+        const target = Math.min(scroll + viewport * nib - mainTop.current, holdAt(scroll));
         // Between two samples, not on one: snapping to the 4px grid they sit on
         // would make the nib tick against the page as it scrolled.
         let low = 0;
@@ -167,7 +199,32 @@ export function ScrollInk() {
       }
 
       ink.jump(progressFor(lenis.scroll));
-      const stopScroll = lenis.on("scroll", ({ scroll }) => ink.set(progressFor(scroll)));
+
+      // While the ink catches up it is not tied to the scroll; the rest of the
+      // time it stays exactly on it, with nothing smoothing it.
+      let chasing = false;
+      const chase = ({ delta }: { delta: number }) => {
+        const goal = progressFor(lenis.scroll);
+        const gap = goal - ink.get();
+        if (gap * total < 1) {
+          chasing = false;
+          cancelFrame(chase);
+          ink.set(goal);
+          return;
+        }
+        ink.set(ink.get() + gap * (1 - Math.exp((-CATCH_UP * delta) / 1000)));
+      };
+      const release = () => {
+        if (chasing) return;
+        chasing = true;
+        frame.update(chase, true);
+      };
+      const main = path.ownerSVGElement?.parentElement;
+      main?.addEventListener(INK_GATE_OPEN, release);
+
+      const stopScroll = lenis.on("scroll", ({ scroll }) => {
+        if (!chasing) ink.set(progressFor(scroll));
+      });
 
       const placeNib = (progress: number) => {
         const point = path.getPointAtLength(progress * total);
@@ -180,6 +237,8 @@ export function ScrollInk() {
       const stopInk = ink.on("change", placeNib);
 
       return () => {
+        main?.removeEventListener(INK_GATE_OPEN, release);
+        cancelFrame(chase);
         stopScroll();
         stopInk();
       };
@@ -224,4 +283,17 @@ export function ScrollInk() {
       )}
     </svg>
   );
+}
+
+/** The landing page in either language; the export has trailing slashes. */
+const HOME = new Set(["/", "/en"]);
+
+/**
+ * The ink belongs to the landing page alone: on the inner pages - a game's
+ * page above all, where its own scene already moves in the margins - the
+ * green line down the rail is one moving thing too many.
+ */
+export function ScrollInk() {
+  const pathname = usePathname();
+  return HOME.has(pathname.replace(/\/+$/, "") || "/") ? <Ink /> : null;
 }

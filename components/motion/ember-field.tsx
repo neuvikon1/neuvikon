@@ -4,8 +4,10 @@ import { useEffect, useRef } from "react";
 
 /**
  * Sparks rising behind the Kor ve Kül page, as if the page sat over the game's
- * hearth. Sparse on purpose - the copy stays on a clean ground and the sparks
- * live in the margins and gaps around it.
+ * hearth. Where the screen has margins either side of the copy, the sparks
+ * rise only in them, swaying but held inside, so the copy stays on a clean
+ * ground; on a narrower screen they spread over it, sparse. They rise slowly
+ * on purpose: anything quicker beside the copy pulls the eye away from it.
  *
  * Every spark is one point whose whole life is computed in the vertex shader
  * from time: it rises from below the screen, sways, cools from yellow through
@@ -24,18 +26,26 @@ const VERTEX = /* glsl */ `
   uniform float uScroll;
   uniform vec2 uView;
   uniform float uPixelRatio;
+  // Free width either side of the copy, already less the padding; 0 for none.
+  uniform float uMargin;
 
   varying float vLife;
   varying float vBlur;
 
   void main() {
     float travel = uView.y + 120.0;
-    float speed = 30.0 + aSeed.z * 70.0;
+    float speed = 16.0 + aSeed.z * 38.0;
     // 0 at the bottom edge, 1 at the top: where this spark is in its life.
     float life = fract(aSeed.y + (uTime * speed + uScroll * 0.35) / travel);
     float y = -uView.y * 0.5 - 60.0 + life * travel;
-    float x = (aSeed.x - 0.5) * uView.x
-      + sin(uTime * (0.6 + aSeed.w) + aSeed.y * 40.0) * (14.0 + aSeed.z * 22.0) * life;
+    float sway = sin(uTime * (0.4 + aSeed.w * 0.6) + aSeed.y * 40.0) * (10.0 + aSeed.z * 14.0) * life;
+    float x = (aSeed.x - 0.5) * uView.x + sway;
+    if (uMargin > 0.0) {
+      // Half the sparks to each margin, spread across it, swaying inside it.
+      float across = fract(aSeed.x * 2.0) * uMargin + sway;
+      float inMargin = 24.0 + clamp(across, 0.0, uMargin);
+      x = aSeed.x < 0.5 ? -uView.x * 0.5 + inMargin : uView.x * 0.5 - inMargin;
+    }
 
     vBlur = step(0.86, aSeed.w);
     vLife = life;
@@ -66,6 +76,8 @@ const FRAGMENT = /* glsl */ `
   }
 `;
 
+const CONTENT = 1190; // the page's content width in px (--container-max)
+
 /** On black the sparks glow; on white they are drawn a step deeper to hold contrast. */
 const PALETTES = {
   // Kor ve Kül's hearth: yellow cooling through orange to red.
@@ -93,7 +105,7 @@ export function EmberField({ palette = "fire", density = 1 }: { palette?: keyof 
       if (disposed) return;
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
       const small = window.matchMedia("(max-width: 1023px)");
-      const count = Math.round((small.matches ? 140 : 320) * density);
+      const count = Math.round((small.matches ? 140 : 380) * density);
 
       let renderer: InstanceType<typeof THREE.WebGLRenderer>;
       try {
@@ -124,6 +136,7 @@ export function EmberField({ palette = "fire", density = 1 }: { palette?: keyof 
           uScroll: { value: 0 },
           uView: { value: new THREE.Vector2(1, 1) },
           uPixelRatio: { value: dpr },
+          uMargin: { value: 0 },
           uHot: { value: new THREE.Color() },
           uWarm: { value: new THREE.Color() },
           uCool: { value: new THREE.Color() },
@@ -157,6 +170,10 @@ export function EmberField({ palette = "fire", density = 1 }: { palette?: keyof 
         camera.bottom = -h / 2;
         camera.updateProjectionMatrix();
         material.uniforms.uView.value.set(w, h);
+        // 24px clear of the screen edge and of the copy; too little room and
+        // the sparks fall back to the whole width.
+        const margin = (w - CONTENT) / 2 - 48;
+        material.uniforms.uMargin.value = margin >= 60 ? margin : 0;
         render();
       };
       applyTheme();

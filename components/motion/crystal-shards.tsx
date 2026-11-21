@@ -9,14 +9,21 @@ import { useEffect, useRef } from "react";
  * Each shard is a real faceted solid (a stretched, slightly irregular
  * bipyramid) with flat shading, so as it turns its faces catch a slowly
  * circling light and glint one at a time. They rise very slowly and tumble,
- * kept to the margins either side of the page so the copy stays on a
- * clean ground (on a phone, where there are no margins, they stay small and
- * few), and nearer ones move further when the page is scrolled, which
- * gives the field depth.
+ * kept to the margins either side of the page - measured in pixels, with a
+ * shard's own reach and some clear space, so not even a tip crosses the copy
+ * (on a phone, where there are no margins, they stay small and few). Each
+ * margin's shards are dealt evenly down it and rise at one speed, so they
+ * keep their spacing; nearer ones move further when the page is scrolled,
+ * which gives the field depth.
  *
  * Under reduced motion the shards hold still as one lit frame. three.js loads
  * inside the effect, so the page never waits for this layer.
  */
+
+const CONTENT = 1190; // the page's content width in px (--container-max)
+const PAD = 24; // clear space between a shard and the screen edge or the copy
+const RISE = 0.12; // world units per second every shard rises at
+const MIN_MARGIN = 120; // narrower margins than this: shards over the page, few
 
 const PALETTE = {
   dark: { shard: [0x5fd4ea, 0x4c8dff, 0x8b6cff], emissive: 0x16304a, opacity: 0.75, ambient: 0.5 },
@@ -36,7 +43,7 @@ export function CrystalShards() {
       if (disposed) return;
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
       const small = window.matchMedia("(max-width: 1023px)");
-      const count = small.matches ? 10 : 22;
+      const count = small.matches ? 10 : 30;
 
       let renderer: InstanceType<typeof THREE.WebGLRenderer>;
       try {
@@ -90,21 +97,23 @@ export function CrystalShards() {
       scene.add(ambient, key, glint);
 
       /* Each shard's own life: where it starts, how fast it rises and turns. */
-      type Shard = { x: number; y: number; z: number; scale: number; rise: number; axis: InstanceType<typeof THREE.Vector3>; spin: number; phase: number };
-      const shards: Shard[] = Array.from({ length: count }, (_, i) => {
-        // Only in the margins either side of the copy, never over it.
-        const side = (i % 2 === 0 ? -1 : 1) * (0.36 + Math.random() * 0.13);
-        return {
-          x: side,
-          y: Math.random(),
-          z: -6 + Math.random() * 10,
-          scale: 0.16 + Math.random() * 0.34,
-          rise: 0.15 + Math.random() * 0.3,
-          axis: new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize(),
-          spin: 0.15 + Math.random() * 0.35,
-          phase: Math.random() * Math.PI * 2,
-        };
-      });
+      /* Each shard's own life: where it starts, how fast it turns. `across` is
+         where it sits in its margin, 0 at the screen edge and 1 by the copy. */
+      type Shard = { side: -1 | 1; across: number; y: number; z: number; scale: number; axis: InstanceType<typeof THREE.Vector3>; spin: number; phase: number };
+      const perSide = Math.ceil(count / 2);
+      const shards: Shard[] = Array.from({ length: count }, (_, i) => ({
+        side: i % 2 === 0 ? -1 : 1,
+        across: Math.random(),
+        // Dealt evenly down the margin with a little jitter; the right margin
+        // half a step off the left so the two never mirror each other.
+        y: (Math.floor(i / 2) + 0.5 + (Math.random() - 0.5) * 0.4 + (i % 2) * 0.5) / perSide,
+        z: -6 + Math.random() * 10,
+        // Kept small: a near shard turning broadside on reads as a blot.
+        scale: 0.12 + Math.random() * 0.16,
+        axis: new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize(),
+        spin: 0.08 + Math.random() * 0.17,
+        phase: Math.random() * Math.PI * 2,
+      }));
 
       const applyTheme = () => {
         const dark = document.documentElement.classList.contains("dark");
@@ -120,8 +129,9 @@ export function CrystalShards() {
 
       let halfW = 1;
       let halfH = 1;
+      let w = 1;
       const measure = () => {
-        const w = window.innerWidth;
+        w = window.innerWidth;
         const h = window.innerHeight;
         renderer.setSize(w, h, false);
         camera.aspect = w / h;
@@ -134,6 +144,27 @@ export function CrystalShards() {
       const themeWatch = new MutationObserver(applyTheme);
       themeWatch.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
+      const shardSize = (s: Shard, depth: number) => s.scale * (0.85 + depth * 0.25);
+
+      /**
+       * A shard's x in world units at its depth, worked out from pixels: its
+       * place across its margin, kept its own reach plus PAD clear of the
+       * screen edge and of the copy. Perspective shrinks far shards, so the
+       * same pixel needs a wider world x the further back it is.
+       */
+      const shardX = (s: Shard, depth: number) => {
+        const z = -6 + depth * 10;
+        const perspective = (camera.position.z - z) / camera.position.z;
+        const margin = (w - CONTENT) / 2;
+        if (margin < MIN_MARGIN) return s.side * (0.36 + s.across * 0.13) * halfW * 2 * perspective;
+        const pxPerUnit = w / 2 / (halfW * perspective);
+        // The long tip is ~2.2 units out from the centre, at any angle.
+        const reach = Math.min(shardSize(s, depth) * 2.2 * pxPerUnit, margin / 2 - PAD);
+        const fromEdge = PAD + reach + s.across * Math.max(0, margin - 2 * (PAD + reach));
+        const ndc = 1 - fromEdge / (w / 2);
+        return s.side * ndc * halfW * perspective;
+      };
+
       const dummy = new THREE.Object3D();
       const place = (t: number) => {
         const scroll = window.scrollY;
@@ -141,10 +172,10 @@ export function CrystalShards() {
           const depth = (s.z + 6) / 10; // 0 far, 1 near
           const span = halfH * 2 + 4;
           // Rise slowly; scrolling carries near shards further than far ones.
-          const y = ((s.y * span + t * s.rise + scroll * (0.002 + depth * 0.004)) % span) - span / 2;
-          dummy.position.set(s.x * halfW * 2 * (1 + depth * 0.15), y, s.z);
+          const y = ((s.y * span + t * RISE + scroll * (0.002 + depth * 0.004)) % span) - span / 2;
+          dummy.position.set(shardX(s, depth), y, s.z);
           dummy.quaternion.setFromAxisAngle(s.axis, s.phase + t * s.spin);
-          dummy.scale.setScalar(s.scale * (0.8 + depth * 0.5));
+          dummy.scale.setScalar(shardSize(s, depth));
           dummy.updateMatrix();
           mesh.setMatrixAt(i, dummy.matrix);
         });
