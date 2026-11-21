@@ -33,6 +33,8 @@ const PER_SIDE = 3;
 /** How far the dropped marble travels along the push, in holes. */
 const FALL_REACH = 3.6;
 const RADIUS = 2; // board patch radius, in holes
+/** Smallest patch, as a share of the largest. */
+const MIN_SIZE = 0.45;
 
 /** Axial hex directions; a push runs along one of these. */
 const DIRS: [number, number][] = [[1, 0], [0, 1], [-1, 1], [-1, 0], [0, -1], [1, -1]];
@@ -49,6 +51,8 @@ type Patch = {
   /** Which of its margin's bands, top to bottom, the patch keeps to. */
   slot: number;
   phase: number;
+  /** Scale of this patch against the base spacing; re-rolled each setup. */
+  size: number;
   dir: [number, number];
   strays: { q: number; r: number; white: boolean }[];
   round: number;
@@ -70,6 +74,8 @@ function setup(p: Patch) {
 function create(env: Env): Scene {
   const { ctx } = env;
   let spacing = 30;
+  /** Spacing of the patch being drawn: the base spacing times its size. */
+  let cur = spacing;
   let patches: Patch[] = [];
 
   let perSide = 1;
@@ -79,11 +85,14 @@ function create(env: Env): Scene {
    * board and the marble dropping off it, which depends on the push's line.
    */
   const place = (p: Patch) => {
+    // Patches come big and small, so the margins don't read as a row of stamps.
+    p.size = MIN_SIZE + Math.random() * (1 - MIN_SIZE);
+    const sp = spacing * p.size;
     const [dq, dr] = p.dir;
-    const half = spacing * (RADIUS + 0.75);
-    const fallX = spacing * FALL_REACH * (dq + dr / 2);
-    const fallY = spacing * FALL_REACH * (Math.sqrt(3) / 2) * dr + spacing * 2.2;
-    const marble = spacing * 0.4;
+    const half = sp * (RADIUS + 0.75);
+    const fallX = sp * FALL_REACH * (dq + dr / 2);
+    const fallY = sp * FALL_REACH * (Math.sqrt(3) / 2) * dr + sp * 2.2;
+    const marble = sp * 0.4;
     Object.assign(
       p,
       bandSpot(env, p.side, p.slot, perSide, {
@@ -97,7 +106,7 @@ function create(env: Env): Scene {
 
   const layout = () => {
     const make = (side: 0 | 1, slot: number, phase: number): Patch => {
-      const p: Patch = { cx: 0, cy: 0, side, slot, phase, dir: [1, 0], strays: [], round: -1 };
+      const p: Patch = { cx: 0, cy: 0, side, slot, phase, size: 1, dir: [1, 0], strays: [], round: -1 };
       setup(p);
       return p;
     };
@@ -109,7 +118,7 @@ function create(env: Env): Scene {
       return;
     }
     // Room for the board and a marble dropping off either side of it.
-    spacing = Math.min(28, (env.margin - PAD * 2) / 7);
+    spacing = Math.min(34, (env.margin - PAD * 2) / 7);
     perSide = bandsPerSide(env, 270, PER_SIDE);
     patches = Array.from({ length: perSide * 2 }, (_, i) => {
       const p = make((i % 2) as 0 | 1, Math.floor(i / 2), (LOOP * i) / (perSide * 2));
@@ -121,12 +130,12 @@ function create(env: Env): Scene {
 
   /** Hole (q, r) of a patch, in screen px. */
   const at = (p: Patch, q: number, r: number) => ({
-    x: p.cx + spacing * (q + r / 2),
-    y: p.cy + spacing * (Math.sqrt(3) / 2) * r,
+    x: p.cx + cur * (q + r / 2),
+    y: p.cy + cur * (Math.sqrt(3) / 2) * r,
   });
 
   const marble = (x: number, y: number, white: boolean, alpha: number, scale = 1) => {
-    const rad = spacing * 0.4 * scale;
+    const rad = cur * 0.4 * scale;
     if (rad <= 0.5 || alpha <= 0) return;
     const g = ctx.createRadialGradient(x - rad * 0.35, y - rad * 0.4, rad * 0.1, x, y, rad);
     g.addColorStop(0, white ? "#ffffff" : "#5a6878");
@@ -144,6 +153,7 @@ function create(env: Env): Scene {
   };
 
   const drawPatch = (p: Patch, time: number) => {
+    cur = spacing * p.size;
     const dark = env.dark();
     const t = (time + p.phase) % LOOP;
     const round = Math.floor((time + p.phase) / LOOP);
@@ -167,7 +177,7 @@ function create(env: Env): Scene {
     ctx.beginPath();
     for (let i = 0; i < 6; i++) {
       const a = (Math.PI / 3) * i + Math.PI / 6;
-      const R = spacing * (RADIUS + 0.75);
+      const R = cur * (RADIUS + 0.75);
       ctx.lineTo(p.cx + Math.cos(a) * R, p.cy + Math.sin(a) * R);
     }
     ctx.closePath();
@@ -176,7 +186,7 @@ function create(env: Env): Scene {
     for (const [q, r] of HOLES) {
       const { x, y } = at(p, q, r);
       ctx.beginPath();
-      ctx.arc(x, y, spacing * 0.16, 0, Math.PI * 2);
+      ctx.arc(x, y, cur * 0.16, 0, Math.PI * 2);
       ctx.fill();
     }
 
@@ -191,7 +201,7 @@ function create(env: Env): Scene {
       if (k === 2 && push > 0.99) {
         // Over the edge: carried on, dropping, shrinking and gone.
         const off = at(p, dq * (3 + fall * (FALL_REACH - 3)), dr * (3 + fall * (FALL_REACH - 3)));
-        marble(off.x, off.y + fall * fall * spacing * 2.2, false, base * (1 - fall), 1 - fall * 0.5);
+        marble(off.x, off.y + fall * fall * cur * 2.2, false, base * (1 - fall), 1 - fall * 0.5);
       } else {
         const step = k + lean + push;
         const { x, y } = at(p, dq * step, dr * step);
