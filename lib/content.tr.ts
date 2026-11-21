@@ -140,10 +140,10 @@ export const divisions: Division[] = [
         cover: "/media/shardbound/cover.webp",
         media: [
           { src: "/media/shardbound/01.webp", alt: "Kamp: ateşin başında kahramanını seç", wide: true },
-          { src: "/media/shardbound/02.webp", alt: "Kahraman paneli: Nekromansör ve Arise yeteneği", wide: true },
+          { src: "/media/shardbound/02.webp", alt: "Kahraman paneli: Nekromansör ve Ruh Uyandırma yeteneği", wide: true },
           { src: "/media/shardbound/03.webp", alt: "1. bölüm haritası: Yosunlu Katakomplar, yolunu seç", wide: true },
           { src: "/media/shardbound/04.webp", alt: "Nekromansör dört iskeletle odaya giriyor", wide: true },
-          { src: "/media/shardbound/05.webp", alt: "Çatışma: gölge ordusu goblinlere ve yaban domuzuna karşı", wide: true },
+          { src: "/media/shardbound/05.webp", alt: "Çatışma: gölge ordusu düşmanların üstüne çullanıyor", wide: true },
           { src: "/media/shardbound/06.webp", alt: "Kutsama seçimi: yol için bir lütuf", wide: true },
           { src: "/media/shardbound/07.webp", alt: "Gölge Ordusu: seviye, ekipman ve diziliş emirleri", wide: true },
           { src: "/media/shardbound/08.webp", alt: "Demirhane: kalıcı geliştirmeler ve silah planları", wide: true },

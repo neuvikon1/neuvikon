@@ -139,10 +139,10 @@ export const divisions: Division[] = [
         cover: "/media/shardbound/cover.webp",
         media: [
           { src: "/media/shardbound/01.webp", alt: "Camp: choose your hero around the fire", wide: true },
-          { src: "/media/shardbound/02.webp", alt: "Hero panel: the Necromancer and the Arise skill", wide: true },
+          { src: "/media/shardbound/02.webp", alt: "Hero panel: the Necromancer and the Soul Awakening skill", wide: true },
           { src: "/media/shardbound/03.webp", alt: "Act 1 map: Mossy Catacombs, choose your path", wide: true },
           { src: "/media/shardbound/04.webp", alt: "The Necromancer enters a room with four skeletons", wide: true },
-          { src: "/media/shardbound/05.webp", alt: "Fight: the shadow army against goblins and a boar", wide: true },
+          { src: "/media/shardbound/05.webp", alt: "Fight: the shadow army swarms the enemy", wide: true },
           { src: "/media/shardbound/06.webp", alt: "Choose a blessing: one boon for the road ahead", wide: true },
           { src: "/media/shardbound/07.webp", alt: "Shadow Army: levels, gear and formation orders", wide: true },
           { src: "/media/shardbound/08.webp", alt: "The Forge: permanent upgrades and weapon blueprints", wide: true },
